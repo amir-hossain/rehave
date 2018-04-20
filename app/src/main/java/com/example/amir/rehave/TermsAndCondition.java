@@ -1,6 +1,7 @@
 package com.example.amir.rehave;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -36,6 +37,9 @@ public class TermsAndCondition extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
+        SharedPreferences.Editor editor = getSharedPreferences("terms", MODE_PRIVATE).edit();
+        editor.putBoolean("opened",true);
+        editor.commit();
         startActivity(new Intent(TermsAndCondition.this,MainActivity.class));
 
     }

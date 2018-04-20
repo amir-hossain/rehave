@@ -2,7 +2,7 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme"
-        parent="Theme.AppCompat.Light.NoActionBar">
+        parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -27,6 +27,13 @@
         <item name="android:textSize">15sp</item>
         <item name="android:layout_marginTop">5dp</item>
         <item name="android:layout_marginBottom">5dp</item>
+    </style>
+    <style name="homeButton">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_width">270dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">10dp</item>
+
     </style>
 
 </resources>

@@ -22,7 +22,10 @@
             android:screenOrientation="portrait" />
         <activity android:name=".TermsAndCondition" />
         <activity android:name=".loginActivity" />
-        <activity android:name=".AdminActivity"></activity>
+        <activity android:name=".AdminActivity" />
+        <activity android:name=".InfoActivity" />
+        <activity android:name=".ProtectionActivity" />
+        <activity android:name=".ArchiveActivity"></activity>
     </application>
 
 </manifest>

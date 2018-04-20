@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Rehave</string>
     <string name="tc_title">Terms and Conditions</string>
-    <string name="tc_tick_label">I have read and accept terms and condition</string>
+    <string name="tc_tick_label">আমি শর্ত পড়েছি এবং স্বীকার করছি</string>
     <string name="tc_text1">1. Introduction</string>
     <string name="tc_text2">
 1.1 The Android Software Development Kit (referred to in the License Agreement as the "SDK" and specifically including the Android system files, packaged APIs, and Google APIs add-ons) is licensed to you subject to the terms of the License Agreement. The License Agreement forms a legally binding contract between you and Google in relation to your use of the SDK.
@@ -30,9 +30,12 @@
     <string name="tc_text10">
 2.4 If you are agreeing to be bound by the License Agreement on behalf of your employer or other entity, you represent and warrant that you have full legal authority to bind your employer or such entity to the License Agreement. If you do not have the requisite authority, you may not accept the License Agreement or use the SDK on behalf of your employer or other entity.
     </string>
-    <string name="tc_button_label">Continue</string>
-    <string name="loginButtonLabel">Login</string>
-    <string name="nameFieldTitle">Name</string>
-    <string name="passwordFieldTitle">Password</string>
-    <string name="loginErrorMessage">User name or password is wrong</string>
+    <string name="tc_button_label">চালিয়ে যান</string>
+    <string name="loginButtonLabel"> লগ  ইন করুন </string>
+    <string name="nameFieldTitle">ব্যবহারকারী নাম </string>
+    <string name="passwordFieldTitle">পাসওয়ার্ড</string>
+    <string name="loginErrorMessage">ব্যবহারকারী নাম বা পাসওয়ার্ড ভুল</string>
+    <string name="menuLabel1"> মাদক  ও  মাদকাসক্তি  বিষয়ে তথ্য </string>
+    <string name="menuLabe2"> রিলাপ্স প্রতিরোধ</string>
+    <string name="menuLabel3"> আর্কাইভ </string>
 </resources>
