@@ -1,6 +1,7 @@
 package com.example.amir.rehave;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,6 +39,10 @@ public class loginActivity extends AppCompatActivity{
 
             }
         });
+
+        ActionBar actionBar=getSupportActionBar();
+        actionBar.setTitle(R.string.loginPageLabel);
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
 

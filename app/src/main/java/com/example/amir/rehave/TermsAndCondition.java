@@ -3,6 +3,7 @@ package com.example.amir.rehave;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
@@ -25,7 +26,7 @@ public class TermsAndCondition extends AppCompatActivity implements View.OnClick
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    tcBtn.setBackgroundColor(Color.GREEN);
+                    tcBtn.setBackgroundColor(getResources().getColor(R.color.darkTeal));
                     tcBtn.setOnClickListener(TermsAndCondition.this);
                 }else{
                     tcBtn.setBackgroundColor(Color.WHITE);

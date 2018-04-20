@@ -20,12 +20,17 @@
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".TermsAndCondition" />
-        <activity android:name=".loginActivity" />
+        <activity android:name=".TermsAndCondition"
+            android:theme="@style/termsTheme"/>
+        <activity android:name=".loginActivity"
+            android:parentActivityName=".MainActivity"/>
         <activity android:name=".AdminActivity" />
-        <activity android:name=".InfoActivity" />
-        <activity android:name=".ProtectionActivity" />
-        <activity android:name=".ArchiveActivity"></activity>
+        <activity android:name=".InfoActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".ProtectionActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".ArchiveActivity"
+            android:parentActivityName=".MainActivity"></activity>
     </application>
 
 </manifest>
