@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class InfoDetailsActivity extends AppCompatActivity {
 
     @Override
@@ -16,5 +19,9 @@ public class InfoDetailsActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         int index=getIntent().getExtras().getInt("index");
         Toast.makeText(this,""+index,Toast.LENGTH_SHORT).show();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("message");
+
+        myRef.setValue("Hello, World!");
     }
 }
