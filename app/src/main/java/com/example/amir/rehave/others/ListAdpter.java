@@ -47,7 +47,7 @@ public class ListAdpter extends RecyclerView.Adapter<ListAdpter.MyViewHolder> {
         TextView textViewName = holder.textViewName;
 
 
-        textViewName.setText(dataSet.get(listPosition).getName());
+        textViewName.setText(dataSet.get(listPosition).getTitle());
 
     }
 

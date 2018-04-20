@@ -2,22 +2,49 @@ package com.example.amir.rehave.others;
 
 public class DataModel {
 
-    String name;
+    String title;
+    String post;
+    String id;
     int id_;
 
+    public DataModel(String id,String title, String post) {
+        this.title = title;
+        this.post = post;
+        this.id = id;
+    }
+
     public DataModel(String name, int id_) {
-        this.name = name;
+        this.title = name;
         this.id_ = id_;
 
     }
 
-    public String getName() {
-        return name;
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getPost() {
+        return post;
+    }
+
+    public void setPost(String post) {
+        this.post = post;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
 
 
-    public int getId() {
-        return id_;
+    public String getTitle() {
+        return title;
+    }
+
+
+
+    public String getId() {
+        return id;
     }
 }
