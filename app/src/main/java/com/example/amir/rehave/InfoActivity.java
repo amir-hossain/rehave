@@ -8,12 +8,18 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.amir.rehave.others.DataModel;
 import com.example.amir.rehave.others.ListAdpter;
 import com.example.amir.rehave.others.MyData;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -31,6 +37,7 @@ public class InfoActivity extends AppCompatActivity {
         ActionBar actionBar=getSupportActionBar();
         actionBar.setTitle(R.string.menuLabel1);
         actionBar.setDisplayHomeAsUpEnabled(true);
+        getData();
 
         myOnClickListener = new MyOnClickListener(this);
 
@@ -41,16 +48,34 @@ public class InfoActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         data = new ArrayList<>();
-        for (int i = 0; i < MyData.nameArray.length; i++) {
-            data.add(new DataModel(
-                    MyData.nameArray[i],
-                    MyData.id_[i]
-            ));
-        }
+    }
 
+    private void getData(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("info");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                DataModel value=null;
+                for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
+                    value = singleSnapshot.getValue(DataModel.class);
+                    data.add(new DataModel(value.getTitle(),value.getId()));
+                }
 
-        adapter = new ListAdpter(data);
-        recyclerView.setAdapter(adapter);
+                adapter = new ListAdpter(data);
+                recyclerView.setAdapter(adapter);
+//                    Log.d("Fire value", "Value is: " + value.getTitle());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("Fire value", "Failed to read value.", error.toException());
+            }
+        });
+
     }
 
     private static class MyOnClickListener implements View.OnClickListener {

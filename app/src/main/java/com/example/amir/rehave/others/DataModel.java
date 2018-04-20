@@ -1,22 +1,23 @@
 package com.example.amir.rehave.others;
 
 public class DataModel {
-
+    String id;
     String title;
     String post;
-    String id;
-    int id_;
 
-    public DataModel(String id,String title, String post) {
+
+    public DataModel() {
+    }
+
+    public DataModel(String title, String id) {
         this.title = title;
-        this.post = post;
         this.id = id;
     }
 
-    public DataModel(String name, int id_) {
-        this.title = name;
-        this.id_ = id_;
-
+    public DataModel(String id, String title, String post) {
+        this.title = title;
+        this.post = post;
+        this.id = id;
     }
 
 
