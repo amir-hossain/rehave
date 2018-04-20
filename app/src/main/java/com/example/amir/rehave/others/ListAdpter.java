@@ -41,6 +41,8 @@ public class ListAdpter extends RecyclerView.Adapter<ListAdpter.MyViewHolder> {
         return myViewHolder;
     }
 
+
+
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int listPosition) {
 

@@ -89,11 +89,12 @@ public class InfoActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             int index =recyclerView.getChildLayoutPosition(v);
+            String key=data.get(index).getId();
 
 
 //            Toast.makeText(context,index+" clicked",Toast.LENGTH_SHORT).show();
             Intent intent=new Intent(context,InfoDetailsActivity.class);
-            intent.putExtra("index",index);
+            intent.putExtra("key",key);
             context.startActivity(intent);
         }
 
