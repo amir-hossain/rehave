@@ -25,7 +25,7 @@
         <Button
             android:id="@+id/protection_button"
             style="@style/homeButton"
-            android:text="@string/menuLabe2"
+            android:text="@string/menuLabel2"
             android:background="@color/mainBtn2"
             />
 

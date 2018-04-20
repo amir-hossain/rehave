@@ -10,4 +10,6 @@
     <color name="mainBtn5">#3F51B5</color>
     <color name="mainBtn6">#009688</color>
     <color name="darkTeal">#004D40</color>
+    <color name="grey_300">#E0E0E0</color>
+    <color name="color_white">#fefefe</color>
 </resources>

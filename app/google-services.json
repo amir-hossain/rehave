@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "234600144331",
+    "firebase_url": "https://rehub-a2032.firebaseio.com",
+    "project_id": "rehub-a2032",
+    "storage_bucket": "rehub-a2032.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:234600144331:android:d51b46b0a53fe250",
+        "android_client_info": {
+          "package_name": "com.example.amir.rehave"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "234600144331-hcq9hf3n5jtuknc74qehvlq9fhci0rq3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSal_tjwtsTXyCn2OZyIR-1xfGt8UUduI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

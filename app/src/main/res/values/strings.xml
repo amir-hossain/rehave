@@ -37,7 +37,8 @@
     <string name="passwordFieldTitle">পাসওয়ার্ড</string>
     <string name="loginErrorMessage">ব্যবহারকারী নাম বা পাসওয়ার্ড ভুল</string>
     <string name="menuLabel1"> মাদক  ও  মাদকাসক্তি  বিষয়ে তথ্য </string>
-    <string name="menuLabe2"> রিলাপ্স প্রতিরোধ</string>
+    <string name="menuLabel2"> রিলাপ্স প্রতিরোধ</string>
     <string name="menuLabel3"> আর্কাইভ </string>
     <string name="loginPageLabel"> লগ ইন </string>
+    <string name="adminPageLabel"> অ্যাডমিন প্যানেল</string>
 </resources>
