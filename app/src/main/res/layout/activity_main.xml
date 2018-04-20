@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/textView"
@@ -12,4 +11,11 @@
         android:text="Main Screen"
         android:textColor="@android:color/black"
         android:textSize="32sp"/>
-</LinearLayout>
+    <Button
+        android:id="@+id/admin_login_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/loginButtonLabel"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"/>
+</RelativeLayout>
