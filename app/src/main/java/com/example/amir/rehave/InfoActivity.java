@@ -24,11 +24,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class InfoActivity extends AppCompatActivity {
-    private static RecyclerView.Adapter adapter;
+    private  RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    private static RecyclerView recyclerView;
-    private static ArrayList<DataModel> data;
-    public static View.OnClickListener myOnClickListener;
+    private  RecyclerView recyclerView;
+    private  ArrayList<DataModel> data;
+    public  View.OnClickListener myOnClickListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +64,7 @@ public class InfoActivity extends AppCompatActivity {
                     data.add(new DataModel(value.getTitle(),value.getId()));
                 }
 
-                adapter = new ListAdpter(data);
+                adapter = new ListAdpter(data,myOnClickListener);
                 recyclerView.setAdapter(adapter);
 //                    Log.d("Fire value", "Value is: " + value.getTitle());
             }
@@ -78,26 +78,24 @@ public class InfoActivity extends AppCompatActivity {
 
     }
 
-    private static class MyOnClickListener implements View.OnClickListener {
+    private  class MyOnClickListener implements View.OnClickListener {
 
         private final Context context;
 
         private MyOnClickListener(Context context) {
             this.context = context;
+
         }
 
         @Override
         public void onClick(View v) {
+            Log.d("cccccccc", "ccccccccccc");
             int index =recyclerView.getChildLayoutPosition(v);
             String key=data.get(index).getId();
-
-
-//            Toast.makeText(context,index+" clicked",Toast.LENGTH_SHORT).show();
+            Toast.makeText(context,index+" clicked",Toast.LENGTH_SHORT).show();
             Intent intent=new Intent(context,InfoDetailsActivity.class);
             intent.putExtra("key",key);
             context.startActivity(intent);
         }
-
-
     }
 }

@@ -30,7 +30,7 @@ public class InfoDetailsActivity extends AppCompatActivity {
         final TextView desView=findViewById(R.id.des_view);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        Query query = database.getReference("info").orderByKey().equalTo(key);
+        Query query = database.getReference("data/info").orderByKey().equalTo(key);
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

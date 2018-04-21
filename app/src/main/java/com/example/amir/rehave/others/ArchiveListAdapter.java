@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.MyViewHolder> {
     private ArrayList<DataModel> dataSet;
+    private View.OnClickListener listener;
     Context context;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -34,9 +35,10 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
         }
     }
 
-    public ArchiveListAdapter(Context context, ArrayList<DataModel> data) {
+    public ArchiveListAdapter(Context context, ArrayList<DataModel> data, View.OnClickListener listener) {
         this.dataSet = data;
         this.context=context;
+        this.listener=listener;
     }
 
     @Override
@@ -46,7 +48,7 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.archive_item, parent, false);
 
-        view.setOnClickListener(InfoActivity.myOnClickListener);
+        view.setOnClickListener(listener);
 
         ArchiveListAdapter.MyViewHolder myViewHolder = new ArchiveListAdapter.MyViewHolder(view);
         return myViewHolder;

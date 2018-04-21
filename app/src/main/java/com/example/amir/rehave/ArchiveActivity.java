@@ -2,6 +2,7 @@ package com.example.amir.rehave;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,7 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-
+import android.widget.Toast;
 
 
 import com.example.amir.rehave.others.ArchiveListAdapter;
@@ -36,10 +37,10 @@ public class ArchiveActivity extends AppCompatActivity {
         actionBar.setTitle(R.string.menuLabel3);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-
+        myOnClickListener = new ArchiveActivity.MyOnClickListener(this);
         getData();
 
-        myOnClickListener = new ArchiveActivity.MyOnClickListener(this);
+
 
         recyclerView =findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -71,7 +72,7 @@ public class ArchiveActivity extends AppCompatActivity {
 
                 }
 
-                adapter = new ArchiveListAdapter(getApplicationContext(),data);
+                adapter = new ArchiveListAdapter(getApplicationContext(),data,myOnClickListener);
                 recyclerView.setAdapter(adapter);
 //                    Log.d("Fire value", "Value is: " + value.getTitle());
             }
@@ -96,13 +97,9 @@ public class ArchiveActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             int index =recyclerView.getChildLayoutPosition(v);
-            String key=data.get(index).getId();
+            String url=data.get(index).getPost();
 
-
-//            Toast.makeText(context,index+" clicked",Toast.LENGTH_SHORT).show();
-            Intent intent=new Intent(context,InfoDetailsActivity.class);
-            intent.putExtra("key",key);
-            context.startActivity(intent);
+            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
         }
 
 

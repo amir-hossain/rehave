@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.amir.rehave.others.DataModel;
 import com.example.amir.rehave.others.ListAdpter;
@@ -21,11 +22,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class ProtectionActivity extends AppCompatActivity {
-    private static RecyclerView.Adapter adapter;
+    private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    private static RecyclerView recyclerView;
-    private static ArrayList<DataModel> data;
-    public static View.OnClickListener myOnClickListener;
+    private  RecyclerView recyclerView;
+    private  ArrayList<DataModel> data;
+    public  View.OnClickListener myOnClickListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +35,9 @@ public class ProtectionActivity extends AppCompatActivity {
         ActionBar actionBar=getSupportActionBar();
         actionBar.setTitle(R.string.menuLabel2);
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        myOnClickListener = new MyOnClickListener(this);
         getData();
-
-        myOnClickListener = new ProtectionActivity.MyOnClickListener(this);
-
         recyclerView =findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
 
@@ -61,7 +61,7 @@ public class ProtectionActivity extends AppCompatActivity {
                     data.add(new DataModel(value.getTitle(),value.getId()));
                 }
 
-                adapter = new ListAdpter(data);
+                adapter = new ListAdpter(data,myOnClickListener);
                 recyclerView.setAdapter(adapter);
 //                    Log.d("Fire value", "Value is: " + value.getTitle());
             }
@@ -75,7 +75,7 @@ public class ProtectionActivity extends AppCompatActivity {
 
     }
 
-    private static class MyOnClickListener implements View.OnClickListener {
+    private  class MyOnClickListener implements View.OnClickListener {
 
         private final Context context;
 
@@ -85,16 +85,13 @@ public class ProtectionActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
+            Log.d("xzzzzzzzzzz", "xxxxxxx");
             int index =recyclerView.getChildLayoutPosition(v);
             String key=data.get(index).getId();
-
-
-//            Toast.makeText(context,index+" clicked",Toast.LENGTH_SHORT).show();
+            Toast.makeText(context,index+" clicked",Toast.LENGTH_SHORT).show();
             Intent intent=new Intent(context,ProtectionDetailsActivity.class);
             intent.putExtra("key",key);
             context.startActivity(intent);
         }
-
-
     }
 }

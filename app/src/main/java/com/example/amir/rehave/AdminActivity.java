@@ -111,7 +111,7 @@ public class AdminActivity extends AppCompatActivity {
                     }
 
                 }
-                adapter = new AdminListAdapter(data,getApplicationContext());
+                adapter = new AdminListAdapter(data,getApplicationContext(),myOnClickListener);
                 recyclerView.setAdapter(adapter);
                     Log.d("Fire value", "Value is: " + data.get(0).getTitle());
             }

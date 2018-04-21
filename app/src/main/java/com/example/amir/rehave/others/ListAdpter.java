@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 public class ListAdpter extends RecyclerView.Adapter<ListAdpter.MyViewHolder> {
     private ArrayList<DataModel> dataSet;
+    private View.OnClickListener listener;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -22,11 +23,14 @@ public class ListAdpter extends RecyclerView.Adapter<ListAdpter.MyViewHolder> {
         public MyViewHolder(View itemView) {
             super(itemView);
             this.textViewName =itemView.findViewById(R.id.textViewName);
+
         }
     }
 
-    public ListAdpter(ArrayList<DataModel> data) {
+    public ListAdpter(ArrayList<DataModel> data, View.OnClickListener listener) {
         this.dataSet = data;
+        this.listener=listener;
+
     }
 
     @Override
@@ -35,7 +39,7 @@ public class ListAdpter extends RecyclerView.Adapter<ListAdpter.MyViewHolder> {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.items_layout, parent, false);
 
-        view.setOnClickListener(InfoActivity.myOnClickListener);
+        view.setOnClickListener(listener);
 
         MyViewHolder myViewHolder = new MyViewHolder(view);
         return myViewHolder;

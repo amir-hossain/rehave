@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class AdminListAdapter extends RecyclerView.Adapter<AdminListAdapter.MyViewHolder>{
     private ArrayList<DataModel> dataSet;
     private final Context context;
+    private View.OnClickListener listener;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -49,9 +50,10 @@ public class AdminListAdapter extends RecyclerView.Adapter<AdminListAdapter.MyVi
         }
     }
 
-    public AdminListAdapter(ArrayList<DataModel> data, Context context) {
+    public AdminListAdapter(ArrayList<DataModel> data, Context context,View.OnClickListener listener) {
         this.dataSet = data;
         this.context=context;
+        this.listener=listener;
     }
 
     @Override
@@ -60,7 +62,7 @@ public class AdminListAdapter extends RecyclerView.Adapter<AdminListAdapter.MyVi
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.admin_item, parent, false);
 
-        view.setOnClickListener(InfoActivity.myOnClickListener);
+        view.setOnClickListener(listener);
 
         AdminListAdapter.MyViewHolder myViewHolder = new AdminListAdapter.MyViewHolder(context,view);
         return myViewHolder;
