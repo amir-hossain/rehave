@@ -48,14 +48,6 @@ public class AdminActivity extends AppCompatActivity {
             }
         });
 
-//        write demo data
-
-
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference tempRef = database.getReference("data/info");
-
-//        StoreDemoData(database, tempRef);
 
         getData();
 
@@ -72,39 +64,6 @@ public class AdminActivity extends AppCompatActivity {
 
     }
 
-    private void StoreDemoData(FirebaseDatabase database, DatabaseReference tempRef) {
-        String key=tempRef.push().getKey();
-        DatabaseReference mainRef=database.getReference("data/info/"+key);
-        DataModel model=new DataModel(key,getResources().getString(R.string.title1),getResources().getString(R.string.des1));
-        mainRef.setValue(model);
-
-        key=tempRef.push().getKey();
-        mainRef=database.getReference("data/info/"+key);
-        DataModel model2=new DataModel(key,getResources().getString(R.string.title2),getResources().getString(R.string.des2));
-        mainRef.setValue(model2);
-
-        tempRef = database.getReference("data/pro");
-        key=tempRef.push().getKey();
-        mainRef=database.getReference("data/pro/"+key);
-        DataModel model3=new DataModel(key,getResources().getString(R.string.title3),getResources().getString(R.string.des3));
-        mainRef.setValue(model3);
-
-        key=tempRef.push().getKey();
-        mainRef=database.getReference("data/pro/"+key);
-        DataModel model4=new DataModel(key,getResources().getString(R.string.title4),getResources().getString(R.string.des4));
-        mainRef.setValue(model4);
-
-        tempRef = database.getReference("data/arch");
-        key=tempRef.push().getKey();
-        mainRef=database.getReference("data/arch/"+key);
-        DataModel model5=new DataModel(key,getResources().getString(R.string.title5),getResources().getString(R.string.des5));
-        mainRef.setValue(model5);
-
-        key=tempRef.push().getKey();
-        mainRef=database.getReference("data/arch/"+key);
-        DataModel model6=new DataModel(key,getResources().getString(R.string.title6),getResources().getString(R.string.des6));
-        mainRef.setValue(model6);
-    }
 
     private void getData(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -125,7 +84,7 @@ public class AdminActivity extends AppCompatActivity {
                 }
                 adapter = new AdminListAdapter(data,getApplicationContext(),myOnClickListener);
                 recyclerView.setAdapter(adapter);
-                    Log.d("Fire value", "Value is: " + data.get(0).getTitle());
+//                    Log.d("Fire value", "Value is: " + data.get(0).getTitle());
             }
 
             @Override
