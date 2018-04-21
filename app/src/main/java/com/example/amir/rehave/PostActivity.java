@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,10 +13,13 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.amir.rehave.others.AdminListAdapter;
 import com.example.amir.rehave.others.DataModel;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,19 +29,33 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
     String subject;
     EditText titleView;
     EditText postView;
+    Spinner spinner;
     int selectedPosition;
+    String path=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+        if(getIntent().getExtras()!=null){
+            path=getIntent().getExtras().getString("path");
+        }
+
         ActionBar actionBar=getSupportActionBar();
         actionBar.setTitle(R.string.postLabel);
+        if(path!=null){
+            actionBar.setTitle(R.string.editLabel);
+        }
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+
 
         creatSpinner();
         titleView=findViewById(R.id.title);
         postView=findViewById(R.id.post);
         Button postBtn=findViewById(R.id.post_button);
+        if(path!=null){
+            postBtn.setText(R.string.editLabel);
+        }
         postBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,11 +63,38 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
                 String post=postView.getText().toString().trim();
                 postData(title,post,subject);
 
+            }
+        });
+        if(path!=null){
+            getData();
+        }
 
 
+    }
+
+    private void getData(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference(path);
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+//               Log.d("xxxxxxxxxx",dataSnapshot.getValue().toString());
+                DataModel value=dataSnapshot.getValue(DataModel.class);
+                titleView.setText(value.getTitle());
+                postView.setText(value.getPost());
+                if(value.getSection().equals(getResources().getString(R.string.menuLabel2))){
+                    spinner.setSelection(1);
+                }else if(value.getSection().equals(getResources().getString(R.string.menuLabel3))){
+                    spinner.setSelection(2);
+                }
 
 
+            }
 
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("Fire value", "Failed to read value.", error.toException());
             }
         });
 
@@ -87,7 +132,7 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private void creatSpinner() {
         // Spinner element
-        Spinner spinner =findViewById(R.id.subject);
+        spinner =findViewById(R.id.subject);
 
         // Spinner click listener
         spinner.setOnItemSelectedListener(this);

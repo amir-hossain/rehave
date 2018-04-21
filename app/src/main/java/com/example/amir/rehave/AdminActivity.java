@@ -125,14 +125,22 @@ public class AdminActivity extends AppCompatActivity implements AdminListAdapter
         data.remove(index);
         adapter = new AdminListAdapter(data,getApplicationContext(),myOnClickListener,AdminActivity.this);
         recyclerView.setAdapter(adapter);
-
-
     }
 
     private void edit(View v){
         int index =recyclerView.getChildLayoutPosition(v);
         String key=data.get(index).getId();
+        String topic=data.get(index).getSection();
+        String path="data/info/"+key;
+        if(topic.equals(getResources().getString(R.string.menuLabel2))){
+            path="data/pro/"+key;
+        }else if(topic.equals(getResources().getString(R.string.menuLabel3))){
+            path="data/arch/"+key;
+        }
 //            Toast.makeText(this,"edit "+key,Toast.LENGTH_SHORT).show();
+        Intent intent=new Intent(getApplicationContext(),PostActivity.class);
+        intent.putExtra("path",path);
+        startActivity(intent);
 
     }
 
