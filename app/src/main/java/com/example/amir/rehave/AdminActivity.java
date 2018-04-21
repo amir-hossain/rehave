@@ -2,6 +2,8 @@ package com.example.amir.rehave;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,6 +37,15 @@ public class AdminActivity extends AppCompatActivity {
 
         ActionBar actionBar=getSupportActionBar();
         actionBar.setTitle(R.string.adminPageLabel);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
 //        write demo data
 
@@ -135,8 +146,6 @@ public class AdminActivity extends AppCompatActivity {
         public void onClick(View v) {
             int index =recyclerView.getChildLayoutPosition(v);
             String key=data.get(index).getId();
-
-
 //            Toast.makeText(context,index+" clicked",Toast.LENGTH_SHORT).show();
             Intent intent=new Intent(context,InfoDetailsActivity.class);
             intent.putExtra("key",key);
