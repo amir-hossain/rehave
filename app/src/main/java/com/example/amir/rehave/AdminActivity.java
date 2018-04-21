@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.amir.rehave.others.AdminListAdapter;
 import com.example.amir.rehave.others.DataModel;
@@ -23,7 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class AdminActivity extends AppCompatActivity {
+public class AdminActivity extends AppCompatActivity implements AdminListAdapter.ItemClicked {
     private static RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private static RecyclerView recyclerView;
@@ -37,6 +38,7 @@ public class AdminActivity extends AppCompatActivity {
 
         ActionBar actionBar=getSupportActionBar();
         actionBar.setTitle(R.string.adminPageLabel);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +84,7 @@ public class AdminActivity extends AppCompatActivity {
                     }
 
                 }
-                adapter = new AdminListAdapter(data,getApplicationContext(),myOnClickListener);
+                adapter = new AdminListAdapter(data,getApplicationContext(),myOnClickListener,AdminActivity.this);
                 recyclerView.setAdapter(adapter);
 //                    Log.d("Fire value", "Value is: " + data.get(0).getTitle());
             }
@@ -94,7 +96,49 @@ public class AdminActivity extends AppCompatActivity {
             }
         });
 
-    }           private static class MyOnClickListener implements View.OnClickListener {
+    }
+
+    @Override
+    public void onItemClicked(View v, int code) {
+        if(code==0){
+            this.delete(v);
+
+        }else {
+            this.edit(v);
+        }
+    }
+
+    private void delete(View v){
+        int index =recyclerView.getChildLayoutPosition(v);
+        String key=data.get(index).getId();
+//            Toast.makeText(this,"delete "+key,Toast.LENGTH_SHORT).show();
+        String topic=data.get(index).getSection();
+        String path="data/info/"+key;
+        if(topic.equals(getResources().getString(R.string.menuLabel2))){
+            path="data/pro/"+key;
+        }else if(topic.equals(getResources().getString(R.string.menuLabel3))){
+            path="data/arch/"+key;
+        }
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+        database.getReference(path).setValue(null);
+        data.remove(index);
+        adapter = new AdminListAdapter(data,getApplicationContext(),myOnClickListener,AdminActivity.this);
+        recyclerView.setAdapter(adapter);
+
+
+    }
+
+    private void edit(View v){
+        int index =recyclerView.getChildLayoutPosition(v);
+        String key=data.get(index).getId();
+//            Toast.makeText(this,"edit "+key,Toast.LENGTH_SHORT).show();
+
+    }
+
+
+
+    private static class MyOnClickListener implements View.OnClickListener {
 
         private final Context context;
 
@@ -114,6 +158,8 @@ public class AdminActivity extends AppCompatActivity {
 
 
     }
+
+
 
 
 
