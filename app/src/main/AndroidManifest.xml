@@ -42,10 +42,16 @@
         <activity
             android:name=".ProtectionDetailsActivity"
             android:parentActivityName=".ProtectionActivity" />
-        <activity android:name=".ArchiveDetailsActivity"
-            android:parentActivityName=".ArchiveActivity"></activity>
-        <meta-data android:name="com.codewaves.youtubethumbnailview.ApiKey"
+        <activity
+            android:name=".ArchiveDetailsActivity"
+            android:parentActivityName=".ArchiveActivity" />
+
+        <meta-data
+            android:name="com.codewaves.youtubethumbnailview.ApiKey"
             android:value="AIzaSyBWlab7jN6Wzcot20S5ryMBVZ1cit0Z89I" />
+
+        <activity android:name=".PostActivity"
+            android:parentActivityName=".AdminActivity"></activity>
     </application>
 
 </manifest>

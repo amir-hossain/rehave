@@ -59,4 +59,8 @@
     <string name="title6">Talking To Myself (Official Video) - Linkin Park</string>
     <string name="editLabel">সম্পাদন করুন </string>
     <string name="deleteLabel">মুছুন </string>
+    <string name="postLabel">পোস্ট করুন</string>
+    <string name="postItem1">শিরোনাম</string>
+    <string name="postItem2">পোস্ট</string>
+    <string name="postItem3">বিষয়</string>
 </resources>
