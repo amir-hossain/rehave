@@ -44,6 +44,8 @@
             android:parentActivityName=".ProtectionActivity" />
         <activity android:name=".ArchiveDetailsActivity"
             android:parentActivityName=".ArchiveActivity"></activity>
+        <meta-data android:name="com.codewaves.youtubethumbnailview.ApiKey"
+            android:value="AIzaSyBWlab7jN6Wzcot20S5ryMBVZ1cit0Z89I" />
     </application>
 
 </manifest>

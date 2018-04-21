@@ -7,10 +7,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.example.amir.rehave.others.DataModel;
 import com.example.amir.rehave.others.ListAdpter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -24,10 +30,11 @@ public class ProtectionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_info);
+        setContentView(R.layout.activity_protection);
         ActionBar actionBar=getSupportActionBar();
         actionBar.setTitle(R.string.menuLabel2);
         actionBar.setDisplayHomeAsUpEnabled(true);
+        getData();
 
         myOnClickListener = new ProtectionActivity.MyOnClickListener(this);
 
@@ -38,10 +45,34 @@ public class ProtectionActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         data = new ArrayList<>();
-        data.add(new DataModel(getResources().getString(R.string.title3),"sdsdsds"));
-        data.add(new DataModel(getResources().getString(R.string.title4),"sdsdsds"));
-        adapter = new ListAdpter(data);
-        recyclerView.setAdapter(adapter);
+    }
+
+    private void getData(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("data/pro");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                DataModel value=null;
+                for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
+                    value = singleSnapshot.getValue(DataModel.class);
+                    data.add(new DataModel(value.getTitle(),value.getId()));
+                }
+
+                adapter = new ListAdpter(data);
+                recyclerView.setAdapter(adapter);
+//                    Log.d("Fire value", "Value is: " + value.getTitle());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("Fire value", "Failed to read value.", error.toException());
+            }
+        });
+
     }
 
     private static class MyOnClickListener implements View.OnClickListener {
@@ -59,7 +90,7 @@ public class ProtectionActivity extends AppCompatActivity {
 
 
 //            Toast.makeText(context,index+" clicked",Toast.LENGTH_SHORT).show();
-            Intent intent=new Intent(context,InfoDetailsActivity.class);
+            Intent intent=new Intent(context,ProtectionDetailsActivity.class);
             intent.putExtra("key",key);
             context.startActivity(intent);
         }

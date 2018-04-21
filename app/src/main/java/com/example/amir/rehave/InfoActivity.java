@@ -52,7 +52,7 @@ public class InfoActivity extends AppCompatActivity {
 
     private void getData(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("info");
+        DatabaseReference myRef = database.getReference("data/info");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
