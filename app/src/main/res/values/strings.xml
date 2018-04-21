@@ -42,6 +42,7 @@
     <string name="loginPageLabel"> লগ ইন </string>
     <string name="adminPageLabel"> অ্যাডমিন প্যানেল</string>
     <string name="title1">মাদকাসক্তি কি?</string>
+    <string name="des1">মাদক দ্রব্য গ্রহণ করলে মানুষের শারীরিক ও মানসিক অবস্থার উল্লেখযোগ্য নেতিবাচক পরিবর্তন ঘটে এবং দ্রব্যের উপর নির্ভরশীলতা সৃষ্টির পাশাপাশি দ্রব্যটি গ্রহণের পরিমাণ ক্রমশ বাড়তে থাকে ব্যক্তির এই অবস্থাকে বলে মাদকাসক্তি</string>
     <string name="title2">মাদক কি? </string>
     <string name="des2"> মাদক দ্রব্য হলো একটি ভেষজ দ্রব্য যা গ্রহণে মানুষের স্বাভাবিক শারীরিক ও মানসিক অবস্থার উপর প্রভাব পড়ে এবং যা আসক্তি সৃষ্টি করে।</string>
     <string name="title3">মাদকাসক্তের চিকিৎসা</string>
@@ -52,5 +53,10 @@
 দেখা যায় সাথে সাথে বিভিন্ন উশৃঙ্খল কর্মকাণ্ড করে থাকে এমন কি মাদকাসক্ত চিকিৎসার পরেও অনেক
 রিকভারি এই আসক্তি মুলক আচরন থেকে বের হতে পারে না। তাই রিকভারি জীবনকে সুন্দর করতে হলে
 আসক্তিমুলক আচরন সম্পর্কে জানতে হবে ও আসক্তিমুলক আচরন নিয়ন্ত্রন করতে হবে</string>
-    <string name="des1">মাদক দ্রব্য গ্রহণ করলে মানুষের শারীরিক ও মানসিক অবস্থার উল্লেখযোগ্য নেতিবাচক পরিবর্তন ঘটে এবং দ্রব্যের উপর নির্ভরশীলতা সৃষ্টির পাশাপাশি দ্রব্যটি গ্রহণের পরিমাণ ক্রমশ বাড়তে থাকে ব্যক্তির এই অবস্থাকে বলে মাদকাসক্তি </string>
+    <string name="des5">https://www.youtube.com/watch?v=J56VVtlZCGE&amp;index=2&amp;t=0s&amp;list=PLyEPa0RgLyZHYPonjivxsxVBB8lfnXIvl</string>
+    <string name="title5">OMNIA (Official) - Fee Ra Huri</string>
+    <string name="des6">https://www.youtube.com/watch?v=lvs68OKOquM&amp;list=PLyEPa0RgLyZHYPonjivxsxVBB8lfnXIvl&amp;index=26</string>
+    <string name="title6">Talking To Myself (Official Video) - Linkin Park</string>
+    <string name="editLabel">সম্পাদন করুন </string>
+    <string name="deleteLabel">মুছুন </string>
 </resources>

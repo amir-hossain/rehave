@@ -4,10 +4,12 @@ public class DataModel {
     String id;
     String title;
     String post;
+    String section;
 
 
     public DataModel() {
     }
+
 
     public DataModel(String title, String id) {
         this.title = title;
@@ -20,6 +22,20 @@ public class DataModel {
         this.id = id;
     }
 
+    public DataModel(String id, String title, String post, String section) {
+        this.id = id;
+        this.title = title;
+        this.post = post;
+        this.section = section;
+    }
+
+    public String getSection() {
+        return section;
+    }
+
+    public void setSection(String section) {
+        this.section = section;
+    }
 
     public void setTitle(String title) {
         this.title = title;
