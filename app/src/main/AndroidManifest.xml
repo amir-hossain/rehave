@@ -26,8 +26,9 @@
         <activity
             android:name=".loginActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".AdminActivity"
-            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".AdminActivity"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".InfoActivity"
             android:parentActivityName=".MainActivity" />
@@ -51,9 +52,11 @@
             android:name="com.codewaves.youtubethumbnailview.ApiKey"
             android:value="AIzaSyBWlab7jN6Wzcot20S5ryMBVZ1cit0Z89I" />
 
-        <activity android:name=".PostActivity"
-            android:parentActivityName=".AdminActivity"
-            ></activity>
+        <activity
+            android:name=".PostActivity"
+            android:parentActivityName=".AdminActivity" />
+        <activity android:name=".SingUpActivity"
+            android:parentActivityName=".loginActivity"></activity>
     </application>
 
 </manifest>

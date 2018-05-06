@@ -16,11 +16,21 @@
             android:text="@string/nameFieldTitle"
             android:textStyle="bold"
             />
-    <EditText
-        android:id="@+id/userName"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        />
+        <EditText
+            android:id="@+id/userName"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/phoneFieldTitle"
+            android:textStyle="bold"
+            android:layout_marginTop="5dp"/>
+        <EditText
+            android:id="@+id/phone_email"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,23 +40,21 @@
         <EditText
             android:id="@+id/password"
             android:layout_width="200dp"
-            android:layout_height="wrap_content"
-
-            />
+            android:layout_height="wrap_content"/>
         <Button
-            android:id="@+id/login_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/loginButtonLabel"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="right"/>
-        <Button
-            android:id="@+id/singup_button"
+            android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/singupButtonLabel"
             android:layout_marginTop="10dp"
             android:layout_gravity="right"/>
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tc_tick_label"
+            android:layout_marginTop="10dp"
+            />
 
     </LinearLayout>
 

@@ -40,6 +40,14 @@ public class loginActivity extends AppCompatActivity{
             }
         });
 
+        Button singupButton=findViewById(R.id.singup_button);
+        singupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(loginActivity.this,SingUpActivity.class));
+            }
+        });
+
         ActionBar actionBar=getSupportActionBar();
         actionBar.setTitle(R.string.loginPageLabel);
         actionBar.setDisplayHomeAsUpEnabled(true);

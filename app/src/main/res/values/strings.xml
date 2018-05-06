@@ -32,9 +32,11 @@
     </string>
     <string name="mainMenuLabel"> প্রধান মেনু </string>
     <string name="tc_button_label">চালিয়ে যান</string>
+    <string name="singupButtonLabel"> সাইন আপ  করুন </string>
     <string name="loginButtonLabel"> লগ  ইন করুন </string>
     <string name="nameFieldTitle">ব্যবহারকারী নাম </string>
     <string name="passwordFieldTitle">পাসওয়ার্ড</string>
+    <string name="phoneFieldTitle">ফোন অথবা ইমেইল</string>
     <string name="loginErrorMessage">ব্যবহারকারী নাম বা পাসওয়ার্ড ভুল</string>
     <string name="menuLabel1"> মাদক  ও  মাদকাসক্তি  বিষয়ে তথ্য </string>
     <string name="menuLabel2"> রিলাপ্স প্রতিরোধ</string>
@@ -63,4 +65,5 @@
     <string name="postItem1">শিরোনাম</string>
     <string name="postItem2">পোস্ট</string>
     <string name="postItem3">বিষয়</string>
+    <string name="singupLabel">নিবন্ধন করুন</string>
 </resources>
