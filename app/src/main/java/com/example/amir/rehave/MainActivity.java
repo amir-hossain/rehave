@@ -35,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        boolean isLogedin = sharedPref.getBoolean(getString(R.string.preference_key), false);
-        if(isLogedin){
+        String id  = sharedPref.getString(getString(R.string.id_preference), null);
+        if(id!=null){
             loginButton.setVisibility(View.GONE);
         }else {
             logoutButton.setVisibility(View.VISIBLE);
@@ -45,10 +45,8 @@ public class MainActivity extends AppCompatActivity {
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sharedPref =getPreferences(Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putBoolean(getString(R.string.preference_key), false);
-                editor.commit();
+                SharedPreferences settings = getSharedPreferences("id", Context.MODE_PRIVATE);
+                settings.edit().clear().commit();
                 loginButton.setVisibility(View.VISIBLE);
                 logoutButton.setVisibility(View.GONE);
             }

@@ -66,15 +66,17 @@ public class loginActivity extends AppCompatActivity{
         if(singUpDatas!=null){
             boolean result=false;
             if(phoneEmail.equals("admin") && pass.equals("admin")){
-                saveToPreference();
+                saveToPreference("1","Admin");
                 startActivity(new Intent(getApplicationContext(),AdminActivity.class));
                 result= true;
             }else{
                 for(int i=0;i<singUpDatas.size();i++){
                     String dataBasephoneEmail=singUpDatas.get(i).getPhoneEmail();
                     String dataBasePass=singUpDatas.get(i).getPassword();
+                    String id=singUpDatas.get(i).getId();
+                    String name=singUpDatas.get(i).getName();
                     if(phoneEmail.equals(dataBasephoneEmail) && pass.equals(dataBasePass)){
-                        saveToPreference();
+                        saveToPreference(id,name);
                         startActivity(new Intent(getApplicationContext(),MainActivity.class));
 
                         result= true;
@@ -94,11 +96,11 @@ public class loginActivity extends AppCompatActivity{
 
     }
 
-    private void saveToPreference() {
-        SharedPreferences sharedPref =getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putBoolean(getString(R.string.preference_key), true);
-        editor.commit();
+    private void saveToPreference(String id,String name) {
+        SharedPreferences mSharedPreferences = getSharedPreferences("id", Context.MODE_PRIVATE);
+        SharedPreferences.Editor mEditor = mSharedPreferences.edit();
+        mEditor.putString("id",id);
+        mEditor.apply();
     }
 
 
@@ -110,11 +112,10 @@ public class loginActivity extends AppCompatActivity{
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                boolean result=false;
                 for(DataSnapshot snap : dataSnapshot.getChildren()) {
                     SignUpModel value=snap.getValue(SignUpModel.class);
 //                        Log.d("Fire value", "Value is: " + value.getName());
-                    singUpDatas.add(new SignUpModel(value.getName(),value.getPassword(),value.getPhoneEmail()));
+                    singUpDatas.add(new SignUpModel(value.getId(),value.getName(),value.getPassword(),value.getPhoneEmail()));
                 }
 
             }

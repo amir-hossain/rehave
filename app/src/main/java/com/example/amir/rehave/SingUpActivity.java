@@ -64,9 +64,11 @@ public class SingUpActivity extends AppCompatActivity implements View.OnClickLis
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         String path="auth/";
-        DatabaseReference mainRef=database.getReference(path);
-        SignUpModel model=new SignUpModel(name,pass,phoneEmail);
-        mainRef.push().setValue(model,new
+        DatabaseReference tempRef=database.getReference(path);
+        String key=tempRef.push().getKey();
+        DatabaseReference mainRef=database.getReference(path+key+"/");
+        SignUpModel model=new SignUpModel(key,name,pass,phoneEmail);
+        mainRef.setValue(model,new
                 DatabaseReference.CompletionListener() {
 
                     @Override
