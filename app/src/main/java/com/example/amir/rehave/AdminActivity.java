@@ -3,7 +3,6 @@ package com.example.amir.rehave;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,11 +10,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.amir.rehave.others.AdminListAdapter;
 import com.example.amir.rehave.others.DataModel;
-import com.example.amir.rehave.others.ListAdpter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,13 +37,25 @@ public class AdminActivity extends AppCompatActivity implements AdminListAdapter
         actionBar.setTitle(R.string.adminPageLabel);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton add = (FloatingActionButton) findViewById(R.id.add);
+        add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
                 startActivity(new Intent(AdminActivity.this,PostActivity.class));
+            }
+        });
+
+        FloatingActionButton community = (FloatingActionButton) findViewById(R.id.community);
+        community.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+                Intent intent=new Intent(AdminActivity.this,CommunityActivity.class);
+                intent.putExtra("type","admin");
+                startActivity(intent);
             }
         });
 

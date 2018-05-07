@@ -55,8 +55,11 @@
         <activity
             android:name=".PostActivity"
             android:parentActivityName=".AdminActivity" />
-        <activity android:name=".SingUpActivity"
-            android:parentActivityName=".loginActivity"></activity>
+        <activity
+            android:name=".SingUpActivity"
+            android:parentActivityName=".loginActivity" />
+        <activity android:name=".CommunityActivity" />
+        <activity android:name=".CommunityPost"></activity>
     </application>
 
 </manifest>

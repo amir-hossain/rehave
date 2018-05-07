@@ -34,6 +34,7 @@
     <string name="tc_button_label">চালিয়ে যান</string>
     <string name="singupButtonLabel"> সাইন আপ  করুন </string>
     <string name="loginButtonLabel"> লগ  ইন করুন </string>
+    <string name="logoutButtonLabel"> লগ  আউট করুন </string>
     <string name="nameFieldTitle">ব্যবহারকারী নাম </string>
     <string name="passwordFieldTitle">পাসওয়ার্ড</string>
     <string name="phoneFieldTitle">ফোন অথবা ইমেইল</string>
@@ -67,4 +68,6 @@
     <string name="postItem3">বিষয়</string>
     <string name="singupLabel">নিবন্ধন করুন</string>
     <string name="phonPassLabel">ফোন অথবা ইমেইল</string>
+    <string name="preference_key">loggedIn</string>
+    <string name="forumLabel">ফোরাম</string>
 </resources>

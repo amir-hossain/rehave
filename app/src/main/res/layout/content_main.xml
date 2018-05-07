@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/admin_login_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/loginButtonLabel"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"/>
+    <Button
+        android:id="@+id/logout_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/logoutButtonLabel"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
+        <Button
+            android:id="@+id/info_button"
+            style="@style/homeButton"
+            android:text="@string/menuLabel1"
+            android:background="@color/mainBtn1"
+            />
+        <Button
+            android:id="@+id/protection_button"
+            style="@style/homeButton"
+            android:text="@string/menuLabel2"
+            android:background="@color/mainBtn2"
+            />
+
+        <Button
+            android:id="@+id/archive_button"
+            style="@style/homeButton"
+            android:text="@string/menuLabel3"
+            android:background="@color/mainBtn5"/>
+    </LinearLayout>
+</RelativeLayout>

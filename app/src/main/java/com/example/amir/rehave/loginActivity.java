@@ -1,6 +1,8 @@
 package com.example.amir.rehave;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -63,17 +65,26 @@ public class loginActivity extends AppCompatActivity{
     private void check() {
         if(singUpDatas!=null){
             boolean result=false;
-            for(int i=0;i<singUpDatas.size();i++){
-                String dataBasephoneEmail=singUpDatas.get(i).getPhoneEmail();
-                String dataBasePass=singUpDatas.get(i).getPassword();
-                if(phoneEmail.equals(dataBasephoneEmail) && pass.equals(dataBasePass)){
-                    startActivity(new Intent(getApplicationContext(),AdminActivity.class));
-                    result= true;
-                    break;
-                }else{
-                    result= false;
+            if(phoneEmail.equals("admin") && pass.equals("admin")){
+                saveToPreference();
+                startActivity(new Intent(getApplicationContext(),AdminActivity.class));
+                result= true;
+            }else{
+                for(int i=0;i<singUpDatas.size();i++){
+                    String dataBasephoneEmail=singUpDatas.get(i).getPhoneEmail();
+                    String dataBasePass=singUpDatas.get(i).getPassword();
+                    if(phoneEmail.equals(dataBasephoneEmail) && pass.equals(dataBasePass)){
+                        saveToPreference();
+                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+
+                        result= true;
+                        break;
+                    }else{
+                        result= false;
+                    }
                 }
             }
+
 
             if(!result){
                 Toast.makeText(getApplicationContext(),R.string.loginErrorMessage,Toast.LENGTH_SHORT).show();
@@ -83,7 +94,12 @@ public class loginActivity extends AppCompatActivity{
 
     }
 
-
+    private void saveToPreference() {
+        SharedPreferences sharedPref =getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean(getString(R.string.preference_key), true);
+        editor.commit();
+    }
 
 
     private void getData(){
