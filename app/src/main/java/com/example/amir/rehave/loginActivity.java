@@ -100,6 +100,7 @@ public class loginActivity extends AppCompatActivity{
         SharedPreferences mSharedPreferences = getSharedPreferences("id", Context.MODE_PRIVATE);
         SharedPreferences.Editor mEditor = mSharedPreferences.edit();
         mEditor.putString("id",id);
+        mEditor.putString("name",name);
         mEditor.apply();
     }
 

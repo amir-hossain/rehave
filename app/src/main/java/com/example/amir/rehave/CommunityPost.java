@@ -1,5 +1,8 @@
 package com.example.amir.rehave;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,8 +10,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.example.amir.rehave.others.CommunityPostModel;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 public class CommunityPost extends AppCompatActivity {
 
@@ -27,9 +40,22 @@ public class CommunityPost extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences preferences= getSharedPreferences("id", Context.MODE_PRIVATE);
+                String name=preferences.getString("name",null);
+                String userId=preferences.getString("id",null);
+
                 String imput=post.getText().toString();
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 String path="community/post/";
+                DatabaseReference tempRef=database.getReference(path);
+                String postId=tempRef.push().getKey();
+                path="community/post/"+postId;
+                DatabaseReference mainRef=database.getReference(path);
+                String[] dateTime=getcurrentDateaAndTime();
+                mainRef.setValue(new CommunityPostModel(userId,postId,imput,name,dateTime[0],dateTime[1]));
+                Toast.makeText(getApplicationContext(),R.string.communityMessage,Toast.LENGTH_SHORT).show();
+                finish();
+
             }
         });
     }
@@ -38,5 +64,13 @@ public class CommunityPost extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         finish();
         return true;
+    }
+
+    public String[] getcurrentDateaAndTime() {
+        String []dateTime=new String[2];
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
+        String formatedDate =dateFormat.format(Calendar.getInstance().getTime());
+        dateTime=formatedDate.split(" ");
+        return dateTime;
     }
 }

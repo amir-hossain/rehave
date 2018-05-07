@@ -71,4 +71,6 @@
     <string name="id_preference">id</string>
     <string name="name_preference">name</string>
     <string name="forumLabel">ফোরাম</string>
+    <string name="communityMessage">পর্যালোচনা জন্য পাঠানো হয়েছে</string>
+
 </resources>
