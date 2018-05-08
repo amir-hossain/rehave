@@ -34,19 +34,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        String id  = sharedPref.getString(getString(R.string.id_preference), null);
-        if(id!=null){
-            loginButton.setVisibility(View.GONE);
+        SharedPreferences sharedPref = getSharedPreferences("id",Context.MODE_PRIVATE);
+        String name=sharedPref.getString("name",null);
+        if(name==null){
+
+            logoutButton.setVisibility(View.GONE);
         }else {
-            logoutButton.setVisibility(View.VISIBLE);
+
+            loginButton.setVisibility(View.GONE);
         }
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SharedPreferences settings = getSharedPreferences("id", Context.MODE_PRIVATE);
-                settings.edit().clear().commit();
+                settings.edit().clear().apply();
                 loginButton.setVisibility(View.VISIBLE);
                 logoutButton.setVisibility(View.GONE);
             }

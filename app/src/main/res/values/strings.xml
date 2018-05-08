@@ -72,5 +72,9 @@
     <string name="name_preference">name</string>
     <string name="forumLabel">ফোরাম</string>
     <string name="communityMessage">পর্যালোচনা জন্য পাঠানো হয়েছে</string>
+    <string name="adminPermissionLabel">অনুমতি দিন</string>
+    <string name="reviewTitle">পোস্ট রিভিউ</string>
+    <string name="acceptMessage">পোস্ট যোগ করা হয়েছে </string>
+    <string name="deleteMessage">পোস্ট মুছা করা হয়েছে </string>
 
 </resources>

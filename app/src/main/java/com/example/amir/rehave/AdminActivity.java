@@ -2,6 +2,7 @@ package com.example.amir.rehave;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.example.amir.rehave.others.AdminListAdapter;
@@ -75,6 +77,15 @@ public class AdminActivity extends AppCompatActivity implements AdminListAdapter
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intent);
+        SharedPreferences settings = getSharedPreferences("id", Context.MODE_PRIVATE);
+        settings.edit().clear().apply();
+        finish();
+        return true;
+    }
 
     private void getData(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();

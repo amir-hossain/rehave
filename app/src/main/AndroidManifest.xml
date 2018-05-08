@@ -18,6 +18,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".RootActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -27,8 +30,7 @@
             android:name=".loginActivity"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".AdminActivity"
-            android:parentActivityName=".MainActivity" />
+            android:name=".AdminActivity" />
         <activity
             android:name=".InfoActivity"
             android:parentActivityName=".MainActivity" />
@@ -59,7 +61,9 @@
             android:name=".SingUpActivity"
             android:parentActivityName=".loginActivity" />
         <activity android:name=".CommunityActivity" />
-        <activity android:name=".CommunityPost"></activity>
+        <activity android:name=".CommunityPost" />
+        <activity android:name=".ReviewActivity"
+            android:parentActivityName=".AdminActivity"></activity>
     </application>
 
 </manifest>
