@@ -31,7 +31,6 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
         TextView commentView;
         TextView count;
         RelativeLayout comment;
-        ImageButton optionBtn;
 
 
         public MyViewHolder(final Context context, final View itemView) {
@@ -42,7 +41,6 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
             this.commentView = itemView.findViewById(R.id.post);
             this.comment = itemView.findViewById(R.id.comment);
             this.count = itemView.findViewById(R.id.count);
-            this.optionBtn = itemView.findViewById(R.id.option_btn);
             comment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -58,14 +56,6 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
                 }
             });
 
-            optionBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-//                    Toast.makeText(context,"delete clicked",Toast.LENGTH_SHORT).show();
-                    CommunityListAdapter.clickListener.onItemClicked(itemView, 0);
-
-                }
-            });
         }
     }
 
