@@ -39,8 +39,8 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
             this.dateView = itemView.findViewById(R.id.date);
             this.timeView = itemView.findViewById(R.id.time);
             this.postView = itemView.findViewById(R.id.post);
-            this.commentBtn = itemView.findViewById(R.id.accept);
-            this.optionBtn = itemView.findViewById(R.id.delete);
+            this.commentBtn = itemView.findViewById(R.id.comment_btn);
+            this.optionBtn = itemView.findViewById(R.id.option_btn);
             commentBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -66,7 +66,7 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
     public CommunityListAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
                                                              int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.review_item, parent, false);
+                .inflate(R.layout.community_item, parent, false);
 
 //        view.setOnClickListener(listener);
 
@@ -87,8 +87,8 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
         dateView.setText(dataSet.get(listPosition).getDate());
         TextView postView = holder.postView;
         postView.setText(dataSet.get(listPosition).getPost());
-
     }
+
 
 
 

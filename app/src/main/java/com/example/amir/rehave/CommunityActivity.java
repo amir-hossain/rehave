@@ -7,13 +7,17 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.example.amir.rehave.others.AdminListAdapter;
+import com.example.amir.rehave.others.CommunityListAdapter;
 import com.example.amir.rehave.others.CommunityPostModel;
 import com.example.amir.rehave.others.DataModel;
+import com.example.amir.rehave.others.ReviewListAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,10 +26,14 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class CommunityActivity extends AppCompatActivity {
+public class CommunityActivity extends AppCompatActivity implements CommunityListAdapter.ItemClicked {
     FloatingActionButton review;
     FloatingActionButton add;
-    ArrayList<CommunityPostModel> data=new ArrayList<>();
+    private static RecyclerView.Adapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
+    private static RecyclerView recyclerView;
+    private static ArrayList<CommunityPostModel> data;
+    private String type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +47,25 @@ public class CommunityActivity extends AppCompatActivity {
         actionBar.setTitle(R.string.forumLabel);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        String type=getIntent().getExtras().getString("type");
+        getData();
+        recyclerView =findViewById(R.id.my_recycler_view);
+        recyclerView.setHasFixedSize(true);
+
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        data = new ArrayList<>();
         review = (FloatingActionButton) findViewById(R.id.review);
         add = (FloatingActionButton) findViewById(R.id.add);
+        recyclerView=findViewById(R.id.my_recycler_view);
         SharedPreferences mSharedPreferences = getSharedPreferences("id", Context.MODE_PRIVATE);
         if(mSharedPreferences.contains("id")){
-            initilizeFab(type);
+            if(getIntent().getExtras()!=null){
+                type=getIntent().getExtras().getString("type");
+                initilizeFab(type);
+            }
+
+
         }else {
             review.setVisibility(View.GONE);
             add.setVisibility(View.GONE);
@@ -61,19 +82,17 @@ public class CommunityActivity extends AppCompatActivity {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 CommunityPostModel value=null;
-                for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
-                    for(DataSnapshot snap : singleSnapshot.getChildren()) {
-                        value=snap.getValue(CommunityPostModel.class);
+                for(DataSnapshot snap : dataSnapshot.getChildren()) {
+                    value=snap.getValue(CommunityPostModel.class);
 //                        Log.d("Fire value", "Value is: " + value.getName());
-                        if(!value.getReviewStatus()){
-                            data.add(new CommunityPostModel(value.getUserId(),value.getPostId(),null,value.getName(),value.getDate(),value.getTime()));
-                        }
-
+                    if(value.getReviewStatus()){
+                        data.add(new CommunityPostModel(value.getUserId(),value.getPostId(),value.getPost(),value.getName(),value.getDate(),value.getTime(),value.getReviewStatus()));
                     }
 
                 }
-//                adapter = new AdminListAdapter(data,getApplicationContext(),myOnClickListener,AdminActivity.this);
-//                recyclerView.setAdapter(adapter);
+
+                    adapter = new CommunityListAdapter(data,getApplicationContext(),CommunityActivity.this);
+                    recyclerView.setAdapter(adapter);
 //                    Log.d("Fire value", "Value is: " + data.get(0).getTitle());
             }
 
@@ -86,7 +105,7 @@ public class CommunityActivity extends AppCompatActivity {
 
     }
 
-    private void initilizeFab(String type) {
+    private void initilizeFab(final String type) {
         if(type.equals("user")){
             review.setVisibility(View.GONE);
         }
@@ -97,6 +116,7 @@ public class CommunityActivity extends AppCompatActivity {
 //                        .setAction("Action", null).show();
                 Intent intent=new Intent(CommunityActivity.this,ReviewActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -107,6 +127,7 @@ public class CommunityActivity extends AppCompatActivity {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
                 Intent intent=new Intent(CommunityActivity.this,CommunityPost.class);
+                intent.putExtra("type",type);
                 startActivity(intent);
             }
         });
@@ -116,5 +137,10 @@ public class CommunityActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         finish();
         return true;
+    }
+
+    @Override
+    public void onItemClicked(View v, int code) {
+
     }
 }

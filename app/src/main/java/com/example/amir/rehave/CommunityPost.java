@@ -52,8 +52,15 @@ public class CommunityPost extends AppCompatActivity {
                 path="community/post/"+postId;
                 DatabaseReference mainRef=database.getReference(path);
                 String[] dateTime=getcurrentDateaAndTime();
-                mainRef.setValue(new CommunityPostModel(userId,postId,imput,name,dateTime[0],dateTime[1]));
-                Toast.makeText(getApplicationContext(),R.string.communityMessage,Toast.LENGTH_SHORT).show();
+
+                if(name.equals("Admin")){
+                    mainRef.setValue(new CommunityPostModel(userId,postId,imput,name,dateTime[0],dateTime[1],true));
+                    Toast.makeText(getApplicationContext(),R.string.acceptMessage,Toast.LENGTH_SHORT).show();
+                }else{
+                    mainRef.setValue(new CommunityPostModel(userId,postId,imput,name,dateTime[0],dateTime[1],false));
+                    Toast.makeText(getApplicationContext(),R.string.communityMessage,Toast.LENGTH_SHORT).show();
+                }
+
                 finish();
 
             }

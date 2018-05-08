@@ -7,19 +7,21 @@ public class CommunityPostModel {
     private String name;
     private String date;
     private String time;
-    private boolean reviewStatus=false;
+    private boolean reviewStatus;
 
     public CommunityPostModel() {
     }
 
-    public CommunityPostModel(String userId, String postId, String post, String name, String date, String time) {
+    public CommunityPostModel(String userId, String postId, String post, String name, String date, String time,Boolean reviewStatus) {
         this.userId = userId;
         this.postId = postId;
         this.post = post;
         this.name = name;
         this.date = date;
         this.time = time;
+        this.reviewStatus=reviewStatus;
     }
+
 
     public String getUserId() {
         return userId;

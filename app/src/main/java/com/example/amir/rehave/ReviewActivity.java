@@ -65,7 +65,7 @@ public class ReviewActivity extends AppCompatActivity implements ReviewListAdapt
                         value=snap.getValue(CommunityPostModel.class);
 //                        Log.d("Fire value", "Value is: " + value.getName());
                     if(!value.getReviewStatus()){
-                        data.add(new CommunityPostModel(value.getUserId(),value.getPostId(),value.getPost(),value.getName(),value.getDate(),value.getTime()));
+                        data.add(new CommunityPostModel(value.getUserId(),value.getPostId(),value.getPost(),value.getName(),value.getDate(),value.getTime(),value.getReviewStatus()));
                     }
 
                 }
@@ -112,8 +112,13 @@ public class ReviewActivity extends AppCompatActivity implements ReviewListAdapt
 //                    Log.d("Fire value", "Value is: " + data.get(0).getTitle());
             Toast.makeText(getApplicationContext(),R.string.deleteMessage,Toast.LENGTH_SHORT).show();
         }else {
-            finish();
+            runActivity();
         }
+    }
+
+    private void runActivity(){
+        Intent intent=new Intent(ReviewActivity.this,CommunityActivity.class);
+        startActivity(intent);
     }
 
     private void accept(View v){
@@ -130,7 +135,7 @@ public class ReviewActivity extends AppCompatActivity implements ReviewListAdapt
 //                    Log.d("Fire value", "Value is: " + data.get(0).getTitle());
             Toast.makeText(getApplicationContext(),R.string.acceptMessage,Toast.LENGTH_SHORT).show();
         }else {
-            finish();
+            runActivity();
         }
 
     }
