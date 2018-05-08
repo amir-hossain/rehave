@@ -65,7 +65,8 @@
         <activity
             android:name=".CommentActivity"
             android:parentActivityName=".CommunityActivity" />
-        <activity android:name=".ForumDetails"></activity>
+        <activity android:name=".ForumDetails" />
+        <activity android:name=".EditCommunityPost"></activity>
     </application>
 
 </manifest>

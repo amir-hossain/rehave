@@ -145,8 +145,10 @@ public class CommunityActivity extends AppCompatActivity implements CommunityLis
 
         }else if(code==1){
             int index =recyclerView.getChildLayoutPosition(v);
+            String post=data.get(index).getPost();
             String key=data.get(index).getPostId();
-            Intent intent=new Intent(getApplicationContext(),CommentActivity.class);
+            Intent intent=new Intent(getApplicationContext(),ForumDetails.class);
+            intent.putExtra("post",post);
             intent.putExtra("key",key);
             startActivity(intent);
             finish();
