@@ -60,8 +60,9 @@ public class CommunityPost extends AppCompatActivity {
                     mainRef.setValue(new CommunityPostModel(userId,postId,imput,name,dateTime[0],dateTime[1],false));
                     Toast.makeText(getApplicationContext(),R.string.communityMessage,Toast.LENGTH_SHORT).show();
                 }
-
+                startActivity(new Intent(CommunityPost.this,CommunityActivity.class));
                 finish();
+
 
             }
         });
@@ -69,6 +70,7 @@ public class CommunityPost extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        startActivity(new Intent(CommunityPost.this,CommunityActivity.class));
         finish();
         return true;
     }

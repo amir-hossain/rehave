@@ -38,6 +38,7 @@ public class CommentActivity extends AppCompatActivity implements CommentListAda
     private static RecyclerView recyclerView;
     private static ArrayList<CommentDataModel> data;
     private String type;
+    String postId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,7 @@ public class CommentActivity extends AppCompatActivity implements CommentListAda
         actionBar.setTitle(R.string.commentTitle);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        postId=getIntent().getExtras().getString("key");
 
         getData();
         recyclerView =findViewById(R.id.my_recycler_view);
@@ -86,10 +88,9 @@ public class CommentActivity extends AppCompatActivity implements CommentListAda
                         DatabaseReference.CompletionListener() {
 
                             @Override
-                            public void onComplete(DatabaseError databaseError,
-                                                   DatabaseReference databaseReference) {
-                                finish();
+                            public void onComplete(DatabaseError databaseError,DatabaseReference databaseReference) {
                                 startActivity(new Intent(getApplicationContext(),CommunityActivity.class));
+                                finish();
                             }
                         });
 
@@ -117,9 +118,10 @@ public class CommentActivity extends AppCompatActivity implements CommentListAda
                 for(DataSnapshot snap : dataSnapshot.getChildren()) {
                     value=snap.getValue(CommentDataModel.class);
 //                        Log.d("Fire value", "Value is: " + value.getName());
+                        if(postId.equals(value.getPostId())){
+                            data.add(new CommentDataModel(value.getComment(),value.getPostId(),value.getName(),value.getDate(),value.getTime(),value.getCommentId(),value.getReplayCount()));
 
-                        data.add(new CommentDataModel(value.getComment(),value.getPostId(),value.getName(),value.getDate(),value.getTime(),value.getCommentId(),value.getReplayCount()));
-
+                        }
                 }
 
                 adapter = new CommentListAdapter(data,getApplicationContext(),CommentActivity.this);
@@ -138,6 +140,8 @@ public class CommentActivity extends AppCompatActivity implements CommentListAda
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent=new Intent(getApplicationContext(),CommunityActivity.class);
+        startActivity(intent);
         finish();
         return true;
     }
@@ -148,7 +152,6 @@ public class CommentActivity extends AppCompatActivity implements CommentListAda
 //            this.delete(v);
 
         }else if(code==1){
-//            this.delete(v);
 
         }else {
             this.comment(v);
@@ -163,9 +166,7 @@ public class CommentActivity extends AppCompatActivity implements CommentListAda
         String key=data.get(index).getPostId();
         String count=data.get(index).getReplayCount();
 //            Toast.makeText(context,index+" clicked",Toast.LENGTH_SHORT).show();
-        Intent intent=new Intent(getApplicationContext(),CommentActivity.class);
-        intent.putExtra("key",key);
-        intent.putExtra("count",count);
+        Intent intent=new Intent(getApplicationContext(),CommunityActivity.class);
         startActivity(intent);
         finish();
     }

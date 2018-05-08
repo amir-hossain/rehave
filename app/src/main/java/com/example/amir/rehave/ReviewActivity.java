@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -52,6 +53,13 @@ public class ReviewActivity extends AppCompatActivity implements ReviewListAdapt
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        startActivity(new Intent(ReviewActivity.this,CommunityActivity.class));
+        finish();
+        return true;
+    }
+
     private void getData(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("community/post/");
@@ -69,13 +77,13 @@ public class ReviewActivity extends AppCompatActivity implements ReviewListAdapt
                     }
 
                 }
-                if(data.size()>0){
                     adapter = new ReviewListAdapter(data,getApplicationContext(),ReviewActivity.this);
                     recyclerView.setAdapter(adapter);
 //                    Log.d("Fire value", "Value is: " + data.get(0).getTitle());
-                }
 
             }
+
+
 
             @Override
             public void onCancelled(DatabaseError error) {
@@ -106,20 +114,13 @@ public class ReviewActivity extends AppCompatActivity implements ReviewListAdapt
 
         database.getReference(path).setValue(null);
         data.remove(index);
-        if(data.size()>0){
+
             adapter = new ReviewListAdapter(data,getApplicationContext(),ReviewActivity.this);
             recyclerView.setAdapter(adapter);
 //                    Log.d("Fire value", "Value is: " + data.get(0).getTitle());
             Toast.makeText(getApplicationContext(),R.string.deleteMessage,Toast.LENGTH_SHORT).show();
-        }else {
-            runActivity();
-        }
     }
 
-    private void runActivity(){
-        Intent intent=new Intent(ReviewActivity.this,CommunityActivity.class);
-        startActivity(intent);
-    }
 
     private void accept(View v){
         int index =recyclerView.getChildLayoutPosition(v);
@@ -129,15 +130,10 @@ public class ReviewActivity extends AppCompatActivity implements ReviewListAdapt
 
         database.getReference(path).child("reviewStatus").setValue(true);
         data.remove(index);
-        if(data.size()>0){
             adapter = new ReviewListAdapter(data,getApplicationContext(),ReviewActivity.this);
             recyclerView.setAdapter(adapter);
 //                    Log.d("Fire value", "Value is: " + data.get(0).getTitle());
             Toast.makeText(getApplicationContext(),R.string.acceptMessage,Toast.LENGTH_SHORT).show();
-        }else {
-            runActivity();
-        }
-
     }
 
 

@@ -34,15 +34,11 @@ public class CommunityActivity extends AppCompatActivity implements CommunityLis
     private RecyclerView.LayoutManager layoutManager;
     private static RecyclerView recyclerView;
     private static ArrayList<CommunityPostModel> data;
-    private String type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_community);
-
-        SharedPreferences prefs =getPreferences(Context.MODE_PRIVATE);
-        String id = prefs.getString(getString(R.string.id_preference), null);
 
         ActionBar actionBar=getSupportActionBar();
         actionBar.setTitle(R.string.forumLabel);
@@ -56,21 +52,11 @@ public class CommunityActivity extends AppCompatActivity implements CommunityLis
         recyclerView.setLayoutManager(layoutManager);
 
         data = new ArrayList<>();
-        review = (FloatingActionButton) findViewById(R.id.review);
-        add = (FloatingActionButton) findViewById(R.id.add);
+
         recyclerView=findViewById(R.id.my_recycler_view);
-        SharedPreferences mSharedPreferences = getSharedPreferences("id", Context.MODE_PRIVATE);
-        if(mSharedPreferences.contains("id")){
-            if(getIntent().getExtras()!=null){
-                type=getIntent().getExtras().getString("type");
-                initilizeFab(type);
-            }
 
+        initilizeFab();
 
-        }else {
-            review.setVisibility(View.GONE);
-            add.setVisibility(View.GONE);
-        }
     }
 
 
@@ -106,32 +92,44 @@ public class CommunityActivity extends AppCompatActivity implements CommunityLis
 
     }
 
-    private void initilizeFab(final String type) {
-        if(type.equals("user")){
+    private void initilizeFab() {
+        review = (FloatingActionButton) findViewById(R.id.review);
+        add = (FloatingActionButton) findViewById(R.id.add);
+        SharedPreferences preferences=getSharedPreferences("id",Context.MODE_PRIVATE);
+        String name =preferences.getString("name",null);
+        if(name==null){
             review.setVisibility(View.GONE);
+            add.setVisibility(View.GONE);
+        }else {
+            if(!name.equals("Admin")){
+                review.setVisibility(View.GONE);
+
+            }else {
+                review.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+                        Intent intent=new Intent(CommunityActivity.this,ReviewActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+            }
+
+            add.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+                    Intent intent=new Intent(CommunityActivity.this,CommunityPost.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+
         }
-        review.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-                Intent intent=new Intent(CommunityActivity.this,ReviewActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
 
-
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-                Intent intent=new Intent(CommunityActivity.this,CommunityPost.class);
-                intent.putExtra("type",type);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -146,8 +144,12 @@ public class CommunityActivity extends AppCompatActivity implements CommunityLis
 //            this.delete(v);
 
         }else if(code==1){
-//            this.delete(v);
-
+            int index =recyclerView.getChildLayoutPosition(v);
+            String key=data.get(index).getPostId();
+            Intent intent=new Intent(getApplicationContext(),CommentActivity.class);
+            intent.putExtra("key",key);
+            startActivity(intent);
+            finish();
         }else {
             this.comment(v);
         }

@@ -61,11 +61,11 @@
             android:parentActivityName=".loginActivity" />
         <activity android:name=".CommunityActivity" />
         <activity android:name=".CommunityPost" />
+        <activity android:name=".ReviewActivity" />
         <activity
-            android:name=".ReviewActivity"
-            android:parentActivityName=".AdminActivity" />
-        <activity android:name=".CommentActivity"
-            android:parentActivityName=".CommunityActivity"></activity>
+            android:name=".CommentActivity"
+            android:parentActivityName=".CommunityActivity" />
+        <activity android:name=".ForumDetails"></activity>
     </application>
 
 </manifest>
