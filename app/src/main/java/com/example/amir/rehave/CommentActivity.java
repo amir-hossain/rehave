@@ -38,14 +38,19 @@ public class CommentActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String imput=comment.getText().toString();
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                String path="comment/";
+                String path="community/comment/";
                 DatabaseReference tempRef=database.getReference(path);
                 String commentId=tempRef.push().getKey();
-                path="comment/"+commentId;
+                path=path+commentId;
                 DatabaseReference mainRef=database.getReference(path);
                 String postId=getIntent().getExtras().getString("key");
+                String count=getIntent().getExtras().getString("count");
+                int tempCount=Integer.parseInt(count);
                 SharedPreferences preferences=getSharedPreferences("id", Context.MODE_PRIVATE);
                 String name=preferences.getString("name","null");
+                DatabaseReference postref=database.getReference("community/post/"+postId);
+                tempCount++;
+                postref.child("commentCount").setValue(""+tempCount);
                 mainRef.setValue(new CommentDataModel(imput,postId,name),new
                         DatabaseReference.CompletionListener() {
 

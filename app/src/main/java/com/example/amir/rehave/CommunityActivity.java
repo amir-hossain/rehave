@@ -87,7 +87,7 @@ public class CommunityActivity extends AppCompatActivity implements CommunityLis
                     value=snap.getValue(CommunityPostModel.class);
 //                        Log.d("Fire value", "Value is: " + value.getName());
                     if(value.getReviewStatus()){
-                        data.add(new CommunityPostModel(value.getUserId(),value.getPostId(),value.getPost(),value.getName(),value.getDate(),value.getTime(),value.getReviewStatus()));
+                        data.add(new CommunityPostModel(value.getUserId(),value.getPostId(),value.getPost(),value.getName(),value.getDate(),value.getTime(),value.getReviewStatus(),value.getCommentCount()));
                     }
 
                 }
@@ -159,9 +159,11 @@ public class CommunityActivity extends AppCompatActivity implements CommunityLis
     private void comment(View v) {
         int index =recyclerView.getChildLayoutPosition(v);
         String key=data.get(index).getPostId();
+        String count=data.get(index).getCommentCount();
 //            Toast.makeText(context,index+" clicked",Toast.LENGTH_SHORT).show();
         Intent intent=new Intent(getApplicationContext(),CommentActivity.class);
         intent.putExtra("key",key);
+        intent.putExtra("count",count);
         startActivity(intent);
         finish();
     }

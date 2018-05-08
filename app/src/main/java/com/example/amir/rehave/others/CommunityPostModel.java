@@ -7,6 +7,7 @@ public class CommunityPostModel {
     private String name;
     private String date;
     private String time;
+    private String commentCount="0";
     private boolean reviewStatus;
 
     public CommunityPostModel() {
@@ -22,6 +23,24 @@ public class CommunityPostModel {
         this.reviewStatus=reviewStatus;
     }
 
+    public CommunityPostModel(String userId, String postId, String post, String name, String date, String time,Boolean reviewStatus,String commentCount) {
+        this.userId = userId;
+        this.postId = postId;
+        this.post = post;
+        this.name = name;
+        this.date = date;
+        this.time = time;
+        this.reviewStatus=reviewStatus;
+        this.commentCount=commentCount;
+    }
+
+    public String getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(String commentCount) {
+        this.commentCount = commentCount;
+    }
 
     public String getUserId() {
         return userId;

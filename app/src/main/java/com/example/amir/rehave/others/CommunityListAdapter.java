@@ -30,6 +30,7 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
         TextView dateView;
         TextView timeView;
         TextView postView;
+        TextView count;
         RelativeLayout comment;
         ImageButton optionBtn;
 
@@ -41,6 +42,7 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
             this.timeView = itemView.findViewById(R.id.time);
             this.postView = itemView.findViewById(R.id.post);
             this.comment = itemView.findViewById(R.id.comment);
+            this.count = itemView.findViewById(R.id.count);
             this.optionBtn = itemView.findViewById(R.id.option_btn);
             comment.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -95,6 +97,14 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
         dateView.setText(dataSet.get(listPosition).getDate());
         TextView postView = holder.postView;
         postView.setText(dataSet.get(listPosition).getPost());
+        TextView countView = holder.count;
+        String count=dataSet.get(listPosition).getCommentCount();
+        if (count.equals("0")){
+            countView.setVisibility(View.GONE);
+        }else {
+            countView.setText(count);
+        }
+
     }
 
 
