@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -13,11 +12,11 @@ import com.example.amir.rehave.R;
 
 import java.util.ArrayList;
 
-public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdapter.MyViewHolder> {
-    private ArrayList<CommunityPostModel> dataSet;
+public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.MyViewHolder> {
+    private ArrayList<CommentDataModel> dataSet;
     private Context context=null;
-    private static CommunityListAdapter.ItemClicked clickListener;
-    public CommunityListAdapter(ArrayList<CommunityPostModel> data, Context context,CommunityListAdapter.ItemClicked clickListener) {
+    private static CommentListAdapter.ItemClicked clickListener;
+    public CommentListAdapter(ArrayList<CommentDataModel> data, Context context, CommentListAdapter.ItemClicked clickListener) {
         this.dataSet = data;
         this.context=context;
         this.clickListener=clickListener;
@@ -25,13 +24,14 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView nameView;
+
         TextView dateView;
         TextView timeView;
+        TextView nameView;
         TextView commentView;
-        TextView count;
-        RelativeLayout comment;
-        ImageButton optionBtn;
+        TextView countView;
+        RelativeLayout replayBtn;
+
 
 
         public MyViewHolder(final Context context, final View itemView) {
@@ -39,54 +39,43 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
             this.nameView = itemView.findViewById(R.id.name);
             this.dateView = itemView.findViewById(R.id.date);
             this.timeView = itemView.findViewById(R.id.time);
-            this.commentView = itemView.findViewById(R.id.post);
-            this.comment = itemView.findViewById(R.id.comment);
-            this.count = itemView.findViewById(R.id.count);
-            this.optionBtn = itemView.findViewById(R.id.option_btn);
-            comment.setOnClickListener(new View.OnClickListener() {
+            this.commentView = itemView.findViewById(R.id.comment);
+            this.replayBtn = itemView.findViewById(R.id.replay);
+            this.countView = itemView.findViewById(R.id.count);
+            replayBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 //                    Toast.makeText(context,"Edit clicked",Toast.LENGTH_SHORT).show();
-                    CommunityListAdapter.clickListener.onItemClicked(itemView, 2);
+                    CommentListAdapter.clickListener.onItemClicked(itemView, 1);
                 }
             });
 
             commentView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CommunityListAdapter.clickListener.onItemClicked(itemView, 1);
+                    CommentListAdapter.clickListener.onItemClicked(itemView, 0);
                 }
             });
 
-            optionBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-//                    Toast.makeText(context,"delete clicked",Toast.LENGTH_SHORT).show();
-                    CommunityListAdapter.clickListener.onItemClicked(itemView, 0);
-
-                }
-            });
         }
     }
 
 
 
     @Override
-    public CommunityListAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
-                                                             int viewType) {
+    public CommentListAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
+                                                                int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.community_item, parent, false);
+                .inflate(R.layout.comment_item, parent, false);
 
 //        view.setOnClickListener(listener);
 
-        CommunityListAdapter.MyViewHolder myViewHolder = new CommunityListAdapter.MyViewHolder(context,view);
+        CommentListAdapter.MyViewHolder myViewHolder = new CommentListAdapter.MyViewHolder(context,view);
         return myViewHolder;
     }
 
-
-
     @Override
-    public void onBindViewHolder(final CommunityListAdapter.MyViewHolder holder, final int listPosition) {
+    public void onBindViewHolder(final CommentListAdapter.MyViewHolder holder, final int listPosition) {
 
         TextView nameView = holder.nameView;
         nameView.setText(dataSet.get(listPosition).getName());
@@ -94,17 +83,18 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
         timeView.setText(dataSet.get(listPosition).getTime());
         TextView dateView = holder.dateView;
         dateView.setText(dataSet.get(listPosition).getDate());
-        TextView postView = holder.commentView;
-        postView.setText(dataSet.get(listPosition).getPost());
-        TextView countView = holder.count;
-        String count=dataSet.get(listPosition).getCommentCount();
+        TextView commentView = holder.commentView;
+        commentView.setText(dataSet.get(listPosition).getComment());
+        TextView countView = holder.countView;
+        String count=dataSet.get(listPosition).getReplayCount();
         if (count.equals("0")){
             countView.setVisibility(View.GONE);
         }else {
             countView.setText(count);
         }
 
-    }
+
+}
 
 
 
