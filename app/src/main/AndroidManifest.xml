@@ -29,8 +29,7 @@
         <activity
             android:name=".loginActivity"
             android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".AdminActivity" />
+        <activity android:name=".AdminActivity" />
         <activity
             android:name=".InfoActivity"
             android:parentActivityName=".MainActivity" />
@@ -62,8 +61,11 @@
             android:parentActivityName=".loginActivity" />
         <activity android:name=".CommunityActivity" />
         <activity android:name=".CommunityPost" />
-        <activity android:name=".ReviewActivity"
-            android:parentActivityName=".AdminActivity"></activity>
+        <activity
+            android:name=".ReviewActivity"
+            android:parentActivityName=".AdminActivity" />
+        <activity android:name=".CommentActivity"
+            android:parentActivityName=".CommunityActivity"></activity>
     </application>
 
 </manifest>

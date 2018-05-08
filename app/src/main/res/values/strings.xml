@@ -76,5 +76,6 @@
     <string name="reviewTitle">পোস্ট রিভিউ</string>
     <string name="acceptMessage">পোস্ট যোগ করা হয়েছে </string>
     <string name="deleteMessage">পোস্ট মুছা করা হয়েছে </string>
+    <string name="commentTitle">মন্তব্য</string>
 
 </resources>

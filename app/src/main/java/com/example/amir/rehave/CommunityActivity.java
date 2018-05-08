@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.amir.rehave.others.AdminListAdapter;
 import com.example.amir.rehave.others.CommunityListAdapter;
@@ -141,6 +142,29 @@ public class CommunityActivity extends AppCompatActivity implements CommunityLis
 
     @Override
     public void onItemClicked(View v, int code) {
+        if(code==0){
+//            this.delete(v);
+
+        }else if(code==1){
+//            this.delete(v);
+
+        }else {
+            this.comment(v);
+        }
+//        Toast.makeText(getApplicationContext(),code+"",Toast.LENGTH_SHORT).show();
+
 
     }
+
+    private void comment(View v) {
+        int index =recyclerView.getChildLayoutPosition(v);
+        String key=data.get(index).getPostId();
+//            Toast.makeText(context,index+" clicked",Toast.LENGTH_SHORT).show();
+        Intent intent=new Intent(getApplicationContext(),CommentActivity.class);
+        intent.putExtra("key",key);
+        startActivity(intent);
+        finish();
+    }
+
+
 }

@@ -5,8 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.amir.rehave.R;
@@ -29,7 +30,7 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
         TextView dateView;
         TextView timeView;
         TextView postView;
-        Button commentBtn;
+        RelativeLayout comment;
         ImageButton optionBtn;
 
 
@@ -39,12 +40,19 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
             this.dateView = itemView.findViewById(R.id.date);
             this.timeView = itemView.findViewById(R.id.time);
             this.postView = itemView.findViewById(R.id.post);
-            this.commentBtn = itemView.findViewById(R.id.comment_btn);
+            this.comment = itemView.findViewById(R.id.comment);
             this.optionBtn = itemView.findViewById(R.id.option_btn);
-            commentBtn.setOnClickListener(new View.OnClickListener() {
+            comment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 //                    Toast.makeText(context,"Edit clicked",Toast.LENGTH_SHORT).show();
+                    CommunityListAdapter.clickListener.onItemClicked(itemView, 2);
+                }
+            });
+
+            postView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
                     CommunityListAdapter.clickListener.onItemClicked(itemView, 1);
                 }
             });
