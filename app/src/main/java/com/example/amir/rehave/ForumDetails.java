@@ -62,9 +62,14 @@ public class ForumDetails extends AppCompatActivity {
                 finish();
                 break;
                 default:
+                    startActivity(new Intent(ForumDetails.this,CommunityActivity.class));
+                    finish();
         }
         return true;
     }
+
+
+
 
 
     private void delete(){

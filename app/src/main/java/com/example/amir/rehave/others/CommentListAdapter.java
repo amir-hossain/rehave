@@ -28,7 +28,7 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
         TextView dateView;
         TextView timeView;
         TextView nameView;
-        TextView commentView;
+        TextView replayView;
         TextView countView;
         RelativeLayout replayBtn;
 
@@ -39,7 +39,7 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
             this.nameView = itemView.findViewById(R.id.name);
             this.dateView = itemView.findViewById(R.id.date);
             this.timeView = itemView.findViewById(R.id.time);
-            this.commentView = itemView.findViewById(R.id.comment);
+            this.replayView = itemView.findViewById(R.id.comment);
             this.replayBtn = itemView.findViewById(R.id.replay);
             this.countView = itemView.findViewById(R.id.count);
             replayBtn.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +50,7 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
                 }
             });
 
-            commentView.setOnClickListener(new View.OnClickListener() {
+            replayView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     CommentListAdapter.clickListener.onItemClicked(itemView, 0);
@@ -83,7 +83,7 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
         timeView.setText(dataSet.get(listPosition).getTime());
         TextView dateView = holder.dateView;
         dateView.setText(dataSet.get(listPosition).getDate());
-        TextView commentView = holder.commentView;
+        TextView commentView = holder.replayView;
         commentView.setText(dataSet.get(listPosition).getComment());
         TextView countView = holder.countView;
         String count=dataSet.get(listPosition).getReplayCount();

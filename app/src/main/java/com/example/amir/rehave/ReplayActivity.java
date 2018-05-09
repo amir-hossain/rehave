@@ -3,7 +3,6 @@ package com.example.amir.rehave;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,10 +13,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.example.amir.rehave.others.CommentDataModel;
 import com.example.amir.rehave.others.CommentListAdapter;
+import com.example.amir.rehave.others.RepalayListAdapter;
+import com.example.amir.rehave.others.ReplayDataModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,24 +29,24 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class CommentActivity extends AppCompatActivity implements CommentListAdapter.ItemClicked {
+public class ReplayActivity extends AppCompatActivity{
     ImageButton send;
     EditText comment;
 
     private static RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private static RecyclerView recyclerView;
-    private static ArrayList<CommentDataModel> data;
+    private static ArrayList<ReplayDataModel> data;
     private String type;
     String postId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_comment);
+        setContentView(R.layout.activity_replay);
 
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setTitle(R.string.commentTitle);
+        actionBar.setTitle(R.string.replayTitle);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         postId=getIntent().getExtras().getString("key");
@@ -67,32 +67,32 @@ public class CommentActivity extends AppCompatActivity implements CommentListAda
             @Override
             public void onClick(View v) {
                 String imput=comment.getText().toString();
-
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-                String postId=getIntent().getExtras().getString("key");
+                String commentId=getIntent().getExtras().getString("key");
                 String count=getIntent().getExtras().getString("count");
-
                 int tempCount=Integer.parseInt(count);
                 SharedPreferences preferences=getSharedPreferences("id", Context.MODE_PRIVATE);
                 String name=preferences.getString("name","null");
-                DatabaseReference postref=database.getReference("community/post/"+postId);
+
+                DatabaseReference postref=database.getReference("community/comment/"+commentId);
                 tempCount++;
-                postref.child("commentCount").setValue(""+tempCount);
+                postref.child("replayCount").setValue(""+tempCount);
 
-
-                String path="community/comment/";
+                String path="community/replay/";
                 DatabaseReference tempRef=database.getReference(path);
-                String commentId=tempRef.push().getKey();
-                path=path+commentId;
+                String replayId=tempRef.push().getKey();
+                path=path+replayId;
                 DatabaseReference mainRef=database.getReference(path);
                 String[] dateTime=getcurrentDateaAndTime();
-                mainRef.setValue(new CommentDataModel(imput,postId,name,dateTime[0],dateTime[1],commentId),new
+                mainRef.setValue(new ReplayDataModel(name,dateTime[0],dateTime[1],commentId,imput),new
                         DatabaseReference.CompletionListener() {
 
                             @Override
-                            public void onComplete(DatabaseError databaseError,DatabaseReference databaseReference) {
-                                startActivity(new Intent(getApplicationContext(),CommunityActivity.class));
+                            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                String postId=getIntent().getExtras().getString("postId",null);
+                                Intent intent=new Intent(getApplicationContext(),CommentActivity.class);
+                                intent.putExtra("key",postId);
+                                startActivity(intent);
                                 finish();
                             }
                         });
@@ -111,23 +111,23 @@ public class CommentActivity extends AppCompatActivity implements CommentListAda
 
     private void getData(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("community/comment/");
+        DatabaseReference myRef = database.getReference("community/replay/");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                CommentDataModel value=null;
+                ReplayDataModel value=null;
                 for(DataSnapshot snap : dataSnapshot.getChildren()) {
-                    value=snap.getValue(CommentDataModel.class);
+                    value=snap.getValue(ReplayDataModel.class);
 //                        Log.d("Fire value", "Value is: " + value.getName());
-                        if(postId.equals(value.getPostId())){
-                            data.add(new CommentDataModel(value.getComment(),value.getPostId(),value.getName(),value.getDate(),value.getTime(),value.getCommentId(),value.getReplayCount()));
+                    if(postId.equals(value.getCommentId())){
+                        data.add(new ReplayDataModel(value.getName(),value.getDate(),value.getTime(),value.getCommentId(),value.getReplay()));
 
-                        }
+                    }
                 }
 
-                adapter = new CommentListAdapter(data,getApplicationContext(),CommentActivity.this);
+                adapter = new RepalayListAdapter(data,getApplicationContext());
                 recyclerView.setAdapter(adapter);
 //                    Log.d("Fire value", "Value is: " + data.get(0).getTitle());
             }
@@ -143,32 +143,14 @@ public class CommentActivity extends AppCompatActivity implements CommentListAda
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent=new Intent(getApplicationContext(),CommunityActivity.class);
+        Intent intent=new Intent(getApplicationContext(),CommentActivity.class);
+        String postId=getIntent().getExtras().getString("postId",null);
+        intent.putExtra("key",postId);
         startActivity(intent);
         finish();
         return true;
     }
 
-    @Override
-    public void onItemClicked(View v, int code) {
-       if(code==1){
-            this.replay(v);
-        }
-//        Toast.makeText(getApplicationContext(),code+"", Toast.LENGTH_SHORT).show();
-
-
-    }
-
-    private void replay(View v) {
-        int index =recyclerView.getChildLayoutPosition(v);
-        String key=data.get(index).getCommentId();
-        String count=data.get(index).getReplayCount();
-//            Toast.makeText(context,index+" clicked",Toast.LENGTH_SHORT).show();
-        Intent intent=new Intent(getApplicationContext(),ReplayActivity.class);
-        intent.putExtra("key",key);
-        intent.putExtra("count",count);
-        intent.putExtra("postId",postId);
-        startActivity(intent);
-        finish();
-    }
 }
+
+
