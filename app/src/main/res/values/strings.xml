@@ -82,5 +82,6 @@
     <string name="moreComment">আরো মন্তব্য দেখুন</string>
     <string name="forumDetailsLabel">সম্পূর্ণ পোস্ট</string>
     <string name="commentLabel">মন্তব্য করুন</string>
+    <string name="posted_by_label">লিখেছেন </string>
 
 </resources>
