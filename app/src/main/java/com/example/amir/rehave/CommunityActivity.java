@@ -75,7 +75,7 @@ public class CommunityActivity extends AppCompatActivity implements CommunityLis
                     value=snap.getValue(CommunityPostModel.class);
 //                        Log.d("Fire value", "Value is: " + value.getName());
                     if(value.getReviewStatus()){
-                        data.add(new CommunityPostModel(value.getUserId(),value.getPostId(),value.getPost(),value.getName(),value.getDate(),value.getTime(),value.getReviewStatus(),value.getCommentCount()));
+                        data.add(new CommunityPostModel(value.getUserId(),value.getPostId(),value.getTitle(),value.getPost(),value.getName(),value.getDate(),value.getTime(),value.getReviewStatus(),value.getCommentCount()));
                     }
 
                 }

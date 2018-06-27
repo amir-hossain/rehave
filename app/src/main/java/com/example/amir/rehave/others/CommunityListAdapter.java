@@ -1,13 +1,11 @@
 package com.example.amir.rehave.others;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.amir.rehave.R;
@@ -26,6 +24,7 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
+        TextView titleView;
         TextView nameView;
         TextView dateView;
         TextView timeView;
@@ -36,6 +35,7 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
 
         public MyViewHolder(final Context context, final View itemView) {
             super(itemView);
+            this.titleView=itemView.findViewById(R.id.title);
             this.nameView = itemView.findViewById(R.id.name);
             this.dateView = itemView.findViewById(R.id.date);
             this.timeView = itemView.findViewById(R.id.time);
@@ -66,7 +66,7 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
     public CommunityListAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
                                                              int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.post_item_list_view, parent, false);
+                .inflate(R.layout.community_item, parent, false);
 
 //        view.setOnClickListener(listener);
 
@@ -78,6 +78,14 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
 
     @Override
     public void onBindViewHolder(final CommunityListAdapter.MyViewHolder holder, final int listPosition) {
+        TextView titleView = holder.titleView;
+        String title=dataSet.get(listPosition).getTitle();
+        if(title.equals("")){
+            titleView.setText(context.getString(R.string.untitled));
+
+        }else{
+            titleView.setText(title);
+        }
 
         TextView nameView = holder.nameView;
         nameView.setText(dataSet.get(listPosition).getName());

@@ -4,6 +4,7 @@ public class CommunityPostModel {
     private String userId;
     private String postId;
     private String post;
+    private String title;
     private String name;
     private String date;
     private String time;
@@ -13,9 +14,10 @@ public class CommunityPostModel {
     public CommunityPostModel() {
     }
 
-    public CommunityPostModel(String userId, String postId, String post, String name, String date, String time,Boolean reviewStatus) {
+    public CommunityPostModel(String userId, String postId,String title, String post, String name, String date, String time,Boolean reviewStatus) {
         this.userId = userId;
         this.postId = postId;
+        this.title=title;
         this.post = post;
         this.name = name;
         this.date = date;
@@ -23,9 +25,10 @@ public class CommunityPostModel {
         this.reviewStatus=reviewStatus;
     }
 
-    public CommunityPostModel(String userId, String postId, String post, String name, String date, String time,Boolean reviewStatus,String commentCount) {
+    public CommunityPostModel(String userId, String postId, String title,String post, String name, String date, String time,Boolean reviewStatus,String commentCount) {
         this.userId = userId;
         this.postId = postId;
+        this.title=title;
         this.post = post;
         this.name = name;
         this.date = date;
@@ -52,6 +55,10 @@ public class CommunityPostModel {
 
     public String getPost() {
         return post;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public String getName() {

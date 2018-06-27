@@ -18,23 +18,22 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.ZonedDateTime;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
 
 public class CommunityPost extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_community_post);
+        setContentView(R.layout.community_post);
 
         ActionBar actionBar=getSupportActionBar();
         actionBar.setTitle(R.string.postLabel);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+
         final EditText post=findViewById(R.id.post);
+        final EditText titleView=findViewById(R.id.title);
 
         Button button=findViewById(R.id.post_button);
         button.setOnClickListener(new View.OnClickListener() {
@@ -44,7 +43,8 @@ public class CommunityPost extends AppCompatActivity {
                 String name=preferences.getString("name",null);
                 String userId=preferences.getString("id",null);
 
-                String imput=post.getText().toString();
+                String input=post.getText().toString().trim();
+                String title=titleView.getText().toString().trim();
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 String path="community/post/";
                 DatabaseReference tempRef=database.getReference(path);
@@ -54,10 +54,10 @@ public class CommunityPost extends AppCompatActivity {
                 String[] dateTime=getcurrentDateaAndTime();
 
                 if(name.equals("Admin")){
-                    mainRef.setValue(new CommunityPostModel(userId,postId,imput,name,dateTime[0],dateTime[1],true));
+                    mainRef.setValue(new CommunityPostModel(userId,postId,title,input,name,dateTime[0],dateTime[1],true));
                     Toast.makeText(getApplicationContext(),R.string.acceptMessage,Toast.LENGTH_SHORT).show();
                 }else{
-                    mainRef.setValue(new CommunityPostModel(userId,postId,imput,name,dateTime[0],dateTime[1],false));
+                    mainRef.setValue(new CommunityPostModel(userId,postId,title,input,name,dateTime[0],dateTime[1],false));
                     Toast.makeText(getApplicationContext(),R.string.communityMessage,Toast.LENGTH_SHORT).show();
                 }
                 startActivity(new Intent(CommunityPost.this,CommunityActivity.class));
