@@ -1,6 +1,7 @@
 package com.example.amir.rehave.others;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,9 +29,9 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
         TextView nameView;
         TextView dateView;
         TextView timeView;
-        TextView postView;
         TextView commentView;
-        LinearLayout commentLayout;
+        TextView postView;
+        CardView cardView;
 
 
         public MyViewHolder(final Context context, final View itemView) {
@@ -39,23 +40,18 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
             this.nameView = itemView.findViewById(R.id.name);
             this.dateView = itemView.findViewById(R.id.date);
             this.timeView = itemView.findViewById(R.id.time);
-            this.postView = itemView.findViewById(R.id.post);
             this.commentView = itemView.findViewById(R.id.comment);
-            this.commentLayout = itemView.findViewById(R.id.comment_layout);
-            commentLayout.setOnClickListener(new View.OnClickListener() {
+            this.postView = itemView.findViewById(R.id.post);
+            this.cardView = itemView.findViewById(R.id.card);
+            cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 //                    Toast.makeText(context,"Edit clicked",Toast.LENGTH_SHORT).show();
-                    CommunityListAdapter.clickListener.onItemClicked(itemView, 2);
+                    CommunityListAdapter.clickListener.onItemClicked(itemView);
                 }
             });
 
-            postView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    CommunityListAdapter.clickListener.onItemClicked(itemView, 1);
-                }
-            });
+
 
         }
     }
@@ -114,6 +110,6 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
     }
 
     public static interface ItemClicked {
-        void onItemClicked(View v ,int code);
+        void onItemClicked(View v);
     }
 }

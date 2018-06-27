@@ -141,11 +141,7 @@ public class CommunityActivity extends AppCompatActivity implements CommunityLis
     }
 
     @Override
-    public void onItemClicked(View v, int code) {
-        if(code==0){
-//            this.delete(v);
-
-        }else if(code==1){
+    public void onItemClicked(View v) {
             int index =recyclerView.getChildLayoutPosition(v);
             String post=data.get(index).getPost();
             String key=data.get(index).getPostId();
@@ -154,9 +150,7 @@ public class CommunityActivity extends AppCompatActivity implements CommunityLis
             intent.putExtra("key",key);
             startActivity(intent);
             finish();
-        }else {
-            this.comment(v);
-        }
+
 //        Toast.makeText(getApplicationContext(),code+"",Toast.LENGTH_SHORT).show();
 
 

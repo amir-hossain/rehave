@@ -17,4 +17,6 @@
     <color name="secondary_light">#979797</color>
     <color name="icons_counter_color">#828181</color>
     <color name="highlight_text">#17a1d7</color>
+    <color name="send_comment_button_activated">#0097d3</color>
+    <color name="send_comment_button_deactivated">#7fcbe9</color>
 </resources>

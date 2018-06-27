@@ -84,5 +84,7 @@
     <string name="commentLabel">মন্তব্য করুন</string>
     <string name="posted_by_label">লিখেছেন </string>
     <string name="untitled">শিরোনামহীন  </string>
+    <string name="send_comment_button_label">পাঠাও</string>
+    <string name="comment_text_hint">আপনার মন্তব্য লিখুন ...</string>
 
 </resources>
