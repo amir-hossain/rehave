@@ -11,9 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-import com.example.amir.rehave.others.AdminListAdapter;
 import com.example.amir.rehave.others.DataModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -82,9 +80,9 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
                 DataModel value=dataSnapshot.getValue(DataModel.class);
                 titleView.setText(value.getTitle());
                 postView.setText(value.getPost());
-                if(value.getSection().equals(getResources().getString(R.string.menuLabel2))){
+                if(value.getSection().equals(getResources().getString(R.string.relapse_protection))){
                     spinner.setSelection(1);
-                }else if(value.getSection().equals(getResources().getString(R.string.menuLabel3))){
+                }else if(value.getSection().equals(getResources().getString(R.string.archive))){
                     spinner.setSelection(2);
                 }
 
@@ -139,9 +137,9 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
 
         // Spinner Drop down elements
         List<String> categories = new ArrayList<>();
-        categories.add(getResources().getString(R.string.menuLabel1));
-        categories.add(getResources().getString(R.string.menuLabel2));
-        categories.add(getResources().getString(R.string.menuLabel3));
+        categories.add(getResources().getString(R.string.adiction_information));
+        categories.add(getResources().getString(R.string.relapse_protection));
+        categories.add(getResources().getString(R.string.archive));
 
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);

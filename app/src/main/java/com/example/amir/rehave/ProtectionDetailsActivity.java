@@ -21,7 +21,7 @@ public class ProtectionDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_protection_details);
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setTitle(R.string.menuLabel2);
+        actionBar.setTitle(R.string.relapse_protection);
         actionBar.setDisplayHomeAsUpEnabled(true);
         String key=getIntent().getExtras().getString("key");
 //        Toast.makeText(this,key,Toast.LENGTH_SHORT).show();

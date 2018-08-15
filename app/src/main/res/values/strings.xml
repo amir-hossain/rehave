@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Rehab</string>
+    <string name="app_name">রিহাব</string>
     <string name="tc_title">শর্তাবলী</string>
     <string name="tc_tick_label">আমি শর্ত পড়েছি এবং স্বীকার করছি</string>
     <string name="tc_text1">1. Introduction</string>
@@ -34,17 +34,29 @@
     <string name="tc_button_label">চালিয়ে যান</string>
     <string name="singupButtonLabel"> সাইন আপ  করুন </string>
     <string name="loginButtonLabel"> লগ  ইন করুন </string>
-    <string name="logoutButtonLabel"> লগ  আউট করুন </string>
+
+    <string name="logout">বের হন</string>
+
     <string name="nameFieldTitle">ব্যবহারকারী নাম </string>
+
     <string name="passwordFieldTitle">পাসওয়ার্ড</string>
+
     <string name="phoneFieldTitle">ফোন অথবা ইমেইল</string>
+
     <string name="loginErrorMessage">ভুল</string>
-    <string name="menuLabel1"> মাদক  ও  মাদকাসক্তি  বিষয়ে তথ্য </string>
-    <string name="menuLabel2"> রিলাপ্স প্রতিরোধ</string>
-    <string name="menuLabel3"> আর্কাইভ </string>
-    <string name="loginPageLabel"> লগ ইন </string>
-    <string name="adminPageLabel"> অ্যাডমিন প্যানেল</string>
+
+    <string name="adiction_information"> মাদক  ও  মাদকাসক্তি  বিষয়ে তথ্য </string>
+
+    <string name="relapse_protection"> রিলাপ্স প্রতিরোধ</string>
+
+    <string name="archive"> আর্কাইভ </string>
+
+    <string name="login">প্রবেশ করুন</string>
+
+    <string name="admin"> অ্যাডমিন</string>
+
     <string name="title1">মাদকাসক্তি কি?</string>
+
     <string name="des1">মাদক দ্রব্য গ্রহণ করলে মানুষের শারীরিক ও মানসিক অবস্থার উল্লেখযোগ্য নেতিবাচক পরিবর্তন ঘটে এবং দ্রব্যের উপর নির্ভরশীলতা সৃষ্টির পাশাপাশি দ্রব্যটি গ্রহণের পরিমাণ ক্রমশ বাড়তে থাকে ব্যক্তির এই অবস্থাকে বলে মাদকাসক্তি</string>
     <string name="title2">মাদক কি? </string>
     <string name="des2"> মাদক দ্রব্য হলো একটি ভেষজ দ্রব্য যা গ্রহণে মানুষের স্বাভাবিক শারীরিক ও মানসিক অবস্থার উপর প্রভাব পড়ে এবং যা আসক্তি সৃষ্টি করে।</string>
@@ -56,35 +68,80 @@
 দেখা যায় সাথে সাথে বিভিন্ন উশৃঙ্খল কর্মকাণ্ড করে থাকে এমন কি মাদকাসক্ত চিকিৎসার পরেও অনেক
 রিকভারি এই আসক্তি মুলক আচরন থেকে বের হতে পারে না। তাই রিকভারি জীবনকে সুন্দর করতে হলে
 আসক্তিমুলক আচরন সম্পর্কে জানতে হবে ও আসক্তিমুলক আচরন নিয়ন্ত্রন করতে হবে</string>
+
     <string name="des5">https://www.youtube.com/watch?v=J56VVtlZCGE&amp;index=2&amp;t=0s&amp;list=PLyEPa0RgLyZHYPonjivxsxVBB8lfnXIvl</string>
+
     <string name="title5">OMNIA (Official) - Fee Ra Huri</string>
+
     <string name="des6">https://www.youtube.com/watch?v=lvs68OKOquM&amp;list=PLyEPa0RgLyZHYPonjivxsxVBB8lfnXIvl&amp;index=26</string>
+
     <string name="title6">Talking To Myself (Official Video) - Linkin Park</string>
+
     <string name="editLabel">সম্পাদন করুন </string>
+
     <string name="deleteLabel">মুছুন </string>
+
     <string name="postLabel">পোস্ট করুন</string>
+
     <string name="postItem1">শিরোনাম</string>
+
     <string name="postItem2">পোস্ট</string>
+
     <string name="postItem3">বিষয়</string>
+
     <string name="singupLabel">নিবন্ধন করুন</string>
+
     <string name="phonPassLabel">ফোন অথবা ইমেইল</string>
+
     <string name="id_preference">id</string>
+
     <string name="name_preference">name</string>
-    <string name="forumLabel">ফোরাম</string>
+
+    <string name="forum">ফোরাম</string>
+
     <string name="communityMessage">পর্যালোচনা জন্য পাঠানো হয়েছে</string>
+
     <string name="adminPermissionLabel">অনুমতি দিন</string>
+
     <string name="reviewTitle">পোস্ট রিভিউ</string>
+
     <string name="acceptMessage">পোস্ট যোগ করা হয়েছে </string>
+
     <string name="deleteMessage">পোস্ট মুছা করা হয়েছে </string>
+
     <string name="commentTitle">মন্তব্য</string>
+
     <string name="replayTitle">জবাব</string>
+
     <string name="replayLabel">জবাব দিন</string>
+
     <string name="moreComment">আরো মন্তব্য দেখুন</string>
+
     <string name="forumDetailsLabel">সম্পূর্ণ পোস্ট</string>
+
     <string name="commentLabel">মন্তব্য করুন</string>
+
     <string name="posted_by_label">লিখেছেন </string>
+
     <string name="untitled">শিরোনামহীন  </string>
+
     <string name="send_comment_button_label">পাঠাও</string>
+
     <string name="comment_text_hint">আপনার মন্তব্য লিখুন ...</string>
+
+    <string name="registration">রেজিস্ট্রেশন</string>
+
+    <string name="about">আমাদের সম্পর্কে জানুন</string>
+
+    <string name="main">প্রধান</string>
+
+    <string name="menu">মেনু</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

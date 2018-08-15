@@ -33,7 +33,7 @@ public class ProtectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_protection);
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setTitle(R.string.menuLabel2);
+        actionBar.setTitle(R.string.relapse_protection);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         myOnClickListener = new MyOnClickListener(this);

@@ -3,86 +3,112 @@ package com.example.amir.rehave;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
+import com.example.amir.rehave.fragments.AboutFragment;
+import com.example.amir.rehave.fragments.AddictionInformationFragment;
+import com.example.amir.rehave.fragments.ArchiveFragment;
+import com.example.amir.rehave.fragments.ForumFragment;
+import com.example.amir.rehave.fragments.MainFragment;
+import com.example.amir.rehave.fragments.RegistrationFragment;
+import com.example.amir.rehave.fragments.RelapseProtectionFragment;
+
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
-        final Button loginButton=findViewById(R.id.admin_login_btn);
-        final Button logoutButton=findViewById(R.id.logout_btn);
-        final Button infoButton=findViewById(R.id.info_button);
-        Button protectionButton=findViewById(R.id.protection_button);
-        Button archiveButton=findViewById(R.id.archive_button);
+        initializeNavDrawer();
+    }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.add);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-                Intent intent=new Intent(MainActivity.this,CommunityActivity.class);
-                intent.putExtra("type","user");
-                startActivity(intent);
-            }
-        });
 
-        SharedPreferences sharedPref = getSharedPreferences("id",Context.MODE_PRIVATE);
-        String name=sharedPref.getString("name",null);
-        if(name==null){
+    private void initializeNavDrawer() {
 
-            logoutButton.setVisibility(View.GONE);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+
+        final DrawerLayout drawer = findViewById(R.id.drawer_layout);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
+        drawer.addDrawerListener(toggle);
+
+        toggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+
+        navigationView.setNavigationItemSelectedListener(this);
+
+        MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.container_layout, MainFragment.newInstance()).commit();
+
+        navigationView.setCheckedItem(R.id.nav_main);
+    }
+
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.nav_main) {
+
+            MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.container_layout, MainFragment.newInstance()).addToBackStack(null).commit();
+
+        } else if (id == R.id.nav_about) {
+
+            MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.container_layout, AboutFragment.newInstance()).addToBackStack(null).commit();
+        }else if (id == R.id.nav_registration) {
+
+            MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.container_layout, RegistrationFragment.newInstance()).addToBackStack(null).commit();
+
+        } else if (id == R.id.nav_login) {
+
+
+        } else if (id == R.id.nav_addiction) {
+
+            MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.container_layout, AddictionInformationFragment.newInstance()).addToBackStack(null).commit();
+
+
+        } else if (id == R.id.nav_protection) {
+
+            MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.container_layout, RelapseProtectionFragment.newInstance()).addToBackStack(null).commit();
+
+        } else if (id == R.id.nav_archive) {
+
+            MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.container_layout, ArchiveFragment.newInstance()).addToBackStack(null).commit();
+
+        } else if (id == R.id.nav_forum) {
+
+            MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.container_layout, ForumFragment.newInstance()).addToBackStack(null).commit();
+
         }else {
 
-            loginButton.setVisibility(View.GONE);
         }
 
-        logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences settings = getSharedPreferences("id", Context.MODE_PRIVATE);
-                settings.edit().clear().apply();
-                loginButton.setVisibility(View.VISIBLE);
-                logoutButton.setVisibility(View.GONE);
-            }
-        });
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,loginActivity.class));
-            }
-        });
+        drawer.closeDrawer(GravityCompat.START);
 
-
-        infoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,InfoActivity.class));
-            }
-        });
-
-
-        protectionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,ProtectionActivity.class));
-            }
-        });
-
-
-        archiveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,ArchiveActivity.class));
-            }
-        });
+        return true;
     }
+
+
 }

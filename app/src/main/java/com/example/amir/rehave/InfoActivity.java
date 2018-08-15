@@ -5,16 +5,13 @@ import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.amir.rehave.others.DataModel;
 import com.example.amir.rehave.others.ListAdpter;
-import com.example.amir.rehave.others.MyData;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,7 +32,7 @@ public class InfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setTitle(R.string.menuLabel1);
+        actionBar.setTitle(R.string.adiction_information);
         actionBar.setDisplayHomeAsUpEnabled(true);
         getData();
 

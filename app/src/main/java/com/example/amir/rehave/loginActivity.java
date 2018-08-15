@@ -58,7 +58,7 @@ public class loginActivity extends AppCompatActivity{
         });
 
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setTitle(R.string.loginPageLabel);
+        actionBar.setTitle(R.string.login);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 

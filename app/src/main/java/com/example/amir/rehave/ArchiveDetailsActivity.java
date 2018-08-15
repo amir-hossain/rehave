@@ -11,7 +11,7 @@ public class ArchiveDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_archive_details);
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setTitle(R.string.menuLabel3);
+        actionBar.setTitle(R.string.archive);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 }

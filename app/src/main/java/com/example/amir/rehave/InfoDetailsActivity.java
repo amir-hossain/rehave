@@ -5,12 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.amir.rehave.others.DataModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
@@ -22,7 +20,7 @@ public class InfoDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_details);
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setTitle(R.string.menuLabel1);
+        actionBar.setTitle(R.string.adiction_information);
         actionBar.setDisplayHomeAsUpEnabled(true);
         String key=getIntent().getExtras().getString("key");
 //        Toast.makeText(this,key,Toast.LENGTH_SHORT).show();

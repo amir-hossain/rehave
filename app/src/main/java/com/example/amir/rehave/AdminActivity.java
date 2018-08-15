@@ -36,7 +36,7 @@ public class AdminActivity extends AppCompatActivity implements AdminListAdapter
         setContentView(R.layout.activity_admin);
 
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setTitle(R.string.adminPageLabel);
+        actionBar.setTitle(R.string.admin);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         FloatingActionButton add = (FloatingActionButton) findViewById(R.id.add);
@@ -134,9 +134,9 @@ public class AdminActivity extends AppCompatActivity implements AdminListAdapter
 //            Toast.makeText(this,"delete "+key,Toast.LENGTH_SHORT).show();
         String topic=data.get(index).getSection();
         String path="data/info/"+key;
-        if(topic.equals(getResources().getString(R.string.menuLabel2))){
+        if(topic.equals(getResources().getString(R.string.relapse_protection))){
             path="data/pro/"+key;
-        }else if(topic.equals(getResources().getString(R.string.menuLabel3))){
+        }else if(topic.equals(getResources().getString(R.string.archive))){
             path="data/arch/"+key;
         }
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -152,9 +152,9 @@ public class AdminActivity extends AppCompatActivity implements AdminListAdapter
         String key=data.get(index).getId();
         String topic=data.get(index).getSection();
         String path="data/info/"+key;
-        if(topic.equals(getResources().getString(R.string.menuLabel2))){
+        if(topic.equals(getResources().getString(R.string.relapse_protection))){
             path="data/pro/"+key;
-        }else if(topic.equals(getResources().getString(R.string.menuLabel3))){
+        }else if(topic.equals(getResources().getString(R.string.archive))){
             path="data/arch/"+key;
         }
 //            Toast.makeText(this,"edit "+key,Toast.LENGTH_SHORT).show();

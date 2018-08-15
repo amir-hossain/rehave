@@ -10,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 
 import com.example.amir.rehave.others.ArchiveListAdapter;
@@ -34,7 +33,7 @@ public class ArchiveActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_archive);
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setTitle(R.string.menuLabel3);
+        actionBar.setTitle(R.string.archive);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         myOnClickListener = new ArchiveActivity.MyOnClickListener(this);
