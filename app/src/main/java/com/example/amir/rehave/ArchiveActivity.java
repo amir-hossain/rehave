@@ -95,7 +95,9 @@ public class ArchiveActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
+
             int index =recyclerView.getChildLayoutPosition(v);
+
             String url=data.get(index).getPost();
 
             context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
