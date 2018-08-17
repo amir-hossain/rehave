@@ -90,7 +90,7 @@ public class InfoActivity extends AppCompatActivity {
             int index =recyclerView.getChildLayoutPosition(v);
             String key=data.get(index).getId();
 //            Toast.makeText(context,index+" clicked",Toast.LENGTH_SHORT).show();
-            Intent intent=new Intent(context,InfoDetailsActivity.class);
+            Intent intent=new Intent(context,AddictionInfoDetailsActivity.class);
             intent.putExtra("key",key);
             context.startActivity(intent);
         }

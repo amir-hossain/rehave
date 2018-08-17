@@ -37,8 +37,8 @@
             android:name=".ProtectionActivity"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".InfoDetailsActivity"
-            android:parentActivityName=".InfoActivity" />
+            android:name=".AddictionInfoDetailsActivity"
+            android:theme="@style/ActivityTheme"/>
         <activity
             android:name=".ProtectionDetailsActivity"
             android:parentActivityName=".ProtectionActivity" />
