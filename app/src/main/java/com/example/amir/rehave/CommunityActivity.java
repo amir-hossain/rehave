@@ -75,8 +75,8 @@ public class CommunityActivity extends AppCompatActivity implements CommunityLis
 
                 }
 
-                    adapter = new CommunityListAdapter(data,getApplicationContext(),CommunityActivity.this);
-                    recyclerView.setAdapter(adapter);
+                adapter = new CommunityListAdapter(data,getApplicationContext(),CommunityActivity.this);
+                recyclerView.setAdapter(adapter);
 //                    Log.d("Fire value", "Value is: " + data.get(0).getTitle());
             }
 
@@ -137,14 +137,14 @@ public class CommunityActivity extends AppCompatActivity implements CommunityLis
 
     @Override
     public void onItemClicked(View v) {
-            int index =recyclerView.getChildLayoutPosition(v);
-            String post=data.get(index).getPost();
-            String key=data.get(index).getPostId();
-            Intent intent=new Intent(getApplicationContext(),ForumDetails.class);
-            intent.putExtra("post",post);
-            intent.putExtra("key",key);
-            startActivity(intent);
-            finish();
+        int index =recyclerView.getChildLayoutPosition(v);
+        String post=data.get(index).getPost();
+        String key=data.get(index).getPostId();
+        Intent intent=new Intent(getApplicationContext(),ForumDetails.class);
+        intent.putExtra("post",post);
+        intent.putExtra("key",key);
+        startActivity(intent);
+        finish();
 
 //        Toast.makeText(getApplicationContext(),code+"",Toast.LENGTH_SHORT).show();
 

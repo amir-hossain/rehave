@@ -37,17 +37,13 @@
             android:name=".ProtectionActivity"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".ArchiveActivity"
-            android:parentActivityName=".MainActivity" />
-        <activity
             android:name=".InfoDetailsActivity"
             android:parentActivityName=".InfoActivity" />
         <activity
             android:name=".ProtectionDetailsActivity"
             android:parentActivityName=".ProtectionActivity" />
         <activity
-            android:name=".ArchiveDetailsActivity"
-            android:parentActivityName=".ArchiveActivity" />
+            android:name=".ArchiveDetailsActivity" />
 
         <meta-data
             android:name="com.codewaves.youtubethumbnailview.ApiKey"
@@ -59,13 +55,15 @@
         <activity
             android:name=".SingUpActivity"
             android:parentActivityName=".loginActivity" />
-        <activity android:name=".CommunityActivity" />
         <activity android:name=".CommunityPost" />
         <activity android:name=".ReviewActivity" />
         <activity
             android:name=".CommentActivity"
             android:parentActivityName=".CommunityActivity" />
-        <activity android:name=".ForumDetails" />
+        <activity android:name=".CommunityActivity"/>
+        <activity android:name=".ForumDetails"
+            android:theme="@style/ActivityTheme"/>
+
         <activity android:name=".EditCommunityPost" />
         <activity android:name=".ReplayActivity"></activity>
     </application>

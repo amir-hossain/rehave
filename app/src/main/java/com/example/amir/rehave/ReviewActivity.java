@@ -55,9 +55,13 @@ public class ReviewActivity extends AppCompatActivity implements ReviewListAdapt
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        startActivity(new Intent(ReviewActivity.this,CommunityActivity.class));
-        finish();
+        onBackPressed();
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     private void getData(){

@@ -50,8 +50,7 @@ public class ForumDetails extends AppCompatActivity {
         switch(item.getItemId()){
             case R.id.delete:
                 delete();
-                startActivity(new Intent(ForumDetails.this,CommunityActivity.class));
-                finish();
+                onBackPressed();
                 break;
             case R.id.edit:
                 String key=getIntent().getExtras().getString("key");
@@ -62,8 +61,7 @@ public class ForumDetails extends AppCompatActivity {
                 finish();
                 break;
                 default:
-                    startActivity(new Intent(ForumDetails.this,CommunityActivity.class));
-                    finish();
+                    onBackPressed();
         }
         return true;
     }
@@ -83,4 +81,11 @@ public class ForumDetails extends AppCompatActivity {
         Toast.makeText(getApplicationContext(),R.string.deleteMessage,Toast.LENGTH_SHORT).show();
 
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+
 }
