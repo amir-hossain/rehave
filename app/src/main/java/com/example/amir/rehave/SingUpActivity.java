@@ -75,7 +75,7 @@ public class SingUpActivity extends AppCompatActivity implements View.OnClickLis
                     public void onComplete(DatabaseError databaseError,
                                            DatabaseReference databaseReference) {
                         Toast.makeText(getApplicationContext(),"sucessfully registered",Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getApplicationContext(),loginActivity.class));
+                        startActivity(new Intent(getApplicationContext(),LoginActivity.class));
                     }
                 });
 

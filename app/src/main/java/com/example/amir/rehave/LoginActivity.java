@@ -21,7 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class loginActivity extends AppCompatActivity{
+public class LoginActivity extends AppCompatActivity{
     String phoneEmail;
     String pass;
     EditText phoneEmailField;
@@ -53,13 +53,9 @@ public class loginActivity extends AppCompatActivity{
         singupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(loginActivity.this,SingUpActivity.class));
+                startActivity(new Intent(LoginActivity.this,SingUpActivity.class));
             }
         });
-
-        ActionBar actionBar=getSupportActionBar();
-        actionBar.setTitle(R.string.login);
-        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     private void check() {

@@ -1,10 +1,6 @@
 package com.example.amir.rehave;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,8 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 import com.example.amir.rehave.fragments.AboutFragment;
 import com.example.amir.rehave.fragments.AddictionInformationFragment;
@@ -100,6 +94,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.container_layout, ForumFragment.newInstance()).addToBackStack(null).commit();
 
         }else {
+            Intent intent=new Intent(this,LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
 
         }
 

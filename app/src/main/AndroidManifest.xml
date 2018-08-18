@@ -27,8 +27,8 @@
             android:name=".TermsAndCondition"
             android:theme="@style/termsTheme" />
         <activity
-            android:name=".loginActivity"
-            android:parentActivityName=".MainActivity" />
+            android:name=".LoginActivity"
+            android:theme="@style/ActivityTheme"/>
         <activity android:name=".AdminActivity" />
         <activity
             android:name=".InfoActivity"
@@ -55,7 +55,7 @@
             android:parentActivityName=".AdminActivity" />
         <activity
             android:name=".SingUpActivity"
-            android:parentActivityName=".loginActivity" />
+            android:parentActivityName=".LoginActivity" />
         <activity android:name=".CommunityPost" />
         <activity android:name=".ReviewActivity" />
         <activity
