@@ -41,7 +41,8 @@
             android:theme="@style/ActivityTheme"/>
         <activity
             android:name=".ProtectionDetailsActivity"
-            android:parentActivityName=".ProtectionActivity" />
+            android:parentActivityName=".ProtectionActivity"
+            android:theme="@style/ActivityTheme"/>
         <activity
             android:name=".ArchiveDetailsActivity" />
 
