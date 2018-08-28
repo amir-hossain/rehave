@@ -7,7 +7,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.example.amir.rehave.others.DataModel;
+import com.example.amir.rehave.model.DataModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;

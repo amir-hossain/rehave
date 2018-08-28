@@ -1,4 +1,4 @@
-package com.example.amir.rehave.others;
+package com.example.amir.rehave.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.amir.rehave.InfoActivity;
 import com.example.amir.rehave.R;
+import com.example.amir.rehave.model.DataModel;
 
 import java.util.ArrayList;
 

@@ -10,8 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
-import com.example.amir.rehave.others.DataModel;
-import com.example.amir.rehave.others.ListAdpter;
+import com.example.amir.rehave.model.DataModel;
+import com.example.amir.rehave.adapter.ListAdpter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

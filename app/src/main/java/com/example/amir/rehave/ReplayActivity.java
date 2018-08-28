@@ -14,10 +14,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
-import com.example.amir.rehave.others.CommentDataModel;
-import com.example.amir.rehave.others.CommentListAdapter;
-import com.example.amir.rehave.others.RepalayListAdapter;
-import com.example.amir.rehave.others.ReplayDataModel;
+import com.example.amir.rehave.adapter.RepalayListAdapter;
+import com.example.amir.rehave.model.ReplayDataModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

@@ -1,4 +1,4 @@
-package com.example.amir.rehave.others;
+package com.example.amir.rehave.model;
 
 public class DataModel {
     String id;

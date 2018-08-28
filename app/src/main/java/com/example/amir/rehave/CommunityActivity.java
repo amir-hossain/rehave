@@ -13,8 +13,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.amir.rehave.others.CommunityListAdapter;
-import com.example.amir.rehave.others.CommunityPostModel;
+import com.example.amir.rehave.adapter.CommunityListAdapter;
+import com.example.amir.rehave.model.CommunityPostModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

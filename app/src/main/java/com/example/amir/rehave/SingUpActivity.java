@@ -11,7 +11,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.amir.rehave.others.SignUpModel;
+import com.example.amir.rehave.model.SignUpModel;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
