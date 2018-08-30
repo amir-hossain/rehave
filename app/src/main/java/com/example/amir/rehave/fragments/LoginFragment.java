@@ -1,16 +1,21 @@
-package com.example.amir.rehave;
+package com.example.amir.rehave.fragments;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.amir.rehave.AdminActivity;
+import com.example.amir.rehave.MainActivity;
+import com.example.amir.rehave.R;
 import com.example.amir.rehave.model.SignUpModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,23 +25,29 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class LoginActivity extends AppCompatActivity{
+public class LoginFragment extends Fragment {
     String phoneEmail;
     String pass;
     EditText phoneEmailField;
     EditText password;
+    private View rootView;
     ArrayList<SignUpModel> singUpDatas =new ArrayList<>();
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        phoneEmailField =findViewById(R.id.phone_email);
-        password=findViewById(R.id.password);
+    public static LoginFragment newInstance() {
+        LoginFragment fragment = new LoginFragment();
+        return fragment;
+    }
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        rootView = inflater.inflate(R.layout.login_fragment, container, false);
+        phoneEmailField =rootView.findViewById(R.id.phone_email);
+        password=rootView.findViewById(R.id.password);
 
         getData();
 
-        Button loginButton=findViewById(R.id.login_button);
+        Button loginButton=rootView.findViewById(R.id.login_button);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,13 +59,20 @@ public class LoginActivity extends AppCompatActivity{
             }
         });
 
-        Button singupButton=findViewById(R.id.singup_button);
+        Button singupButton=rootView.findViewById(R.id.singup_button);
         singupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this,SingUpActivity.class));
+                SingUpFragment nextFrag= new SingUpFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container_layout, nextFrag,"findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
+
             }
         });
+
+        return rootView;
     }
 
     private void check() {
@@ -62,7 +80,7 @@ public class LoginActivity extends AppCompatActivity{
             boolean result=false;
             if(phoneEmail.equals("admin") && pass.equals("admin")){
                 saveToPreference("1","Admin");
-                startActivity(new Intent(getApplicationContext(),AdminActivity.class));
+                startActivity(new Intent(getContext().getApplicationContext(),AdminActivity.class));
                 result= true;
             }else{
                 for(int i=0;i<singUpDatas.size();i++){
@@ -72,7 +90,7 @@ public class LoginActivity extends AppCompatActivity{
                     String name=singUpDatas.get(i).getName();
                     if(phoneEmail.equals(dataBasephoneEmail) && pass.equals(dataBasePass)){
                         saveToPreference(id,name);
-                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                        startActivity(new Intent(getContext(),MainActivity.class));
 
                         result= true;
                         break;
@@ -84,7 +102,7 @@ public class LoginActivity extends AppCompatActivity{
 
 
             if(!result){
-                Toast.makeText(getApplicationContext(),R.string.loginErrorMessage,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),R.string.loginErrorMessage,Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -92,7 +110,7 @@ public class LoginActivity extends AppCompatActivity{
     }
 
     private void saveToPreference(String id,String name) {
-        SharedPreferences mSharedPreferences = getSharedPreferences("id", Context.MODE_PRIVATE);
+        SharedPreferences mSharedPreferences = getContext().getSharedPreferences("id", Context.MODE_PRIVATE);
         SharedPreferences.Editor mEditor = mSharedPreferences.edit();
         mEditor.putString("id",id);
         mEditor.putString("name",name);

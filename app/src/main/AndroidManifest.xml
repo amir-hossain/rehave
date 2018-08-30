@@ -27,7 +27,7 @@
             android:name=".TermsAndCondition"
             android:theme="@style/termsTheme" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".fragments.LoginFragment"
             android:theme="@style/ActivityTheme"/>
         <activity android:name=".AdminActivity" />
         <activity
@@ -54,8 +54,8 @@
             android:name=".PostActivity"
             android:parentActivityName=".AdminActivity" />
         <activity
-            android:name=".SingUpActivity"
-            android:parentActivityName=".LoginActivity" />
+            android:name=".fragments.SingUpFragment"
+            android:parentActivityName=".fragments.LoginFragment" />
         <activity android:name=".CommunityPost" />
         <activity android:name=".ReviewActivity" />
         <activity

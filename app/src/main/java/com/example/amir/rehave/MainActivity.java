@@ -14,9 +14,10 @@ import com.example.amir.rehave.fragments.AboutFragment;
 import com.example.amir.rehave.fragments.AddictionInformationFragment;
 import com.example.amir.rehave.fragments.ArchiveFragment;
 import com.example.amir.rehave.fragments.ForumFragment;
+import com.example.amir.rehave.fragments.LoginFragment;
 import com.example.amir.rehave.fragments.MainFragment;
-import com.example.amir.rehave.fragments.RegistrationFragment;
 import com.example.amir.rehave.fragments.RelapseProtectionFragment;
+import com.example.amir.rehave.fragments.SingUpFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -71,10 +72,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.container_layout, AboutFragment.newInstance()).addToBackStack(null).commit();
         }else if (id == R.id.nav_registration) {
 
-            MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.container_layout, RegistrationFragment.newInstance()).addToBackStack(null).commit();
+            MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.container_layout, SingUpFragment.newInstance()).addToBackStack(null).commit();
 
         } else if (id == R.id.nav_login) {
 
+            MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.container_layout, LoginFragment.newInstance()).addToBackStack(null).commit();
 
         } else if (id == R.id.nav_addiction) {
 
@@ -94,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.container_layout, ForumFragment.newInstance()).addToBackStack(null).commit();
 
         }else {
-            Intent intent=new Intent(this,LoginActivity.class);
+            Intent intent=new Intent(this,LoginFragment.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
 

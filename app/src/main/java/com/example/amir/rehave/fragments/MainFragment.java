@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,6 +36,8 @@ public class MainFragment extends Fragment implements MainFragmentAdapter.Listen
     private ProgressBar progressBar;
     private View rootView;
 
+    private CardView forumCard;
+
 
     public static MainFragment newInstance() {
         MainFragment fragment = new MainFragment();
@@ -52,6 +55,22 @@ public class MainFragment extends Fragment implements MainFragmentAdapter.Listen
         recyclerView = rootView.findViewById(R.id.recycler_view);
 
         progressBar = rootView.findViewById(R.id.progress_bar);
+
+        forumCard = rootView.findViewById(R.id.forum_card);
+
+        forumCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ForumFragment nextFrag= new ForumFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container_layout, nextFrag,"findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
+
+            }
+        });
+
+
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(recyclerView.getContext(), 2);
 
