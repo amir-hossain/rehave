@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -17,21 +19,31 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.amir.rehave.manager.SharedPrefManager;
+import com.example.amir.rehave.model.CommunityPostModel;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class NewPostActivity extends AppCompatActivity {
 
     private ImageView ivNewPostUserImage;
     private TextView tvNewPostUserName;
-    private EditText etNewPostMessage;
+    private EditText etNewPostMessage,titleView;
     private Button btNewPostAddImage;
     private ImageView ivNewPostPostImage;
 
     private boolean photoSelected = false;
     private Uri selectedImageURI;
+
+    private String userId;
 
     private ProgressDialog progressDialog;
 
@@ -44,14 +56,21 @@ public class NewPostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_post);
 
-        setTitle("New Post");
+        userId=SharedPrefManager.getInstance(this).getString("id");
+
+        ActionBar actionBar=getSupportActionBar();
+        actionBar.setTitle(R.string.postLabel);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-        ivNewPostUserImage = findViewById(R.id.iv_new_post_user_image);
-        tvNewPostUserName = findViewById(R.id.tv_new_post_user_name);
+        ivNewPostUserImage = findViewById(R.id.user_image);
+        tvNewPostUserName = findViewById(R.id.user_name);
         etNewPostMessage = findViewById(R.id.et_new_post_message);
+        titleView = findViewById(R.id.title);
         btNewPostAddImage = findViewById(R.id.bt_new_post_add_a_photo);
-        ivNewPostPostImage = findViewById(R.id.iv_new_post_post_image);
+        ivNewPostPostImage = findViewById(R.id.post_image);
 
         progressDialog = new ProgressDialog(this);
 
@@ -62,7 +81,7 @@ public class NewPostActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("image/jpeg");
+                intent.setType("image/*");
                 intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
                 startActivityForResult(Intent.createChooser(intent, "Complete action using"), RC_PHOTO_PICKER_POST);
             }
@@ -95,41 +114,21 @@ public class NewPostActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_post){
             String message = etNewPostMessage.getText().toString();
+            String title = titleView.getText().toString();
             String imageurl = "";
             if (message.isEmpty()){
-                Toast.makeText(this, "Please write a post message", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "মেসেজ লিখুন ", Toast.LENGTH_SHORT).show();
             } else {
-                message = message.replace(" ", "+");
-                progressDialog.setMessage("Posting on yout timeline...");
+                progressDialog.setMessage("পোস্ট হচ্ছে ");
                 progressDialog.show();
                 if (photoSelected){
-                    uploadImage(selectedImageURI,message);
+                    uploadImage(selectedImageURI,message,title);
                 } else {
-                    String url = Constants.UPLOAD_WALL_POST + "?postImage=" + "NOIMAGE" + "&postMessage=" + message + "&userEmail=" + SharedPrefManager.getInstance(this).getUserEmail();
-                    StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    response = response.trim();
-                                    if (response.equals("okay")){
-                                        progressDialog.dismiss();
-                                        Toast.makeText(com.example.shivamvk.facebookandroid.NewPostActivity.this, "Post is now live!", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(com.example.shivamvk.facebookandroid.NewPostActivity.this, HomeActivity.class));
-                                        overridePendingTransition(R.anim.push_down_in, R.anim.push_down_out);
-                                    }
-                                }
-                            },
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Toast.makeText(com.example.shivamvk.facebookandroid.NewPostActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
 
-                    RequestQueue requestQueue = Volley.newRequestQueue(this);
-                    requestQueue.add(stringRequest);
                 }
             }
+        }else {
+            onBackPressed();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -146,41 +145,46 @@ public class NewPostActivity extends AppCompatActivity {
         }
     }
 
-    private void uploadImage(Uri selectedImageURI, final String message) {
-        StorageReference photoReference = storageReference.child(selectedImageURI.getLastPathSegment());
+    private void uploadImage(Uri selectedImageURI, final String message, final String title) {
+        StorageReference photoReference = storageReference.child("/image");
         photoReference.putFile(selectedImageURI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Uri downlaodURI = taskSnapshot.getDownloadUrl();
-                Log.i("error",downlaodURI.toString());
-                insertInDatabaseWithImage(downlaodURI.toString(), message);
+
+                insertWithImage(downlaodURI.toString(), message,title);
+            }
+        })
+        .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.i("error",exception.getMessage());
             }
         });
     }
 
-    private void insertInDatabaseWithImage(String s, String message) {
-        String url = Constants.UPLOAD_WALL_POST + "?postImage=" + s + "&postMessage=" + message + "&userEmail=" + SharedPrefManager.getInstance(this).getUserEmail();
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        response = response.trim();
-                        if (response.equals("okay")){
-                            progressDialog.dismiss();
-                            Toast.makeText(com.example.shivamvk.facebookandroid.NewPostActivity.this, "Post is now live!", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(com.example.shivamvk.facebookandroid.NewPostActivity.this, HomeActivity.class));
-                            overridePendingTransition(R.anim.push_down_in, R.anim.push_down_out);
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+    private void insertWithImage(String imageUrl, String message,String title) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        String path="community/post/";
+        DatabaseReference tempRef=database.getReference(path);
+        String postId=tempRef.push().getKey();
+        path="community/post/"+postId;
+        DatabaseReference mainRef=database.getReference(path);
+        String[] dateTime=getcurrentDateaAndTime();
 
-                    }
-                });
 
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
+
+            mainRef.setValue(new CommunityPostModel(userId,postId,title,message,"Admin",dateTime[0],dateTime[1],true,imageUrl));
+            progressDialog.dismiss();
+            Toast.makeText(getApplicationContext(),R.string.acceptMessage,Toast.LENGTH_SHORT).show();
+            onBackPressed();
+    }
+
+    public String[] getcurrentDateaAndTime() {
+        String []dateTime;
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
+        String formatedDate =dateFormat.format(Calendar.getInstance().getTime());
+        dateTime=formatedDate.split(" ");
+        return dateTime;
     }
 }

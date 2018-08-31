@@ -1,19 +1,27 @@
-package com.example.amir.rehave;
+package com.example.amir.rehave.fragments;
+
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
+import com.example.amir.rehave.CommentActivity;
+import com.example.amir.rehave.ForumDetails;
+import com.example.amir.rehave.NewPostActivity;
+import com.example.amir.rehave.R;
+import com.example.amir.rehave.ReviewActivity;
 import com.example.amir.rehave.adapter.CommunityListAdapter;
+import com.example.amir.rehave.manager.SharedPrefManager;
+import com.example.amir.rehave.manager.StaticDataManager;
 import com.example.amir.rehave.model.CommunityPostModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,7 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class CommunityActivity extends AppCompatActivity implements CommunityListAdapter.ItemClicked {
+public class CommunityFragment extends Fragment implements CommunityListAdapter.ItemClicked {
 
     FloatingActionButton review;
     FloatingActionButton add;
@@ -32,27 +40,35 @@ public class CommunityActivity extends AppCompatActivity implements CommunityLis
     private static RecyclerView recyclerView;
     private static ArrayList<CommunityPostModel> data;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_community);
+    private View view;
 
-        ActionBar actionBar=getSupportActionBar();
-        actionBar.setTitle(R.string.forum);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+    public static CommunityFragment newInstance() {
+
+        CommunityFragment fragment = new CommunityFragment();
+
+        return fragment;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        view= inflater.inflate(R.layout.fragment_community, container, false);
 
         getData();
-        recyclerView =findViewById(R.id.my_recycler_view);
+        recyclerView =view.findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
 
-        layoutManager = new LinearLayoutManager(this);
+        layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
         data = new ArrayList<>();
 
-        recyclerView=findViewById(R.id.my_recycler_view);
+        recyclerView=view.findViewById(R.id.my_recycler_view);
 
         initilizeFab();
+
+        return view;
 
     }
 
@@ -70,12 +86,12 @@ public class CommunityActivity extends AppCompatActivity implements CommunityLis
                     value=snap.getValue(CommunityPostModel.class);
 //                        Log.d("Fire value", "Value is: " + value.getName());
                     if(value.getReviewStatus()){
-                        data.add(new CommunityPostModel(value.getUserId(),value.getPostId(),value.getTitle(),value.getPost(),value.getName(),value.getDate(),value.getTime(),value.getReviewStatus(),value.getCommentCount()));
+                        data.add(new CommunityPostModel(value.getUserId(),value.getPostId(),value.getTitle(),value.getPost(),value.getName(),value.getDate(),value.getTime(),value.getReviewStatus(),value.getCommentCount(),value.getImage()));
                     }
 
                 }
 
-                adapter = new CommunityListAdapter(data,getApplicationContext(),CommunityActivity.this);
+                adapter = new CommunityListAdapter(data,getActivity(),CommunityFragment.this);
                 recyclerView.setAdapter(adapter);
 //                    Log.d("Fire value", "Value is: " + data.get(0).getTitle());
             }
@@ -90,10 +106,9 @@ public class CommunityActivity extends AppCompatActivity implements CommunityLis
     }
 
     private void initilizeFab() {
-        review = (FloatingActionButton) findViewById(R.id.review);
-        add = (FloatingActionButton) findViewById(R.id.add);
-        SharedPreferences preferences=getSharedPreferences("id",Context.MODE_PRIVATE);
-        String name =preferences.getString("name",null);
+        review = (FloatingActionButton) view.findViewById(R.id.review);
+        add = (FloatingActionButton) view.findViewById(R.id.add);
+        String name=SharedPrefManager.getInstance(getContext()).getString(StaticDataManager.NAME_PREF);
         if(name==null){
             review.setVisibility(View.GONE);
             add.setVisibility(View.GONE);
@@ -105,11 +120,8 @@ public class CommunityActivity extends AppCompatActivity implements CommunityLis
                 review.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-                        Intent intent=new Intent(CommunityActivity.this,ReviewActivity.class);
+                        Intent intent=new Intent(getActivity(),ReviewActivity.class);
                         startActivity(intent);
-                        finish();
                     }
                 });
             }
@@ -117,11 +129,10 @@ public class CommunityActivity extends AppCompatActivity implements CommunityLis
             add.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-                    Intent intent=new Intent(CommunityActivity.this,CommunityPost.class);
+
+                    Intent intent=new Intent(getActivity(),NewPostActivity.class);
                     startActivity(intent);
-                    finish();
+
                 }
             });
 
@@ -129,26 +140,16 @@ public class CommunityActivity extends AppCompatActivity implements CommunityLis
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        finish();
-        return true;
-    }
 
     @Override
     public void onItemClicked(View v) {
         int index =recyclerView.getChildLayoutPosition(v);
         String post=data.get(index).getPost();
-        String key=data.get(index).getPostId();
-        Intent intent=new Intent(getApplicationContext(),ForumDetails.class);
+        String postId=data.get(index).getPostId();
+        Intent intent=new Intent(getActivity(),ForumDetails.class);
         intent.putExtra("post",post);
-        intent.putExtra("key",key);
+        intent.putExtra(StaticDataManager.ID_PREF,postId);
         startActivity(intent);
-        finish();
-
-//        Toast.makeText(getApplicationContext(),code+"",Toast.LENGTH_SHORT).show();
-
-
     }
 
     private void comment(View v) {
@@ -156,11 +157,10 @@ public class CommunityActivity extends AppCompatActivity implements CommunityLis
         String key=data.get(index).getPostId();
         String count=data.get(index).getCommentCount();
 //            Toast.makeText(context,index+" clicked",Toast.LENGTH_SHORT).show();
-        Intent intent=new Intent(getApplicationContext(),CommentActivity.class);
+        Intent intent=new Intent(getActivity(),CommentActivity.class);
         intent.putExtra("key",key);
         intent.putExtra("count",count);
         startActivity(intent);
-        finish();
     }
 
 

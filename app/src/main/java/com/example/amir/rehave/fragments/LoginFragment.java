@@ -13,9 +13,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.amir.rehave.AdminActivity;
 import com.example.amir.rehave.MainActivity;
 import com.example.amir.rehave.R;
+import com.example.amir.rehave.manager.SharedPrefManager;
+import com.example.amir.rehave.manager.StaticDataManager;
 import com.example.amir.rehave.model.SignUpModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -63,11 +64,7 @@ public class LoginFragment extends Fragment {
         singupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SingUpFragment nextFrag= new SingUpFragment();
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container_layout, nextFrag,"findThisFragment")
-                        .addToBackStack(null)
-                        .commit();
+                runFragment(SingUpFragment.newInstance());
 
             }
         });
@@ -75,12 +72,19 @@ public class LoginFragment extends Fragment {
         return rootView;
     }
 
+    private void runFragment(Fragment nextFrag) {
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container_layout, nextFrag,"findThisFragment")
+                .addToBackStack(null)
+                .commit();
+    }
+
     private void check() {
         if(singUpDatas!=null){
             boolean result=false;
             if(phoneEmail.equals("admin") && pass.equals("admin")){
-                saveToPreference("1","Admin");
-                startActivity(new Intent(getContext().getApplicationContext(),AdminActivity.class));
+                saveToPreference("1","Admin", StaticDataManager.ADMIN_TYPE);
+                runFragment(MainFragment.newInstance());
                 result= true;
             }else{
                 for(int i=0;i<singUpDatas.size();i++){
@@ -89,7 +93,7 @@ public class LoginFragment extends Fragment {
                     String id=singUpDatas.get(i).getId();
                     String name=singUpDatas.get(i).getName();
                     if(phoneEmail.equals(dataBasephoneEmail) && pass.equals(dataBasePass)){
-                        saveToPreference(id,name);
+                        saveToPreference(id,name,StaticDataManager.USER_TYPE);
                         startActivity(new Intent(getContext(),MainActivity.class));
 
                         result= true;
@@ -109,12 +113,10 @@ public class LoginFragment extends Fragment {
 
     }
 
-    private void saveToPreference(String id,String name) {
-        SharedPreferences mSharedPreferences = getContext().getSharedPreferences("id", Context.MODE_PRIVATE);
-        SharedPreferences.Editor mEditor = mSharedPreferences.edit();
-        mEditor.putString("id",id);
-        mEditor.putString("name",name);
-        mEditor.apply();
+    private void saveToPreference(String id,String name,String type) {
+        SharedPrefManager.getInstance(getContext()).setString(StaticDataManager.NAME_PREF,name);
+        SharedPrefManager.getInstance(getContext()).setString(StaticDataManager.ID_PREF,id);
+        SharedPrefManager.getInstance(getContext()).setString(StaticDataManager.TYPE_PREF,type);
     }
 
 

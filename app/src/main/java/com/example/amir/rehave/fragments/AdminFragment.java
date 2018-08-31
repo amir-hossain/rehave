@@ -1,19 +1,26 @@
-package com.example.amir.rehave;
+package com.example.amir.rehave.fragments;
+
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 
+import com.example.amir.rehave.AddictionInfoDetailsActivity;
+import com.example.amir.rehave.MainActivity;
+import com.example.amir.rehave.PostActivity;
+import com.example.amir.rehave.R;
 import com.example.amir.rehave.adapter.AdminListAdapter;
+import com.example.amir.rehave.manager.StaticDataManager;
 import com.example.amir.rehave.model.DataModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,67 +30,82 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class AdminActivity extends AppCompatActivity implements AdminListAdapter.ItemClicked {
+public class AdminFragment extends Fragment implements AdminListAdapter.ItemClicked {
     private static RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private static RecyclerView recyclerView;
     private static ArrayList<DataModel> data;
     public static View.OnClickListener myOnClickListener;
+    private View rootView;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin);
+    public static AdminFragment newInstance() {
+        AdminFragment fragment = new AdminFragment();
+        return fragment;
+    }
 
-        ActionBar actionBar=getSupportActionBar();
-        actionBar.setTitle(R.string.admin);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
-        FloatingActionButton add = (FloatingActionButton) findViewById(R.id.add);
+        rootView = inflater.inflate(R.layout.admin_fragment, container, false);
+
+
+        FloatingActionButton add = (FloatingActionButton) rootView.findViewById(R.id.add);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-                startActivity(new Intent(AdminActivity.this,PostActivity.class));
+
+                startActivity(new Intent(getActivity(),PostActivity.class));
             }
         });
 
-        FloatingActionButton community = (FloatingActionButton) findViewById(R.id.community);
+        FloatingActionButton community = (FloatingActionButton) rootView.findViewById(R.id.community);
         community.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-                Intent intent=new Intent(AdminActivity.this,CommunityActivity.class);
-                intent.putExtra("type","admin");
-                startActivity(intent);
+
+                runFragment(StaticDataManager.ADMIN_TYPE);
+
             }
         });
 
 
         getData();
 
-        myOnClickListener = new AdminActivity.MyOnClickListener(this);
+        myOnClickListener = new AdminFragment.MyOnClickListener(getActivity());
 
-        recyclerView =findViewById(R.id.my_recycler_view);
+        recyclerView =rootView.findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
 
-        layoutManager = new LinearLayoutManager(this);
+        layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
         data = new ArrayList<>();
 
+        return rootView;
 
+    }
+
+    private void runFragment(String type) {
+
+        Bundle bundle = new Bundle();
+        bundle.putString(StaticDataManager.TYPE_PREF,type);
+
+        CommunityFragment fragment =CommunityFragment.newInstance();
+        fragment.setArguments(bundle);
+
+
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container_layout, CommunityFragment.newInstance(),"findThisFragment")
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+        Intent intent=new Intent(getActivity(),MainActivity.class);
         startActivity(intent);
-        SharedPreferences settings = getSharedPreferences("id", Context.MODE_PRIVATE);
+        SharedPreferences settings = getActivity().getSharedPreferences("id", Context.MODE_PRIVATE);
         settings.edit().clear().apply();
-        finish();
         return true;
     }
 
@@ -104,7 +126,7 @@ public class AdminActivity extends AppCompatActivity implements AdminListAdapter
                     }
 
                 }
-                adapter = new AdminListAdapter(data,getApplicationContext(),myOnClickListener,AdminActivity.this);
+                adapter = new AdminListAdapter(data,getActivity(),myOnClickListener,AdminFragment.this);
                 recyclerView.setAdapter(adapter);
 //                    Log.d("Fire value", "Value is: " + data.get(0).getTitle());
             }
@@ -143,7 +165,7 @@ public class AdminActivity extends AppCompatActivity implements AdminListAdapter
 
         database.getReference(path).setValue(null);
         data.remove(index);
-        adapter = new AdminListAdapter(data,getApplicationContext(),myOnClickListener,AdminActivity.this);
+        adapter = new AdminListAdapter(data,getActivity(),myOnClickListener,AdminFragment.this);
         recyclerView.setAdapter(adapter);
     }
 
@@ -158,7 +180,7 @@ public class AdminActivity extends AppCompatActivity implements AdminListAdapter
             path="data/arch/"+key;
         }
 //            Toast.makeText(this,"edit "+key,Toast.LENGTH_SHORT).show();
-        Intent intent=new Intent(getApplicationContext(),PostActivity.class);
+        Intent intent=new Intent(getActivity(),PostActivity.class);
         intent.putExtra("path",path);
         startActivity(intent);
 
@@ -186,8 +208,6 @@ public class AdminActivity extends AppCompatActivity implements AdminListAdapter
 
 
     }
-
-
 
 
 

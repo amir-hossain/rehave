@@ -5,25 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".AdminActivity">
-    <include layout="@layout/content_community" />
+    tools:context=".fragments.AdminFragment">
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/review"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="80dp"
-        android:layout_marginRight="16dp"
-        android:src="@mipmap/ic_review"
-        android:scaleType="center"/>
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:src="@android:drawable/ic_input_add"
-        android:scaleType="centerCrop"/>
+        android:src="@drawable/admin"
+        android:id="@+id/admin_fab"/>
 
 </android.support.design.widget.CoordinatorLayout>
 

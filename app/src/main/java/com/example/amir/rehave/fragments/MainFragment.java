@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -16,22 +17,22 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.amir.rehave.ForumDetails;
 import com.example.amir.rehave.R;
 import com.example.amir.rehave.adapter.MainFragmentAdapter;
 import com.example.amir.rehave.factory.IntentFactory;
 import com.example.amir.rehave.link.LinkListeners;
 import com.example.amir.rehave.link.LinkMethods;
-import com.example.amir.rehave.model.HomeProductResponse;
+import com.example.amir.rehave.manager.SharedPrefManager;
+import com.example.amir.rehave.manager.StaticDataManager;
 import com.example.amir.rehave.model.MainFragmentData;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
 public class MainFragment extends Fragment implements MainFragmentAdapter.Listener,LinkListeners.DataTableListener{
     private RecyclerView recyclerView;
     private MainFragmentAdapter adapter;
+
 
     private ProgressBar progressBar;
     private View rootView;
@@ -52,6 +53,13 @@ public class MainFragment extends Fragment implements MainFragmentAdapter.Listen
 
         rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
+        String type= SharedPrefManager.getInstance(getContext()).getString(StaticDataManager.TYPE_PREF);
+        if(type.equals(StaticDataManager.ADMIN_TYPE)){
+            intializeAdminFab();
+        }
+
+
+
         recyclerView = rootView.findViewById(R.id.recycler_view);
 
         progressBar = rootView.findViewById(R.id.progress_bar);
@@ -61,7 +69,7 @@ public class MainFragment extends Fragment implements MainFragmentAdapter.Listen
         forumCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ForumFragment nextFrag= new ForumFragment();
+                CommunityFragment nextFrag= new CommunityFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.container_layout, nextFrag,"findThisFragment")
                         .addToBackStack(null)
@@ -86,6 +94,21 @@ public class MainFragment extends Fragment implements MainFragmentAdapter.Listen
 
         return rootView;
     }
+
+    private void intializeAdminFab() {
+        FloatingActionButton adminFab=rootView.findViewById(R.id.admin_fab);
+        adminFab.setVisibility(View.VISIBLE);
+        adminFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container_layout, AdminFragment.newInstance(),"findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+    }
+
     @Override
     public void itemClick(String id,String title) {
 

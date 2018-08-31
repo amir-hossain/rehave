@@ -7,7 +7,7 @@ public class SharedPrefManager {
     private static SharedPrefManager sharedPrefManager;
     private static Context context;
 
-    private static final String SHARED_PREF_NAME = "MySharedPref";
+    private static final String SHARED_PREF_NAME = "id";
 
     private SharedPrefManager(Context context) {
         SharedPrefManager.context = context;

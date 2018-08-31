@@ -12,8 +12,9 @@ import android.view.MenuItem;
 
 import com.example.amir.rehave.fragments.AboutFragment;
 import com.example.amir.rehave.fragments.AddictionInformationFragment;
+import com.example.amir.rehave.fragments.AdminFragment;
 import com.example.amir.rehave.fragments.ArchiveFragment;
-import com.example.amir.rehave.fragments.ForumFragment;
+import com.example.amir.rehave.fragments.CommunityFragment;
 import com.example.amir.rehave.fragments.LoginFragment;
 import com.example.amir.rehave.fragments.MainFragment;
 import com.example.amir.rehave.fragments.RelapseProtectionFragment;
@@ -93,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.nav_forum) {
 
-            MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.container_layout, ForumFragment.newInstance()).addToBackStack(null).commit();
+            MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.container_layout, CommunityFragment.newInstance()).addToBackStack(null).commit();
 
         }else {
             Intent intent=new Intent(this,LoginFragment.class);
@@ -108,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         return true;
     }
+
 
 
 }

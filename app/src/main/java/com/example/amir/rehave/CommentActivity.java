@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.example.amir.rehave.fragments.CommunityFragment;
 import com.example.amir.rehave.model.CommentDataModel;
 import com.example.amir.rehave.adapter.CommentListAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -90,7 +91,7 @@ public class CommentActivity extends AppCompatActivity implements CommentListAda
 
                             @Override
                             public void onComplete(DatabaseError databaseError,DatabaseReference databaseReference) {
-                                startActivity(new Intent(getApplicationContext(),CommunityActivity.class));
+                                startActivity(new Intent(getApplicationContext(),CommunityFragment.class));
                                 finish();
                             }
                         });
@@ -141,7 +142,7 @@ public class CommentActivity extends AppCompatActivity implements CommentListAda
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent=new Intent(getApplicationContext(),CommunityActivity.class);
+        Intent intent=new Intent(getApplicationContext(),CommunityFragment.class);
         startActivity(intent);
         finish();
         return true;

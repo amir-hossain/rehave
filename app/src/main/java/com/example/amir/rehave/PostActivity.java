@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.amir.rehave.fragments.AdminFragment;
 import com.example.amir.rehave.model.DataModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -119,7 +120,7 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
                     @Override
                     public void onComplete(DatabaseError databaseError,
                                            DatabaseReference databaseReference) {
-                           startActivity(new Intent(getApplicationContext(),AdminActivity.class));
+                           startActivity(new Intent(getApplicationContext(),AdminFragment.class));
                     }
                 });
 

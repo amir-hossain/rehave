@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.amir.rehave.fragments.CommunityFragment;
 import com.example.amir.rehave.model.CommunityPostModel;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -60,7 +61,7 @@ public class CommunityPost extends AppCompatActivity {
                     mainRef.setValue(new CommunityPostModel(userId,postId,title,input,name,dateTime[0],dateTime[1],false));
                     Toast.makeText(getApplicationContext(),R.string.communityMessage,Toast.LENGTH_SHORT).show();
                 }
-                startActivity(new Intent(CommunityPost.this,CommunityActivity.class));
+                startActivity(new Intent(CommunityPost.this,CommunityFragment.class));
                 finish();
 
 
@@ -70,7 +71,7 @@ public class CommunityPost extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        startActivity(new Intent(CommunityPost.this,CommunityActivity.class));
+        startActivity(new Intent(CommunityPost.this,CommunityFragment.class));
         finish();
         return true;
     }

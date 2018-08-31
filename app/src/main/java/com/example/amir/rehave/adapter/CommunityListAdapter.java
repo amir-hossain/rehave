@@ -6,8 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.amir.rehave.R;
 import com.example.amir.rehave.model.CommunityPostModel;
 
@@ -32,17 +34,19 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
         TextView commentView;
         TextView postView;
         CardView cardView;
+        ImageView img;
 
 
         public MyViewHolder(final Context context, final View itemView) {
             super(itemView);
             this.titleView=itemView.findViewById(R.id.title);
+            this.img=itemView.findViewById(R.id.img);
             this.nameView = itemView.findViewById(R.id.name);
             this.dateView = itemView.findViewById(R.id.date);
             this.timeView = itemView.findViewById(R.id.time);
             this.commentView = itemView.findViewById(R.id.comment);
             this.postView = itemView.findViewById(R.id.post);
-            this.cardView = itemView.findViewById(R.id.card);
+            this.cardView = itemView.findViewById(R.id.card_view);
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -81,6 +85,12 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
 
         }else{
             titleView.setText(title);
+        }
+
+        if(dataSet.get(listPosition).getImage()!=null){
+
+            holder.img.setVisibility(View.VISIBLE);
+            Glide.with(context).load(dataSet.get(listPosition).getImage()).into(holder.img);
         }
 
         TextView nameView = holder.nameView;

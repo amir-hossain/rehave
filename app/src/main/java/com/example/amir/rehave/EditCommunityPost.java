@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.amir.rehave.fragments.CommunityFragment;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class EditCommunityPost extends AppCompatActivity {
@@ -36,7 +37,7 @@ public class EditCommunityPost extends AppCompatActivity {
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 database.getReference("community/post/"+id).child("post").setValue(post);
                 Toast.makeText(getApplicationContext(),R.string.deleteMessage,Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(EditCommunityPost.this,CommunityActivity.class));
+                startActivity(new Intent(EditCommunityPost.this,CommunityFragment.class));
                 finish();
 
             }
@@ -45,7 +46,7 @@ public class EditCommunityPost extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        startActivity(new Intent(EditCommunityPost.this,CommunityActivity.class));
+        startActivity(new Intent(EditCommunityPost.this,CommunityFragment.class));
         finish();
         return true;
     }
