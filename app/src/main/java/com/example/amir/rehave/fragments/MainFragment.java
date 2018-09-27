@@ -29,7 +29,7 @@ import com.example.amir.rehave.model.MainFragmentData;
 import java.util.List;
 
 
-public class MainFragment extends Fragment implements MainFragmentAdapter.Listener,LinkListeners.DataTableListener{
+public class MainFragment extends Fragment implements MainFragmentAdapter.Listener, LinkListeners.DataTableListener {
     private RecyclerView recyclerView;
     private MainFragmentAdapter adapter;
 
@@ -46,18 +46,19 @@ public class MainFragment extends Fragment implements MainFragmentAdapter.Listen
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        String type= SharedPrefManager.getInstance(getContext()).getString(StaticDataManager.TYPE_PREF);
-        if(type.equals(StaticDataManager.ADMIN_TYPE)){
-            intializeAdminFab();
-        }
+        String type = SharedPrefManager.getInstance(getContext()).getString(StaticDataManager.TYPE_PREF);
+        if (type != null) {
+            if (type.equals(StaticDataManager.ADMIN_TYPE)) {
+                intializeAdminFab();
+            }
 
+        }
 
 
         recyclerView = rootView.findViewById(R.id.recycler_view);
@@ -69,15 +70,14 @@ public class MainFragment extends Fragment implements MainFragmentAdapter.Listen
         forumCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommunityFragment nextFrag= new CommunityFragment();
+                CommunityFragment nextFrag = new CommunityFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container_layout, nextFrag,"findThisFragment")
+                        .replace(R.id.container_layout, nextFrag, "findThisFragment")
                         .addToBackStack(null)
                         .commit();
 
             }
         });
-
 
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(recyclerView.getContext(), 2);
@@ -88,7 +88,7 @@ public class MainFragment extends Fragment implements MainFragmentAdapter.Listen
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        LinkMethods linkMethods=new LinkMethods();
+        LinkMethods linkMethods = new LinkMethods();
 
         linkMethods.setDataTableListener(this);
 
@@ -96,13 +96,13 @@ public class MainFragment extends Fragment implements MainFragmentAdapter.Listen
     }
 
     private void intializeAdminFab() {
-        FloatingActionButton adminFab=rootView.findViewById(R.id.admin_fab);
+        FloatingActionButton adminFab = rootView.findViewById(R.id.admin_fab);
         adminFab.setVisibility(View.VISIBLE);
         adminFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container_layout, AdminFragment.newInstance(),"findThisFragment")
+                        .replace(R.id.container_layout, AdminFragment.newInstance(), "findThisFragment")
                         .addToBackStack(null)
                         .commit();
             }
@@ -110,17 +110,16 @@ public class MainFragment extends Fragment implements MainFragmentAdapter.Listen
     }
 
     @Override
-    public void itemClick(String id,String title) {
+    public void itemClick(String id, String title) {
 
         try {
-            Intent intent = IntentFactory.getIntent(getContext(),title);
+            Intent intent = IntentFactory.getIntent(getContext(), title);
 
-            intent.putExtra("key",id );
+            intent.putExtra("key", id);
             startActivity(intent);
-        }catch (Exception e){
-            Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-
 
 
     }
@@ -131,11 +130,10 @@ public class MainFragment extends Fragment implements MainFragmentAdapter.Listen
     }
 
 
-
     @Override
     public void listenDatable(List<MainFragmentData> datas) {
 
-        adapter = new MainFragmentAdapter( datas, MainFragment.this);
+        adapter = new MainFragmentAdapter(datas, MainFragment.this);
 
         recyclerView.setAdapter(adapter);
 
