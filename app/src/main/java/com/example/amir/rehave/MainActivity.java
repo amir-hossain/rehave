@@ -2,6 +2,7 @@ package com.example.amir.rehave;
 
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -19,6 +20,7 @@ import com.example.amir.rehave.fragments.LoginFragment;
 import com.example.amir.rehave.fragments.MainFragment;
 import com.example.amir.rehave.fragments.RelapseProtectionFragment;
 import com.example.amir.rehave.fragments.SingUpFragment;
+import com.example.amir.rehave.manager.SharedPrefManager;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -97,10 +99,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.container_layout, CommunityFragment.newInstance()).addToBackStack(null).commit();
 
         }else {
-            Intent intent=new Intent(this,LoginFragment.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-
+            SharedPrefManager.getInstance(this).clear();
+            MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.container_layout, LoginFragment.newInstance()).addToBackStack(null).commit();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -109,6 +109,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         return true;
     }
+
+
 
 
 

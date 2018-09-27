@@ -32,4 +32,9 @@ public class SharedPrefManager {
         return sharedPreferences.getString(name, null);
     }
 
+    public void clear(){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        sharedPreferences.edit().clear().commit();
+    }
+
 }
