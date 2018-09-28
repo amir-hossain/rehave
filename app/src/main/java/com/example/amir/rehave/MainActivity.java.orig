@@ -23,8 +23,13 @@ import com.example.amir.rehave.fragments.LoginFragment;
 import com.example.amir.rehave.fragments.MainFragment;
 import com.example.amir.rehave.fragments.RelapseProtectionFragment;
 import com.example.amir.rehave.fragments.SingUpFragment;
+<<<<<<< HEAD
+import com.example.amir.rehave.manager.SharedPrefManager;
+||||||| merged common ancestors
+=======
 import com.example.amir.rehave.manager.SharedPrefManager;
 import com.example.amir.rehave.manager.StaticDataManager;
+>>>>>>> dev
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
