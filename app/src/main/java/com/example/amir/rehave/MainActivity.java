@@ -9,7 +9,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.example.amir.rehave.fragments.AboutFragment;
 import com.example.amir.rehave.fragments.AddictionInformationFragment;
@@ -21,8 +24,15 @@ import com.example.amir.rehave.fragments.MainFragment;
 import com.example.amir.rehave.fragments.RelapseProtectionFragment;
 import com.example.amir.rehave.fragments.SingUpFragment;
 import com.example.amir.rehave.manager.SharedPrefManager;
+import com.example.amir.rehave.manager.StaticDataManager;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+
+    private TextView userNameView;
+
+    private DrawerLayout drawer;
+
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +42,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         initializeNavDrawer();
+
+        View headerView = navigationView.getHeaderView(0);
+
+        userNameView = headerView.findViewById(R.id.user_name);
+
+        userNameView.setText(SharedPrefManager.getInstance(getApplicationContext()).getString(StaticDataManager.NAME_PREF));
     }
 
 
@@ -41,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         setSupportActionBar(toolbar);
 
-        final DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
 
@@ -51,13 +67,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
 
         navigationView.setNavigationItemSelectedListener(this);
 
         MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.container_layout, MainFragment.newInstance()).commit();
 
         navigationView.setCheckedItem(R.id.nav_main);
+
     }
 
 

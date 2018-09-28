@@ -3,6 +3,8 @@ package com.example.amir.rehave.fragments;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +20,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class SingUpFragment extends Fragment implements View.OnClickListener{
+public class SingUpFragment extends BaseFragment implements View.OnClickListener{
     EditText userName;
     EditText phonEmail;
     EditText password;
@@ -83,11 +85,13 @@ public class SingUpFragment extends Fragment implements View.OnClickListener{
                     public void onComplete(DatabaseError databaseError,
                                            DatabaseReference databaseReference) {
                         Toast.makeText(getContext(),"sucessfully registered",Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getContext(),LoginFragment.class));
+                        startFragment(LoginFragment.newInstance());
                     }
                 });
 
 
 
     }
+
+
 }
