@@ -23,7 +23,6 @@ import com.example.amir.rehave.factory.IntentFactory;
 import com.example.amir.rehave.link.LinkListeners;
 import com.example.amir.rehave.link.LinkMethods;
 import com.example.amir.rehave.manager.SharedPrefManager;
-import com.example.amir.rehave.manager.StaticDataManager;
 import com.example.amir.rehave.model.MainFragmentData;
 
 import java.util.List;
@@ -52,9 +51,9 @@ public class MainFragment extends Fragment implements MainFragmentAdapter.Listen
 
         rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        String type = SharedPrefManager.getInstance(getContext()).getString(StaticDataManager.TYPE_PREF);
+        String type = SharedPrefManager.getInstance(getContext()).getString(SharedPrefManager.TYPE_PREF);
         if (type != null) {
-            if (type.equals(StaticDataManager.ADMIN_TYPE)) {
+            if (type.equals(SharedPrefManager.ADMIN_TYPE)) {
                 intializeAdminFab();
             }
 
@@ -70,9 +69,8 @@ public class MainFragment extends Fragment implements MainFragmentAdapter.Listen
         forumCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommunityFragment nextFrag = new CommunityFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container_layout, nextFrag, "findThisFragment")
+                        .replace(R.id.container_layout,CommunityFragment.newInstance())
                         .addToBackStack(null)
                         .commit();
 
@@ -90,7 +88,7 @@ public class MainFragment extends Fragment implements MainFragmentAdapter.Listen
 
         LinkMethods linkMethods = new LinkMethods();
 
-        linkMethods.setDataTableListener(this);
+        linkMethods.setDataTableListener("data",this);
 
         return rootView;
     }
@@ -110,12 +108,12 @@ public class MainFragment extends Fragment implements MainFragmentAdapter.Listen
     }
 
     @Override
-    public void itemClick(String id, String title) {
+    public void itemClick(MainFragmentData data) {
 
         try {
-            Intent intent = IntentFactory.getIntent(getContext(), title);
+            Intent intent = IntentFactory.getIntent(getContext(), data.getSection());
 
-            intent.putExtra("key", id);
+            intent.putExtra("data",data);
             startActivity(intent);
         } catch (Exception e) {
             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();

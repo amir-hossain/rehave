@@ -1,10 +1,6 @@
 package com.example.amir.rehave.fragments;
 
-import android.content.Intent;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,19 +11,33 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.amir.rehave.R;
+import com.example.amir.rehave.database.RehaveDao;
+import com.example.amir.rehave.database.User;
+import com.example.amir.rehave.database.UserDatabase;
 import com.example.amir.rehave.model.SignUpModel;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+
 public class SingUpFragment extends BaseFragment implements View.OnClickListener{
     EditText userName;
     EditText phonEmail;
     EditText password;
+    RehaveDao dao;
+    private RegistrationCompleteListener registrationCompleteListener;
     private View rootView;
+    private boolean isCheckboxChecked=false;
 
-    public static SingUpFragment newInstance() {
+    public static SingUpFragment newInstance(RegistrationCompleteListener registrationCompleteListener) {
         SingUpFragment fragment = new SingUpFragment();
+        fragment.registrationCompleteListener =registrationCompleteListener;
         return fragment;
     }
 
@@ -37,21 +47,23 @@ public class SingUpFragment extends BaseFragment implements View.OnClickListener
 
         rootView = inflater.inflate(R.layout.signup_fragment, container, false);
 
-
-
+        dao=UserDatabase.getDao(getContext());
         userName=rootView.findViewById(R.id.phone_email);
         phonEmail=rootView.findViewById(R.id.phone_email);
         password=rootView.findViewById(R.id.password);
         final Button singUp=rootView.findViewById(R.id.button);
         CheckBox checkBox=rootView.findViewById(R.id.checkbox);
+        singUp.setOnClickListener(SingUpFragment.this);
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                isCheckboxChecked=isChecked;
                 if(isChecked){
                     singUp.setBackgroundColor(getResources().getColor(R.color.darkTeal));
-                    singUp.setOnClickListener(SingUpFragment.this);
+
                 }else {
                     singUp.setBackgroundColor(getResources().getColor(R.color.color_white));
+
 
                 }
             }
@@ -63,11 +75,36 @@ public class SingUpFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        String name=userName.getText().toString();
-        String pass=password.getText().toString();
-        String phoneEmail=phonEmail.getText().toString();
+        if(isCheckboxChecked){
+            String name=userName.getText().toString();
+            String pass=password.getText().toString();
+            String phoneEmail=phonEmail.getText().toString();
 
-        postData(name,pass,phoneEmail);
+            postData(name,pass,phoneEmail);
+//        saveOfline(name,pass,phoneEmail);
+        }else {
+            showToast("দয়া করে শর্ত মানুন",Toast.LENGTH_LONG);
+        }
+
+    }
+
+    private void saveOfline(final String name, final String pass, final String phoneEmail) {
+        Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(ObservableEmitter<String> emitter) throws Exception {
+                dao.userRegistration(new User(name,phoneEmail,pass));
+                emitter.onNext("sucessfully registered");
+            }
+        }).subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        showToast(s, Toast.LENGTH_LONG);
+                        registrationCompleteListener.OnRegistrationComplete();
+                    }
+                });
+
     }
 
     private void postData(String name,String pass,String phoneEmail) {
@@ -84,13 +121,19 @@ public class SingUpFragment extends BaseFragment implements View.OnClickListener
                     @Override
                     public void onComplete(DatabaseError databaseError,
                                            DatabaseReference databaseReference) {
-                        Toast.makeText(getContext(),"sucessfully registered",Toast.LENGTH_SHORT).show();
-                        startFragment(LoginFragment.newInstance());
+                        showToast("রেজিস্টেশন সম্পুর্ন হয়েছে !", Toast.LENGTH_SHORT);
+                        registrationCompleteListener.OnRegistrationComplete();
                     }
                 });
 
+    }
 
+    private void showToast(String s, int lengthShort) {
+        Toast.makeText(getContext(), s, lengthShort).show();
+    }
 
+    public interface RegistrationCompleteListener{
+        void OnRegistrationComplete();
     }
 
 

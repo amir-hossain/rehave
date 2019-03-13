@@ -4,23 +4,17 @@ import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.amir.rehave.adapter.CommentListAdapter;
-import com.example.amir.rehave.adapter.CommunityListAdapter;
-import com.example.amir.rehave.fragments.CommunityFragment;
 import com.example.amir.rehave.manager.SharedPrefManager;
-import com.example.amir.rehave.manager.StaticDataManager;
 import com.example.amir.rehave.model.CommunityPostModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -52,7 +46,7 @@ public class ForumDetails extends AppCompatActivity {
         actionBar.setTitle(R.string.forumDetailsLabel);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        postId=getIntent().getExtras().getString(StaticDataManager.ID_PREF);
+        postId=getIntent().getExtras().getString(SharedPrefManager.ID_PREF);
         initializeView();
 
         getData();

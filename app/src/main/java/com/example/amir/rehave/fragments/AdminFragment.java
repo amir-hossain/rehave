@@ -20,7 +20,7 @@ import com.example.amir.rehave.MainActivity;
 import com.example.amir.rehave.PostActivity;
 import com.example.amir.rehave.R;
 import com.example.amir.rehave.adapter.AdminListAdapter;
-import com.example.amir.rehave.manager.StaticDataManager;
+import com.example.amir.rehave.manager.SharedPrefManager;
 import com.example.amir.rehave.model.DataModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -63,7 +63,7 @@ public class AdminFragment extends Fragment implements AdminListAdapter.ItemClic
             @Override
             public void onClick(View view) {
 
-                runFragment(StaticDataManager.ADMIN_TYPE);
+                runFragment(SharedPrefManager.ADMIN_TYPE);
 
             }
         });
@@ -88,7 +88,7 @@ public class AdminFragment extends Fragment implements AdminListAdapter.ItemClic
     private void runFragment(String type) {
 
         Bundle bundle = new Bundle();
-        bundle.putString(StaticDataManager.TYPE_PREF,type);
+        bundle.putString(SharedPrefManager.TYPE_PREF,type);
 
         CommunityFragment fragment =CommunityFragment.newInstance();
         fragment.setArguments(bundle);

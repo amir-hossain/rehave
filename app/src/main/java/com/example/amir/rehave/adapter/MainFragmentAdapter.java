@@ -66,7 +66,7 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.itemClick(data.getId(),data.getSection());
+                listener.itemClick(data);
             }
         });
     }
@@ -79,6 +79,6 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
 
     public interface Listener {
 
-        void itemClick(String id,String title);
+        void itemClick(MainFragmentData data);
     }
 }

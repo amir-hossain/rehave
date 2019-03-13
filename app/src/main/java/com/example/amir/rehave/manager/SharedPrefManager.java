@@ -4,6 +4,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class SharedPrefManager {
+    public static String TYPE_PREF="type";
+    public static String ADMIN_TYPE="Admin";
+    public static String NAME_PREF="name";
+    public static String ID_PREF="id";
+    public static String USER_TYPE="User";
+
     private static SharedPrefManager sharedPrefManager;
     private static Context context;
 

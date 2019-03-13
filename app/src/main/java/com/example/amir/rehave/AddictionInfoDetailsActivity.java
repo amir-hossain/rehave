@@ -1,56 +1,65 @@
 package com.example.amir.rehave;
 
+import android.databinding.DataBindingUtil;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.Toast;
 
-import com.example.amir.rehave.model.DataModel;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.example.amir.rehave.databinding.ActivityInfoDetailsBinding;
+import com.example.amir.rehave.manager.SharedPrefManager;
+import com.example.amir.rehave.model.MainFragmentData;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 public class AddictionInfoDetailsActivity extends AppCompatActivity {
-
+    private ActivityInfoDetailsBinding binding;
+    private MainFragmentData data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_details);
+        binding= DataBindingUtil.setContentView(this,R.layout.activity_info_details);
+
         ActionBar actionBar=getSupportActionBar();
         actionBar.setTitle(R.string.adiction_information);
         actionBar.setDisplayHomeAsUpEnabled(true);
-        String key=getIntent().getExtras().getString("key");
-//        Toast.makeText(this,key,Toast.LENGTH_SHORT).show();
-        final TextView titleView=findViewById(R.id.title_view);
-        final TextView desView=findViewById(R.id.des_view);
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        Query query = database.getReference("data/info").orderByKey().equalTo(key);
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-//                dataSnapshot.getValue(DataModel.class);
-                DataModel value=null;
-                for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
-                    value = singleSnapshot.getValue(DataModel.class);
-                    titleView.setText(value.getTitle());
-                    desView.setText(value.getPost());
-//                    Log.d("Fire value", "Value is: " + value.getTitle());
-//
-                }
-            }
+        data=getIntent().getParcelableExtra("data");
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w("Fire value", "Failed to read value.", databaseError.toException());
+        binding.setData(data);
 
-            }
-        });
+        String comment=data.getCommentList().get(SharedPrefManager.getInstance(this).getString(SharedPrefManager.ID_PREF));
+        binding.commentBox.setText(comment);
 
+    }
+
+    public void saveComment(View view){
+        String comment=binding.commentBox.getText().toString().trim();
+        if(!comment.isEmpty()){
+            String outerTableName=getOuterTableName();
+            DatabaseReference reference=FirebaseDatabase.getInstance().getReference("data/"+outerTableName+"/"+data.getPostId()+"/commentList/"+ SharedPrefManager.getInstance(this).getString(SharedPrefManager.ID_PREF));
+            reference.setValue(comment);
+
+            showToast("মন্তব্য সেভ হয়েছে!");
+
+        }else {
+            showToast("ফিল্ড খালি আছে!");
+        }
+
+    }
+
+    private void showToast(String s) {
+        Toast.makeText(this,s,Toast.LENGTH_LONG).show();
+    }
+
+    private String getOuterTableName() {
+        if(data.getSection().equals(getResources().getString(R.string.adiction_information))){
+            return "info";
+        }
+        return "";
     }
 
     @Override

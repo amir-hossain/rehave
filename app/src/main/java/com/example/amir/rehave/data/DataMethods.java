@@ -10,8 +10,8 @@ import com.google.firebase.database.ValueEventListener;
 public class DataMethods {
     private static FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-    public static void setDataTableListener(final DataListeners.DataTableListener dataTableListener){
-        database.getReference("data").addValueEventListener(new ValueEventListener() {
+    public static void setDataTableListener(String root,final DataListeners.DataTableListener dataTableListener){
+        database.getReference(root).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 

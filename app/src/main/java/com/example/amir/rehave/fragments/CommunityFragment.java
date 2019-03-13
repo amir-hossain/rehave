@@ -1,9 +1,7 @@
 package com.example.amir.rehave.fragments;
 
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,7 +19,6 @@ import com.example.amir.rehave.R;
 import com.example.amir.rehave.ReviewActivity;
 import com.example.amir.rehave.adapter.CommunityListAdapter;
 import com.example.amir.rehave.manager.SharedPrefManager;
-import com.example.amir.rehave.manager.StaticDataManager;
 import com.example.amir.rehave.model.CommunityPostModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -108,7 +105,7 @@ public class CommunityFragment extends Fragment implements CommunityListAdapter.
     private void initilizeFab() {
         review = (FloatingActionButton) view.findViewById(R.id.review);
         add = (FloatingActionButton) view.findViewById(R.id.add);
-        String name=SharedPrefManager.getInstance(getContext()).getString(StaticDataManager.NAME_PREF);
+        String name=SharedPrefManager.getInstance(getContext()).getString(SharedPrefManager.NAME_PREF);
         if(name==null){
             review.setVisibility(View.GONE);
             add.setVisibility(View.GONE);
@@ -148,7 +145,7 @@ public class CommunityFragment extends Fragment implements CommunityListAdapter.
         String postId=data.get(index).getPostId();
         Intent intent=new Intent(getActivity(),ForumDetails.class);
         intent.putExtra("post",post);
-        intent.putExtra(StaticDataManager.ID_PREF,postId);
+        intent.putExtra(SharedPrefManager.ID_PREF,postId);
         startActivity(intent);
     }
 

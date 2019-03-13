@@ -1,10 +1,8 @@
 package com.example.amir.rehave.fragments;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +14,6 @@ import android.widget.Toast;
 import com.example.amir.rehave.MainActivity;
 import com.example.amir.rehave.R;
 import com.example.amir.rehave.manager.SharedPrefManager;
-import com.example.amir.rehave.manager.StaticDataManager;
 import com.example.amir.rehave.model.SignUpModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,10 +29,12 @@ public class LoginFragment extends Fragment {
     EditText phoneEmailField;
     EditText password;
     private View rootView;
+    private RegistrationButtonClickListenter listenter;
     ArrayList<SignUpModel> singUpDatas =new ArrayList<>();
 
-    public static LoginFragment newInstance() {
+    public static LoginFragment newInstance(RegistrationButtonClickListenter listenter) {
         LoginFragment fragment = new LoginFragment();
+        fragment.listenter=listenter;
         return fragment;
     }
 
@@ -64,7 +63,7 @@ public class LoginFragment extends Fragment {
         singupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                runFragment(SingUpFragment.newInstance());
+                listenter.wantToGoToRegistration();
 
             }
         });
@@ -72,19 +71,14 @@ public class LoginFragment extends Fragment {
         return rootView;
     }
 
-    private void runFragment(Fragment nextFrag) {
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container_layout, nextFrag,"findThisFragment")
-                .addToBackStack(null)
-                .commit();
-    }
+
 
     private void check() {
         if(singUpDatas!=null){
             boolean result=false;
             if(phoneEmail.equals("admin") && pass.equals("admin")){
-                saveToPreference("1","Admin", StaticDataManager.ADMIN_TYPE);
-                runFragment(MainFragment.newInstance());
+                saveToPreference("1","Admin", SharedPrefManager.ADMIN_TYPE);
+                listenter.wantToGoToRegistration();
                 result= true;
             }else{
                 for(int i=0;i<singUpDatas.size();i++){
@@ -93,7 +87,7 @@ public class LoginFragment extends Fragment {
                     String id=singUpDatas.get(i).getId();
                     String name=singUpDatas.get(i).getName();
                     if(phoneEmail.equals(dataBasephoneEmail) && pass.equals(dataBasePass)){
-                        saveToPreference(id,name,StaticDataManager.USER_TYPE);
+                        saveToPreference(id,name,SharedPrefManager.USER_TYPE);
                         startActivity(new Intent(getContext(),MainActivity.class));
 
                         result= true;
@@ -114,9 +108,9 @@ public class LoginFragment extends Fragment {
     }
 
     private void saveToPreference(String id,String name,String type) {
-        SharedPrefManager.getInstance(getContext()).setString(StaticDataManager.NAME_PREF,name);
-        SharedPrefManager.getInstance(getContext()).setString(StaticDataManager.ID_PREF,id);
-        SharedPrefManager.getInstance(getContext()).setString(StaticDataManager.TYPE_PREF,type);
+        SharedPrefManager.getInstance(getContext()).setString(SharedPrefManager.NAME_PREF,name);
+        SharedPrefManager.getInstance(getContext()).setString(SharedPrefManager.ID_PREF,id);
+        SharedPrefManager.getInstance(getContext()).setString(SharedPrefManager.TYPE_PREF,type);
     }
 
 
@@ -146,4 +140,7 @@ public class LoginFragment extends Fragment {
     }
 
 
+    public interface RegistrationButtonClickListenter{
+        void wantToGoToRegistration();
+    }
 }

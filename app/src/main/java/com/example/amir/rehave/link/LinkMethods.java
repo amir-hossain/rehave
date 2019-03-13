@@ -14,9 +14,9 @@ public class LinkMethods implements DataListeners.DataTableListener {
 
     private LinkListeners.DataTableListener dataTableListener;
 
-    public void setDataTableListener(LinkListeners.DataTableListener listener){
+    public void setDataTableListener(String rootTable,LinkListeners.DataTableListener listener){
 
-        DataMethods.setDataTableListener(LinkMethods.this);
+        DataMethods.setDataTableListener(rootTable,LinkMethods.this);
         this.dataTableListener=listener;
     }
 
@@ -28,11 +28,15 @@ public class LinkMethods implements DataListeners.DataTableListener {
         MainFragmentData mainFragmentData;
 
         for(DataSnapshot childSnap : snapshot.getChildren()){
-            for(DataSnapshot grandChild: childSnap.getChildren()){
+            if(!childSnap.getKey().equals("arch")){
+                for(DataSnapshot grandChild: childSnap.getChildren()){
 
-                mainFragmentData=grandChild.getValue(MainFragmentData.class);
-                datas.add(mainFragmentData);
+                    mainFragmentData=grandChild.getValue(MainFragmentData.class);
+                    mainFragmentData.setPostId(grandChild.getKey());
+                    datas.add(mainFragmentData);
+                }
             }
+
 
         }
 
