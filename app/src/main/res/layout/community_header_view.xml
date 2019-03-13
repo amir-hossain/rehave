@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/header_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        card_view:cardBackgroundColor="@color/color_white"
+        card_view:cardCornerRadius="10dp"
+        card_view:cardElevation="5dp"
+        card_view:cardUseCompatPadding="true">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingTop="16dp"
+                android:text="ফোরামে স্বাগতম !"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/post"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignWithParentIfMissing="true"
+                android:layout_below="@+id/img"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="16dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:paddingLeft="@dimen/large_intrinsic_padding"
+                android:paddingRight="@dimen/large_intrinsic_padding"
+                android:paddingBottom="16dp"
+                android:text="এখানে আপনি অন্য ফোরাম বাব্যহারকারীদের সাথে তথ্য আদান প্রদান করতে পারবেন"
+                android:textAllCaps="false"
+                android:textAppearance="@style/TextAppearance.Second"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/title" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

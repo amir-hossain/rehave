@@ -16,6 +16,8 @@ import com.example.amir.rehave.model.CommunityPostModel;
 import java.util.ArrayList;
 
 public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdapter.MyViewHolder> {
+    private static final int HEADER = 0;
+    private static final int ITEM = 1;
     private ArrayList<CommunityPostModel> dataSet;
     private Context context=null;
     private static CommunityListAdapter.ItemClicked clickListener;
@@ -39,24 +41,24 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
 
         public MyViewHolder(final Context context, final View itemView) {
             super(itemView);
-            this.titleView=itemView.findViewById(R.id.title);
-            this.img=itemView.findViewById(R.id.img);
-            this.nameView = itemView.findViewById(R.id.name);
-            this.dateView = itemView.findViewById(R.id.date);
-            this.timeView = itemView.findViewById(R.id.time);
-            this.commentView = itemView.findViewById(R.id.comment);
-            this.postView = itemView.findViewById(R.id.post);
-            this.cardView = itemView.findViewById(R.id.card_view);
-            cardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+
+            if(itemView.findViewById(R.id.item_root)!=null){
+                this.titleView=itemView.findViewById(R.id.title);
+                this.img=itemView.findViewById(R.id.img);
+                this.nameView = itemView.findViewById(R.id.name);
+                this.dateView = itemView.findViewById(R.id.date);
+                this.timeView = itemView.findViewById(R.id.time);
+                this.commentView = itemView.findViewById(R.id.comment);
+                this.postView = itemView.findViewById(R.id.post);
+                this.cardView = itemView.findViewById(R.id.item_root);
+                cardView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 //                    Toast.makeText(context,"Edit clicked",Toast.LENGTH_SHORT).show();
-                    CommunityListAdapter.clickListener.onItemClicked(itemView);
-                }
-            });
-
-
-
+                        CommunityListAdapter.clickListener.onItemClicked(itemView);
+                    }
+                });
+            }
         }
     }
 
@@ -65,8 +67,15 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
     @Override
     public CommunityListAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
                                                              int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.community_item, parent, false);
+        View view=null;
+        if(viewType==HEADER){
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.community_header_view, parent, false);
+        }else {
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.community_item, parent, false);
+        }
+
 
 //        view.setOnClickListener(listener);
 
@@ -74,40 +83,52 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
         return myViewHolder;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        if(position==0){
+            return HEADER;
+        }else {
+            return ITEM;
+        }
 
+    }
 
     @Override
     public void onBindViewHolder(final CommunityListAdapter.MyViewHolder holder, final int listPosition) {
-        TextView titleView = holder.titleView;
-        String title=dataSet.get(listPosition).getTitle();
-        if(title.equals("")){
-            titleView.setText(context.getString(R.string.untitled));
 
-        }else{
-            titleView.setText(title);
+        if(getItemViewType(listPosition)!=HEADER){
+            TextView titleView = holder.titleView;
+            String title=dataSet.get(listPosition).getTitle();
+            if(title.equals("")){
+                titleView.setText(context.getString(R.string.untitled));
+
+            }else{
+                titleView.setText(title);
+            }
+
+            if(dataSet.get(listPosition).getImage()!=null){
+
+                holder.img.setVisibility(View.VISIBLE);
+                Glide.with(context).load(dataSet.get(listPosition).getImage()).into(holder.img);
+            }
+
+            TextView nameView = holder.nameView;
+            nameView.setText(dataSet.get(listPosition).getName());
+            TextView timeView = holder.timeView;
+            timeView.setText(dataSet.get(listPosition).getTime());
+            TextView dateView = holder.dateView;
+            dateView.setText(dataSet.get(listPosition).getDate());
+            TextView postView = holder.postView;
+            postView.setText(dataSet.get(listPosition).getPost());
+            TextView countView = holder.commentView;
+            String count=dataSet.get(listPosition).getCommentCount();
+            if (count.equals("0")){
+                countView.setVisibility(View.GONE);
+            }else {
+                countView.setText(count);
+            }
         }
 
-        if(dataSet.get(listPosition).getImage()!=null){
-
-            holder.img.setVisibility(View.VISIBLE);
-            Glide.with(context).load(dataSet.get(listPosition).getImage()).into(holder.img);
-        }
-
-        TextView nameView = holder.nameView;
-        nameView.setText(dataSet.get(listPosition).getName());
-        TextView timeView = holder.timeView;
-        timeView.setText(dataSet.get(listPosition).getTime());
-        TextView dateView = holder.dateView;
-        dateView.setText(dataSet.get(listPosition).getDate());
-        TextView postView = holder.postView;
-        postView.setText(dataSet.get(listPosition).getPost());
-        TextView countView = holder.commentView;
-        String count=dataSet.get(listPosition).getCommentCount();
-        if (count.equals("0")){
-            countView.setVisibility(View.GONE);
-        }else {
-            countView.setText(count);
-        }
 
     }
 
