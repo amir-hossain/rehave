@@ -43,7 +43,7 @@
 
     <string name="phoneFieldTitle">ফোন অথবা ইমেইল</string>
 
-    <string name="loginErrorMessage">ভুল</string>
+    <string name="loginErrorMessage">লগইন হচ্ছে না,আপনার তথ্য যাচাই করুন!</string>
 
     <string name="adiction_information"> মাদক  ও  মাদকাসক্তি  বিষয়ে তথ্য </string>
 
