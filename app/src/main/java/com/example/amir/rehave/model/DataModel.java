@@ -1,10 +1,18 @@
 package com.example.amir.rehave.model;
 
-public class DataModel {
-    String id;
-    String title;
-    String post;
-    String section;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class DataModel implements Parcelable {
+    private String id;
+    private String title;
+    private String post;
+    private String section;
+
+    private Map<String,String> commentList;
 
 
     public DataModel() {
@@ -29,12 +37,43 @@ public class DataModel {
         this.section = section;
     }
 
-    public String getSection() {
-        return section;
+    protected DataModel(Parcel in) {
+        id = in.readString();
+        title = in.readString();
+        post = in.readString();
+        section = in.readString();
+        int size=in.readInt();
+        this.commentList=new HashMap<>();
+        for(int i=0;i<size;i++){
+            String key=in.readString();
+            String value=in.readString();
+            this.commentList.put(key,value);
+        }
     }
 
-    public void setSection(String section) {
-        this.section = section;
+
+    public static final Creator<DataModel> CREATOR = new Creator<DataModel>() {
+        @Override
+        public DataModel createFromParcel(Parcel in) {
+            return new DataModel(in);
+        }
+
+        @Override
+        public DataModel[] newArray(int size) {
+            return new DataModel[size];
+        }
+    };
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public void setTitle(String title) {
@@ -49,19 +88,39 @@ public class DataModel {
         this.post = post;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getSection() {
+        return section;
     }
 
-
-
-    public String getTitle() {
-        return title;
+    public void setSection(String section) {
+        this.section = section;
     }
 
+    public Map<String, String> getCommentList() {
+        return commentList;
+    }
 
+    public void setCommentList(Map<String, String> commentList) {
+        this.commentList = commentList;
+    }
 
-    public String getId() {
-        return id;
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(title);
+        dest.writeString(post);
+        dest.writeString(section);
+        if(commentList!=null){
+            dest.writeInt(commentList.size());
+            for(Map.Entry<String,String> entry : commentList.entrySet()){
+                dest.writeString(entry.getKey());
+                dest.writeString(entry.getValue());
+            }
+        }
     }
 }

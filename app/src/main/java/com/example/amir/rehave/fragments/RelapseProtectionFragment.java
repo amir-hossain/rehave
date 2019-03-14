@@ -74,7 +74,7 @@ public class RelapseProtectionFragment extends Fragment {
                 DataModel value=null;
                 for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
                     value = singleSnapshot.getValue(DataModel.class);
-                    data.add(new DataModel(value.getTitle(),value.getId()));
+                    data.add(new DataModel(value.getId(),value.getTitle(),value.getPost()));
                 }
 
                 adapter = new ListAdpter(data,myOnClickListener);
@@ -103,10 +103,10 @@ public class RelapseProtectionFragment extends Fragment {
         public void onClick(View v) {
             Log.d("xzzzzzzzzzz", "xxxxxxx");
             int index =recyclerView.getChildLayoutPosition(v);
-            String key=data.get(index).getId();
-            Toast.makeText(context,index+" clicked",Toast.LENGTH_SHORT).show();
+
+//            Toast.makeText(context,index+" clicked",Toast.LENGTH_SHORT).show();
             Intent intent=new Intent(context,ProtectionDetailsActivity.class);
-            intent.putExtra("key",key);
+            intent.putExtra("data",data.get(index));
             context.startActivity(intent);
         }
     }

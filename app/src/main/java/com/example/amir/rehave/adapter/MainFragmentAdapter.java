@@ -10,18 +10,19 @@ import android.widget.TextView;
 
 
 import com.example.amir.rehave.R;
+import com.example.amir.rehave.model.DataModel;
 import com.example.amir.rehave.model.MainFragmentData;
 
 import java.util.List;
 
 public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapter.MyViewHolder> {
 
-    private List<MainFragmentData> dataList;
+    private List<DataModel> dataList;
     private Listener listener;
 
 
 
-    public MainFragmentAdapter(List<MainFragmentData> albumList, MainFragmentAdapter.Listener listener) {
+    public MainFragmentAdapter(List<DataModel> albumList, MainFragmentAdapter.Listener listener) {
 
         this.dataList = albumList;
 
@@ -54,7 +55,7 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
 
     @Override
     public void onBindViewHolder(final MainFragmentAdapter.MyViewHolder holder, final int position) {
-        final MainFragmentData data = dataList.get(position);
+        final DataModel data = dataList.get(position);
 
         holder.title.setText(data.getTitle());
 
@@ -79,6 +80,6 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
 
     public interface Listener {
 
-        void itemClick(MainFragmentData data);
+        void itemClick(DataModel data);
     }
 }

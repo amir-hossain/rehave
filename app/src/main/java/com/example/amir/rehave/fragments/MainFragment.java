@@ -23,6 +23,7 @@ import com.example.amir.rehave.factory.IntentFactory;
 import com.example.amir.rehave.link.LinkListeners;
 import com.example.amir.rehave.link.LinkMethods;
 import com.example.amir.rehave.manager.SharedPrefManager;
+import com.example.amir.rehave.model.DataModel;
 import com.example.amir.rehave.model.MainFragmentData;
 
 import java.util.List;
@@ -108,7 +109,7 @@ public class MainFragment extends Fragment implements MainFragmentAdapter.Listen
     }
 
     @Override
-    public void itemClick(MainFragmentData data) {
+    public void itemClick(DataModel data) {
 
         try {
             Intent intent = IntentFactory.getIntent(getContext(), data.getSection());
@@ -129,7 +130,7 @@ public class MainFragment extends Fragment implements MainFragmentAdapter.Listen
 
 
     @Override
-    public void listenDatable(List<MainFragmentData> datas) {
+    public void listenDatable(List<DataModel> datas) {
 
         adapter = new MainFragmentAdapter(datas, MainFragment.this);
 

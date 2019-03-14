@@ -10,13 +10,14 @@ import android.widget.Toast;
 
 import com.example.amir.rehave.databinding.ActivityInfoDetailsBinding;
 import com.example.amir.rehave.manager.SharedPrefManager;
+import com.example.amir.rehave.model.DataModel;
 import com.example.amir.rehave.model.MainFragmentData;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class AddictionInfoDetailsActivity extends AppCompatActivity {
     private ActivityInfoDetailsBinding binding;
-    private MainFragmentData data;
+    private DataModel data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +32,7 @@ public class AddictionInfoDetailsActivity extends AppCompatActivity {
 
         binding.setData(data);
 
+
         String comment=data.getCommentList().get(SharedPrefManager.getInstance(this).getString(SharedPrefManager.ID_PREF));
         binding.commentBox.setText(comment);
 
@@ -40,7 +42,7 @@ public class AddictionInfoDetailsActivity extends AppCompatActivity {
         String comment=binding.commentBox.getText().toString().trim();
         if(!comment.isEmpty()){
             String outerTableName=getOuterTableName();
-            DatabaseReference reference=FirebaseDatabase.getInstance().getReference("data/"+outerTableName+"/"+data.getPostId()+"/commentList/"+ SharedPrefManager.getInstance(this).getString(SharedPrefManager.ID_PREF));
+            DatabaseReference reference=FirebaseDatabase.getInstance().getReference("data/"+outerTableName+"/"+data.getId()+"/commentList/"+ SharedPrefManager.getInstance(this).getString(SharedPrefManager.ID_PREF));
             reference.setValue(comment);
 
             showToast("মন্তব্য সেভ হয়েছে!");

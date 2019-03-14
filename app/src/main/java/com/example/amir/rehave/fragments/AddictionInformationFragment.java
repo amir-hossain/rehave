@@ -15,6 +15,7 @@ import com.example.amir.rehave.AddictionInfoDetailsActivity;
 import com.example.amir.rehave.R;
 import com.example.amir.rehave.model.DataModel;
 import com.example.amir.rehave.adapter.ListAdpter;
+import com.example.amir.rehave.model.MainFragmentData;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,7 +29,8 @@ public class AddictionInformationFragment extends Fragment {
     private  RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private  RecyclerView recyclerView;
-    private ArrayList<DataModel> data;
+//    private ArrayList<DataModel> data;
+private ArrayList<DataModel> data;
     public  View.OnClickListener myOnClickListener;
 
     private View view;
@@ -66,10 +68,11 @@ public class AddictionInformationFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
+//                DataModel value=null;
                 DataModel value=null;
                 for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
                     value = singleSnapshot.getValue(DataModel.class);
-                    data.add(new DataModel(value.getTitle(),value.getId()));
+                    data.add(new DataModel(value.getId(),value.getTitle(),value.getPost()));
                 }
 
                 adapter = new ListAdpter(data,myOnClickListener);
@@ -99,10 +102,10 @@ public class AddictionInformationFragment extends Fragment {
         public void onClick(View v) {
             Log.d("cccccccc", "ccccccccccc");
             int index =recyclerView.getChildLayoutPosition(v);
-            String key=data.get(index).getId();
 //            Toast.makeText(context,index+" clicked",Toast.LENGTH_SHORT).show();
+
             Intent intent=new Intent(context,AddictionInfoDetailsActivity.class);
-            intent.putExtra("key",key);
+            intent.putExtra("data",data.get(index));
             context.startActivity(intent);
         }
     }

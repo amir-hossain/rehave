@@ -24,12 +24,11 @@ public class ProtectionDetailsActivity extends AppCompatActivity {
         ActionBar actionBar=getSupportActionBar();
         actionBar.setTitle(R.string.relapse_protection);
         actionBar.setDisplayHomeAsUpEnabled(true);
-        String key=getIntent().getExtras().getString("key");
 //        Toast.makeText(this,key,Toast.LENGTH_SHORT).show();
         final TextView titleView=findViewById(R.id.title_view);
         final TextView desView=findViewById(R.id.des_view);
 
-        MainFragmentData data=getIntent().getParcelableExtra("data");
+        DataModel data=getIntent().getParcelableExtra("data");
 
         titleView.setText(data.getTitle());
         desView.setText(data.getPost());

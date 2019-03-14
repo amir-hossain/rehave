@@ -2,6 +2,7 @@ package com.example.amir.rehave.link;
 
 import com.example.amir.rehave.data.DataListeners;
 import com.example.amir.rehave.data.DataMethods;
+import com.example.amir.rehave.model.DataModel;
 import com.example.amir.rehave.model.MainFragmentData;
 import com.google.firebase.database.DataSnapshot;
 
@@ -24,15 +25,15 @@ public class LinkMethods implements DataListeners.DataTableListener {
     @Override
     public void listenDataTable(DataSnapshot snapshot) {
 
-        List<MainFragmentData> datas=new ArrayList<>();
-        MainFragmentData mainFragmentData;
+        List<DataModel> datas=new ArrayList<>();
+        DataModel mainFragmentData;
 
         for(DataSnapshot childSnap : snapshot.getChildren()){
             if(!childSnap.getKey().equals("arch")){
                 for(DataSnapshot grandChild: childSnap.getChildren()){
 
-                    mainFragmentData=grandChild.getValue(MainFragmentData.class);
-                    mainFragmentData.setPostId(grandChild.getKey());
+                    mainFragmentData=grandChild.getValue(DataModel.class);
+                    mainFragmentData.setId(grandChild.getKey());
                     datas.add(mainFragmentData);
                 }
             }
@@ -42,7 +43,7 @@ public class LinkMethods implements DataListeners.DataTableListener {
 
 
 
-        List<MainFragmentData> randomData=getRandomTenData(datas);
+        List<DataModel> randomData=getRandomTenData(datas);
 
         dataTableListener.listenDatable(randomData);
 
@@ -50,8 +51,8 @@ public class LinkMethods implements DataListeners.DataTableListener {
 
     }
 
-    private List<MainFragmentData> getRandomTenData(List<MainFragmentData> datas) {
-        List<MainFragmentData> ramdomData=new ArrayList<>();
+    private List<DataModel> getRandomTenData(List<DataModel> datas) {
+        List<DataModel> ramdomData=new ArrayList<>();
 
 //       all data now random
 

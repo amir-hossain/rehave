@@ -55,6 +55,9 @@ public class MainFragmentData implements Parcelable {
         }
     };
 
+    public MainFragmentData(String title, String postId) {
+    }
+
     public String getPostId() {
         return postId;
     }

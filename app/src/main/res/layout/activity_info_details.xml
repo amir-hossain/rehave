@@ -3,7 +3,7 @@
     <data>
         <variable
             name="data"
-            type="com.example.amir.rehave.model.MainFragmentData"/>
+            type="com.example.amir.rehave.model.DataModel"/>
     </data>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
