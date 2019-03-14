@@ -1,5 +1,6 @@
 package com.example.amir.rehave.fragments;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -35,7 +36,7 @@ public class ArchiveFragment extends Fragment {
 
     private static View.OnClickListener myOnClickListener;
 
-    private View view;
+    private RecyclerView view;
 
     public static ArchiveFragment newInstance() {
         ArchiveFragment fragment = new ArchiveFragment();
@@ -47,22 +48,12 @@ public class ArchiveFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.fragment_archive, container, false);
+        view = (RecyclerView) inflater.inflate(R.layout.fragment_archive, container, false);
 
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.archive);
-
-        myOnClickListener = new MyOnClickListener(getContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        view.setLayoutManager(linearLayoutManager);
 
         getData();
-
-
-        recyclerView = view.findViewById(R.id.my_recycler_view);
-
-        recyclerView.setHasFixedSize(true);
-
-        layoutManager = new LinearLayoutManager(getContext());
-
-        recyclerView.setLayoutManager(layoutManager);
 
         data = new ArrayList<>();
 
@@ -70,27 +61,6 @@ public class ArchiveFragment extends Fragment {
     }
 
 
-
-    private static class MyOnClickListener implements View.OnClickListener {
-
-        private final Context context;
-
-        private MyOnClickListener(Context context) {
-            this.context = context;
-        }
-
-        @Override
-        public void onClick(View v) {
-
-            int index = recyclerView.getChildLayoutPosition(v);
-
-            String url = data.get(index).getPost();
-
-            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
-        }
-
-
-    }
 
     private void getData(){
 
@@ -109,9 +79,8 @@ public class ArchiveFragment extends Fragment {
 
                 }
 
-                adapter = new ArchiveListAdapter(getContext(),data,myOnClickListener);
-                recyclerView.setAdapter(adapter);
-//                    Log.d("Fire value", "Value is: " + value.getTitle());
+                ArchiveListAdapter archiveListAdapter = new ArchiveListAdapter(ArchiveFragment.this,data);
+                view.setAdapter(archiveListAdapter);
             }
 
             @Override
