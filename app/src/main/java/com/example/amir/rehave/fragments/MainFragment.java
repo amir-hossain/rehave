@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.amir.rehave.AddictionInfoDetailsActivity;
 import com.example.amir.rehave.R;
 import com.example.amir.rehave.adapter.MainFragmentAdapter;
 import com.example.amir.rehave.factory.IntentFactory;
@@ -110,17 +111,9 @@ public class MainFragment extends Fragment implements MainFragmentAdapter.Listen
 
     @Override
     public void itemClick(DataModel data) {
-
-        try {
-            Intent intent = IntentFactory.getIntent(getContext(), data.getSection());
-
+            Intent intent = new Intent(getContext(), AddictionInfoDetailsActivity.class);
             intent.putExtra("data",data);
             startActivity(intent);
-        } catch (Exception e) {
-            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-
-
     }
 
     private int dpToPx(int dp) {

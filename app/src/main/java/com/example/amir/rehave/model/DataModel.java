@@ -30,11 +30,12 @@ public class DataModel implements Parcelable {
         this.id = id;
     }
 
-    public DataModel(String id, String title, String post, String section) {
+    public DataModel(String id, String title, String post, String section, Map<String, String> commentList) {
         this.id = id;
         this.title = title;
         this.post = post;
         this.section = section;
+        this.commentList = commentList;
     }
 
     protected DataModel(Parcel in) {

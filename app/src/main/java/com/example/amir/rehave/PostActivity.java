@@ -113,7 +113,7 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
 
         String key=tempRef.push().getKey();
         DatabaseReference mainRef=database.getReference(path+key);
-        DataModel model=new DataModel(key,title,post,subject);
+        DataModel model=new DataModel(key,title,post,subject,null);
         mainRef.setValue(model,new
                 DatabaseReference.CompletionListener() {
 

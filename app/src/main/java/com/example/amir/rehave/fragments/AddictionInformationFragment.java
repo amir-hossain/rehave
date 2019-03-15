@@ -57,7 +57,7 @@ private ArrayList<DataModel> data;
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        data = new ArrayList<>();
+
 
         return view;
     } private void getData(){
@@ -69,10 +69,11 @@ private ArrayList<DataModel> data;
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
 //                DataModel value=null;
+                data = new ArrayList<>();
                 DataModel value=null;
                 for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
                     value = singleSnapshot.getValue(DataModel.class);
-                    data.add(new DataModel(value.getId(),value.getTitle(),value.getPost()));
+                    data.add(new DataModel(value.getId(),value.getTitle(),value.getPost(),value.getSection(),value.getCommentList()));
                 }
 
                 adapter = new ListAdpter(data,myOnClickListener);

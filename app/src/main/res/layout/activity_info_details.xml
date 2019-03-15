@@ -71,6 +71,7 @@
                 android:ems="10"
                 android:hint="মন্তব্য লিখুন"
                 android:inputType="textMultiLine|text"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/comment_btn"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -84,6 +85,7 @@
                 android:layout_marginBottom="8dp"
                 android:onClick="saveComment"
                 android:text="সেভ"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/comment_box"
                 app:layout_constraintEnd_toEndOf="parent" />
         </android.support.constraint.ConstraintLayout>

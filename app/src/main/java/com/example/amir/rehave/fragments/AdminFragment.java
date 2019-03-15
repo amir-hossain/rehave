@@ -122,7 +122,7 @@ public class AdminFragment extends Fragment implements AdminListAdapter.ItemClic
                     for(DataSnapshot snap : singleSnapshot.getChildren()) {
                         value=snap.getValue(DataModel.class);
                         Log.d("Fire value", "Value is: " + value.getTitle());
-                        data.add(new DataModel(value.getId(),value.getTitle(),null,value.getSection()));
+                        data.add(new DataModel(value.getId(),value.getTitle(),null,value.getSection(),value.getCommentList()));
                     }
 
                 }

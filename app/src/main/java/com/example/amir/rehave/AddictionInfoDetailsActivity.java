@@ -18,23 +18,27 @@ import com.google.firebase.database.FirebaseDatabase;
 public class AddictionInfoDetailsActivity extends AppCompatActivity {
     private ActivityInfoDetailsBinding binding;
     private DataModel data;
+    private String userId=SharedPrefManager.getInstance(this).getString(SharedPrefManager.ID_PREF);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_info_details);
         binding= DataBindingUtil.setContentView(this,R.layout.activity_info_details);
 
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setTitle(R.string.adiction_information);
+
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         data=getIntent().getParcelableExtra("data");
-
+        actionBar.setTitle(data.getSection());
         binding.setData(data);
 
+        if(userId!=null){
+            binding.commentBox.setVisibility(View.VISIBLE);
+            binding.commentBtn.setVisibility(View.VISIBLE);
+            String comment=data.getCommentList().get(SharedPrefManager.getInstance(this).getString(SharedPrefManager.ID_PREF));
+            binding.commentBox.setText(comment);
+        }
 
-        String comment=data.getCommentList().get(SharedPrefManager.getInstance(this).getString(SharedPrefManager.ID_PREF));
-        binding.commentBox.setText(comment);
 
     }
 
@@ -42,7 +46,7 @@ public class AddictionInfoDetailsActivity extends AppCompatActivity {
         String comment=binding.commentBox.getText().toString().trim();
         if(!comment.isEmpty()){
             String outerTableName=getOuterTableName();
-            DatabaseReference reference=FirebaseDatabase.getInstance().getReference("data/"+outerTableName+"/"+data.getId()+"/commentList/"+ SharedPrefManager.getInstance(this).getString(SharedPrefManager.ID_PREF));
+            DatabaseReference reference=FirebaseDatabase.getInstance().getReference("data/"+outerTableName+"/"+data.getId()+"/commentList/"+ userId);
             reference.setValue(comment);
 
             showToast("মন্তব্য সেভ হয়েছে!");
@@ -60,6 +64,8 @@ public class AddictionInfoDetailsActivity extends AppCompatActivity {
     private String getOuterTableName() {
         if(data.getSection().equals(getResources().getString(R.string.adiction_information))){
             return "info";
+        }else if(data.getSection().equals(getResources().getString(R.string.relapse_protection))){
+            return "pro";
         }
         return "";
     }

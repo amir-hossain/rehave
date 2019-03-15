@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.amir.rehave.AddictionInfoDetailsActivity;
 import com.example.amir.rehave.ProtectionDetailsActivity;
 import com.example.amir.rehave.R;
 import com.example.amir.rehave.model.DataModel;
@@ -30,8 +31,8 @@ public class RelapseProtectionFragment extends Fragment {
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private  RecyclerView recyclerView;
-    private ArrayList<DataModel> data;
     private  View.OnClickListener myOnClickListener;
+    private ArrayList<DataModel> data;
 
     private View view;
 
@@ -58,8 +59,6 @@ public class RelapseProtectionFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        data = new ArrayList<>();
-
         return view;
     }
 
@@ -71,10 +70,11 @@ public class RelapseProtectionFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
+                data=new ArrayList<>();
                 DataModel value=null;
                 for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
                     value = singleSnapshot.getValue(DataModel.class);
-                    data.add(new DataModel(value.getId(),value.getTitle(),value.getPost()));
+                    data.add(new DataModel(value.getId(),value.getTitle(),value.getPost(),value.getSection(),value.getCommentList()));
                 }
 
                 adapter = new ListAdpter(data,myOnClickListener);
@@ -105,7 +105,7 @@ public class RelapseProtectionFragment extends Fragment {
             int index =recyclerView.getChildLayoutPosition(v);
 
 //            Toast.makeText(context,index+" clicked",Toast.LENGTH_SHORT).show();
-            Intent intent=new Intent(context,ProtectionDetailsActivity.class);
+            Intent intent=new Intent(context, AddictionInfoDetailsActivity.class);
             intent.putExtra("data",data.get(index));
             context.startActivity(intent);
         }
