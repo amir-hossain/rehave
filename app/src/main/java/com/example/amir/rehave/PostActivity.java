@@ -25,7 +25,7 @@ import java.util.List;
 
 public class PostActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    String subject;
+    int subject;
     EditText titleView;
     EditText postView;
     Spinner spinner;
@@ -81,10 +81,10 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
                 DataModel value=dataSnapshot.getValue(DataModel.class);
                 titleView.setText(value.getTitle());
                 postView.setText(value.getPost());
-                if(value.getSection().equals(getResources().getString(R.string.relapse_protection))){
-                    spinner.setSelection(1);
-                }else if(value.getSection().equals(getResources().getString(R.string.archive))){
-                    spinner.setSelection(2);
+                if(value.getSection()==Constants.Section.PROTECTION.toInt()){
+                    spinner.setSelection(Constants.Section.PROTECTION.toInt());
+                }else if(value.getSection()==Constants.Section.ARCHIVE.toInt()){
+                    spinner.setSelection(Constants.Section.ARCHIVE.toInt());
                 }
 
 
@@ -99,7 +99,7 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-    private void postData(String title,String post,String subject) {
+    private void postData(String title,String post,int subject) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         String path="data/info/";
@@ -154,9 +154,8 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        selectedPosition=position;
         // On selecting a spinner item
-        subject = parent.getItemAtPosition(position).toString();
+        subject = position;
 
         // Showing selected spinner item
 //        Toast.makeText(parent.getContext(), "Selected: " + subject, Toast.LENGTH_LONG).show();

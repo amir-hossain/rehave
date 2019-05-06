@@ -1,5 +1,7 @@
 package com.example.amir.rehave.model;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -7,10 +9,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DataModel implements Parcelable {
-    private String id;
+    private String postId;
     private String title;
     private String post;
-    private String section;
+    private int section;
 
     private Map<String,String> commentList;
 
@@ -21,17 +23,17 @@ public class DataModel implements Parcelable {
 
     public DataModel(String title, String id) {
         this.title = title;
-        this.id = id;
+        this.postId = id;
     }
 
     public DataModel(String id, String title, String post) {
         this.title = title;
         this.post = post;
-        this.id = id;
+        this.postId = id;
     }
 
-    public DataModel(String id, String title, String post, String section, Map<String, String> commentList) {
-        this.id = id;
+    public DataModel(String id, String title, String post, int section, Map<String, String> commentList) {
+        this.postId = id;
         this.title = title;
         this.post = post;
         this.section = section;
@@ -39,10 +41,10 @@ public class DataModel implements Parcelable {
     }
 
     protected DataModel(Parcel in) {
-        id = in.readString();
+        postId = in.readString();
         title = in.readString();
         post = in.readString();
-        section = in.readString();
+        section = in.readInt();
         int size=in.readInt();
         this.commentList=new HashMap<>();
         for(int i=0;i<size;i++){
@@ -66,11 +68,11 @@ public class DataModel implements Parcelable {
     };
 
     public String getId() {
-        return id;
+        return postId;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.postId = id;
     }
 
     public String getTitle() {
@@ -89,11 +91,11 @@ public class DataModel implements Parcelable {
         this.post = post;
     }
 
-    public String getSection() {
+    public int getSection() {
         return section;
     }
 
-    public void setSection(String section) {
+    public void setSection(int section) {
         this.section = section;
     }
 
@@ -105,6 +107,14 @@ public class DataModel implements Parcelable {
         this.commentList = commentList;
     }
 
+    public String getPostId() {
+        return postId;
+    }
+
+    public void setPostId(String postId) {
+        this.postId = postId;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -112,10 +122,10 @@ public class DataModel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
+        dest.writeString(postId);
         dest.writeString(title);
         dest.writeString(post);
-        dest.writeString(section);
+        dest.writeInt(section);
         if(commentList!=null){
             dest.writeInt(commentList.size());
             for(Map.Entry<String,String> entry : commentList.entrySet()){

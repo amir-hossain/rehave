@@ -11,9 +11,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.amir.rehave.R;
-import com.example.amir.rehave.database.RehaveDao;
-import com.example.amir.rehave.database.User;
-import com.example.amir.rehave.database.UserDatabase;
 import com.example.amir.rehave.model.SignUpModel;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,7 +27,7 @@ public class SingUpFragment extends BaseFragment implements View.OnClickListener
     EditText userName;
     EditText phonEmail;
     EditText password;
-    RehaveDao dao;
+
     private RegistrationCompleteListener registrationCompleteListener;
     private View rootView;
     private boolean isCheckboxChecked=false;
@@ -47,7 +44,6 @@ public class SingUpFragment extends BaseFragment implements View.OnClickListener
 
         rootView = inflater.inflate(R.layout.signup_fragment, container, false);
 
-        dao=UserDatabase.getDao(getContext());
         userName=rootView.findViewById(R.id.phone_email);
         phonEmail=rootView.findViewById(R.id.phone_email);
         password=rootView.findViewById(R.id.password);
@@ -92,10 +88,10 @@ public class SingUpFragment extends BaseFragment implements View.OnClickListener
         Observable.create(new ObservableOnSubscribe<String>() {
             @Override
             public void subscribe(ObservableEmitter<String> emitter) throws Exception {
-                dao.userRegistration(new User(name,phoneEmail,pass));
+//                dao.userRegistration(new JSONPost(name,phoneEmail,pass));
                 emitter.onNext("sucessfully registered");
             }
-        }).subscribeOn(Schedulers.newThread())
+        }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<String>() {
                     @Override

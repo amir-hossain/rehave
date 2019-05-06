@@ -10,11 +10,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.example.amir.rehave.AddictionInfoDetailsActivity;
-import com.example.amir.rehave.ProtectionDetailsActivity;
+import com.example.amir.rehave.ActivityInfoDetails;
+import com.example.amir.rehave.Constants;
+import com.example.amir.rehave.ItemClickListener;
 import com.example.amir.rehave.R;
+import com.example.amir.rehave.link.LinkListeners;
+import com.example.amir.rehave.link.LinkMethods;
 import com.example.amir.rehave.model.DataModel;
 import com.example.amir.rehave.adapter.ListAdpter;
 import com.google.firebase.database.DataSnapshot;
@@ -24,14 +26,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
-public class RelapseProtectionFragment extends Fragment {
+public class RelapseProtectionFragment extends Fragment implements ItemClickListener, LinkListeners.DataTableListener{
 
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private  RecyclerView recyclerView;
-    private  View.OnClickListener myOnClickListener;
     private ArrayList<DataModel> data;
 
     private View view;
@@ -49,8 +51,6 @@ public class RelapseProtectionFragment extends Fragment {
 
         view=inflater.inflate(R.layout.fragment_relapse_protection, container, false);
 
-        myOnClickListener = new MyOnClickListener(getContext());
-
         getData();
 
         recyclerView =view.findViewById(R.id.my_recycler_view);
@@ -63,53 +63,24 @@ public class RelapseProtectionFragment extends Fragment {
     }
 
     private void getData(){
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("data/pro");
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                data=new ArrayList<>();
-                DataModel value=null;
-                for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
-                    value = singleSnapshot.getValue(DataModel.class);
-                    data.add(new DataModel(value.getId(),value.getTitle(),value.getPost(),value.getSection(),value.getCommentList()));
-                }
 
-                adapter = new ListAdpter(data,myOnClickListener);
-                recyclerView.setAdapter(adapter);
-//                    Log.d("Fire value", "Value is: " + value.getTitle());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("Fire value", "Failed to read value.", error.toException());
-            }
-        });
-
+        LinkMethods.getInstance().setDataTableListener(getContext(), Constants.Section.PROTECTION.toInt(),this);
     }
 
-    private  class MyOnClickListener implements View.OnClickListener {
+    @Override
+    public void itemClick(DataModel data) {
 
-        private final Context context;
-
-        private MyOnClickListener(Context context) {
-            this.context = context;
-        }
-
-        @Override
-        public void onClick(View v) {
-            Log.d("xzzzzzzzzzz", "xxxxxxx");
-            int index =recyclerView.getChildLayoutPosition(v);
+        Log.d("xzzzzzzzzzz", "xxxxxxx");
 
 //            Toast.makeText(context,index+" clicked",Toast.LENGTH_SHORT).show();
-            Intent intent=new Intent(context, AddictionInfoDetailsActivity.class);
-            intent.putExtra("data",data.get(index));
-            context.startActivity(intent);
-        }
+        Intent intent=new Intent(getContext(), ActivityInfoDetails.class);
+        intent.putExtra("data",data);
+        getContext().startActivity(intent);
     }
 
-
+    @Override
+    public void listenDatable(List<DataModel> datas) {
+        adapter = new ListAdpter(data,RelapseProtectionFragment.this);
+        recyclerView.setAdapter(adapter);
+    }
 }

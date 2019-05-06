@@ -15,22 +15,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import com.example.amir.rehave.AddictionInfoDetailsActivity;
+import com.example.amir.rehave.ActivityInfoDetails;
+import com.example.amir.rehave.Constants;
+import com.example.amir.rehave.ItemClickListener;
 import com.example.amir.rehave.R;
 import com.example.amir.rehave.adapter.MainFragmentAdapter;
-import com.example.amir.rehave.factory.IntentFactory;
 import com.example.amir.rehave.link.LinkListeners;
 import com.example.amir.rehave.link.LinkMethods;
 import com.example.amir.rehave.manager.SharedPrefManager;
 import com.example.amir.rehave.model.DataModel;
-import com.example.amir.rehave.model.MainFragmentData;
 
 import java.util.List;
 
 
-public class MainFragment extends Fragment implements MainFragmentAdapter.Listener, LinkListeners.DataTableListener {
+public class MainFragment extends Fragment implements ItemClickListener, LinkListeners.DataTableListener {
     private RecyclerView recyclerView;
     private MainFragmentAdapter adapter;
 
@@ -88,9 +87,9 @@ public class MainFragment extends Fragment implements MainFragmentAdapter.Listen
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        LinkMethods linkMethods = new LinkMethods();
+        LinkMethods linkMethods =LinkMethods.getInstance();
 
-        linkMethods.setDataTableListener("data",this);
+        linkMethods.setDataTableListener(getContext(), Constants.Section.ALL.toInt(),this);
 
         return rootView;
     }
@@ -111,7 +110,7 @@ public class MainFragment extends Fragment implements MainFragmentAdapter.Listen
 
     @Override
     public void itemClick(DataModel data) {
-            Intent intent = new Intent(getContext(), AddictionInfoDetailsActivity.class);
+            Intent intent = new Intent(getContext(), ActivityInfoDetails.class);
             intent.putExtra("data",data);
             startActivity(intent);
     }

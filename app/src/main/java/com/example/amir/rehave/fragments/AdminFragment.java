@@ -15,7 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.amir.rehave.AddictionInfoDetailsActivity;
+import com.example.amir.rehave.ActivityInfoDetails;
+import com.example.amir.rehave.Constants;
 import com.example.amir.rehave.MainActivity;
 import com.example.amir.rehave.PostActivity;
 import com.example.amir.rehave.R;
@@ -154,11 +155,11 @@ public class AdminFragment extends Fragment implements AdminListAdapter.ItemClic
         int index =recyclerView.getChildLayoutPosition(v);
         String key=data.get(index).getId();
 //            Toast.makeText(this,"delete "+key,Toast.LENGTH_SHORT).show();
-        String topic=data.get(index).getSection();
+        int topic=data.get(index).getSection();
         String path="data/info/"+key;
-        if(topic.equals(getResources().getString(R.string.relapse_protection))){
+        if(topic== Constants.Section.PROTECTION.toInt()){
             path="data/pro/"+key;
-        }else if(topic.equals(getResources().getString(R.string.archive))){
+        }else if(topic==Constants.Section.ARCHIVE.toInt()){
             path="data/arch/"+key;
         }
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -172,11 +173,11 @@ public class AdminFragment extends Fragment implements AdminListAdapter.ItemClic
     private void edit(View v){
         int index =recyclerView.getChildLayoutPosition(v);
         String key=data.get(index).getId();
-        String topic=data.get(index).getSection();
+        int topic=data.get(index).getSection();
         String path="data/info/"+key;
-        if(topic.equals(getResources().getString(R.string.relapse_protection))){
+        if(topic==Constants.Section.PROTECTION.toInt()){
             path="data/pro/"+key;
-        }else if(topic.equals(getResources().getString(R.string.archive))){
+        }else if(topic==Constants.Section.ARCHIVE.toInt()){
             path="data/arch/"+key;
         }
 //            Toast.makeText(this,"edit "+key,Toast.LENGTH_SHORT).show();
@@ -201,7 +202,7 @@ public class AdminFragment extends Fragment implements AdminListAdapter.ItemClic
             int index =recyclerView.getChildLayoutPosition(v);
             String key=data.get(index).getId();
 //            Toast.makeText(context,index+" clicked",Toast.LENGTH_SHORT).show();
-            Intent intent=new Intent(context,AddictionInfoDetailsActivity.class);
+            Intent intent=new Intent(context, ActivityInfoDetails.class);
             intent.putExtra("key",key);
             context.startActivity(intent);
         }

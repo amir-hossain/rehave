@@ -1,31 +1,25 @@
 package com.example.amir.rehave.fragments;
 
 
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.amir.rehave.Constants;
 import com.example.amir.rehave.R;
 import com.example.amir.rehave.adapter.ArchiveListAdapter;
+import com.example.amir.rehave.link.LinkListeners;
+import com.example.amir.rehave.link.LinkMethods;
 import com.example.amir.rehave.model.DataModel;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class ArchiveFragment extends Fragment {
+public class ArchiveFragment extends Fragment implements LinkListeners.DataTableListener {
     private static RecyclerView.Adapter adapter;
 
     private RecyclerView.LayoutManager layoutManager;
@@ -64,31 +58,13 @@ public class ArchiveFragment extends Fragment {
 
     private void getData(){
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("data/arch");
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
+        LinkMethods.getInstance().setDataTableListener(getContext(), Constants.Section.ARCHIVE.toInt(),this);
 
-                for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
-                    DataModel value = singleSnapshot.getValue(DataModel.class);
-                    data.add(new DataModel(value.getId(),value.getTitle(),value.getPost()));
+    }
 
-
-                }
-
-                ArchiveListAdapter archiveListAdapter = new ArchiveListAdapter(ArchiveFragment.this,data);
-                view.setAdapter(archiveListAdapter);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("Fire value", "Failed to read value.", error.toException());
-            }
-        });
-
+    @Override
+    public void listenDatable(List<DataModel> datas) {
+        ArchiveListAdapter archiveListAdapter = new ArchiveListAdapter(ArchiveFragment.this,data);
+        view.setAdapter(archiveListAdapter);
     }
 }

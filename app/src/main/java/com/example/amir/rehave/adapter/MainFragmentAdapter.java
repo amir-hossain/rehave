@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
+import com.example.amir.rehave.ItemClickListener;
 import com.example.amir.rehave.R;
+import com.example.amir.rehave.Utils;
 import com.example.amir.rehave.model.DataModel;
 import com.example.amir.rehave.model.MainFragmentData;
 
@@ -18,11 +20,11 @@ import java.util.List;
 public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapter.MyViewHolder> {
 
     private List<DataModel> dataList;
-    private Listener listener;
+    private ItemClickListener listener;
 
 
 
-    public MainFragmentAdapter(List<DataModel> albumList, MainFragmentAdapter.Listener listener) {
+    public MainFragmentAdapter(List<DataModel> albumList, ItemClickListener listener) {
 
         this.dataList = albumList;
 
@@ -59,7 +61,7 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
 
         holder.title.setText(data.getTitle());
 
-        holder.section.setText(data.getSection());
+        holder.section.setText(Utils.getSectionName(data.getSection()));
 
 
 
@@ -78,8 +80,4 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
         return dataList.size();
     }
 
-    public interface Listener {
-
-        void itemClick(DataModel data);
-    }
 }

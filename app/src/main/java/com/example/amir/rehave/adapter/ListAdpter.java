@@ -1,33 +1,38 @@
 package com.example.amir.rehave.adapter;
 
+import android.media.browse.MediaBrowser;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.amir.rehave.ItemClickListener;
 import com.example.amir.rehave.R;
 import com.example.amir.rehave.model.DataModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListAdpter extends RecyclerView.Adapter<ListAdpter.MyViewHolder> {
-    private ArrayList<DataModel> dataSet;
-    private View.OnClickListener listener;
+    private List<DataModel> dataSet;
+    private ItemClickListener listener;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView textViewName;
+        View itemView;
 
 
         public MyViewHolder(View itemView) {
             super(itemView);
             this.textViewName =itemView.findViewById(R.id.textViewName);
+            this.itemView=itemView;
 
         }
     }
 
-    public ListAdpter(ArrayList<DataModel> data, View.OnClickListener listener) {
+    public ListAdpter(List<DataModel> data, ItemClickListener listener) {
         this.dataSet = data;
         this.listener=listener;
 
@@ -39,7 +44,6 @@ public class ListAdpter extends RecyclerView.Adapter<ListAdpter.MyViewHolder> {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.items_layout, parent, false);
 
-        view.setOnClickListener(listener);
 
         MyViewHolder myViewHolder = new MyViewHolder(view);
         return myViewHolder;
@@ -55,6 +59,13 @@ public class ListAdpter extends RecyclerView.Adapter<ListAdpter.MyViewHolder> {
 
         textViewName.setText(dataSet.get(listPosition).getTitle());
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.itemClick(dataSet.get(listPosition));
+            }
+        });
+
     }
 
 
@@ -63,4 +74,6 @@ public class ListAdpter extends RecyclerView.Adapter<ListAdpter.MyViewHolder> {
     public int getItemCount() {
         return dataSet.size();
     }
+
+
 }

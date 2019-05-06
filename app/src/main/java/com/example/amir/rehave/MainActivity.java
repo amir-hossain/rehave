@@ -8,23 +8,42 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.amir.rehave.database.DatabaseHelper;
+import com.example.amir.rehave.database.Post;
+import com.example.amir.rehave.database.RehubDao;
 import com.example.amir.rehave.fragments.AboutFragment;
 import com.example.amir.rehave.fragments.AddictionInformationFragment;
 import com.example.amir.rehave.fragments.ArchiveFragment;
 import com.example.amir.rehave.fragments.CommunityFragment;
 import com.example.amir.rehave.fragments.LoginFragment;
 import com.example.amir.rehave.fragments.MainFragment;
+import com.example.amir.rehave.fragments.NoInternetConnection;
 import com.example.amir.rehave.fragments.RelapseProtectionFragment;
 import com.example.amir.rehave.fragments.SingUpFragment;
+import com.example.amir.rehave.link.LinkMethods;
 import com.example.amir.rehave.manager.SharedPrefManager;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SingUpFragment.RegistrationCompleteListener, LoginFragment.RegistrationButtonClickListenter{
 
     private TextView userNameView;
+
+    private Fragment fragmentToRun;
 
     private DrawerLayout drawer;
 
@@ -36,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        LinkMethods.getInstance().initializeDatabase(this);
 
         initializeNavDrawer();
 
@@ -66,8 +87,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = findViewById(R.id.nav_view);
 
         navigationView.setNavigationItemSelectedListener(this);
-
-        MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.container_layout, MainFragment.newInstance()).commit();
+        fragmentToRun=MainFragment.newInstance();
+        runFragment();
 
         navigationView.setCheckedItem(R.id.nav_main);
 
@@ -80,41 +101,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_main) {
-
-            runFragment(MainFragment.newInstance());
+            fragmentToRun=MainFragment.newInstance();
+            runFragment();
 
         } else if (id == R.id.nav_about) {
-
-            runFragment(AboutFragment.newInstance());
+            fragmentToRun=AboutFragment.newInstance();
+            runFragment();
 
         }else if (id == R.id.nav_registration) {
-
-            runFragment(SingUpFragment.newInstance(this));
+            fragmentToRun=SingUpFragment.newInstance(this);
+            runFragment();
 
         } else if (id == R.id.nav_login) {
-
-            runFragment(LoginFragment.newInstance(this));
+            fragmentToRun=LoginFragment.newInstance(this);
+            runFragment();
 
         } else if (id == R.id.nav_addiction) {
-
-            runFragment(AddictionInformationFragment.newInstance());
+            fragmentToRun=AddictionInformationFragment.newInstance();
+            runFragment();
 
 
         } else if (id == R.id.nav_protection) {
-
-            runFragment(RelapseProtectionFragment.newInstance());
+            fragmentToRun=RelapseProtectionFragment.newInstance();
+            runFragment();
 
         } else if (id == R.id.nav_archive) {
-
-            runFragment(ArchiveFragment.newInstance());
+            fragmentToRun=ArchiveFragment.newInstance();
+            runFragment();
 
         } else if (id == R.id.nav_forum) {
-
-            runFragment(CommunityFragment.newInstance());
+            fragmentToRun=CommunityFragment.newInstance();
+            runFragment();
 
         }else {
             SharedPrefManager.getInstance(this).clear();
-            runFragment(LoginFragment.newInstance(this));
+            fragmentToRun=LoginFragment.newInstance(this);
+            runFragment();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -127,22 +149,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void OnRegistrationComplete() {
-        runFragment(LoginFragment.newInstance(this));
+        fragmentToRun=LoginFragment.newInstance(this);
+        runFragment();
         navigationView.setCheckedItem(R.id.nav_login);
     }
 
-    private void runFragment(Fragment fragment) {
+    private void runFragment() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container_layout, fragment)
+                .replace(R.id.container_layout, fragmentToRun)
                 .addToBackStack(null)
                 .commit();
+//        if(Utils.isNetworkConnected(this)){
+//            getSupportFragmentManager()
+//                    .beginTransaction()
+//                    .replace(R.id.container_layout, fragmentToRun)
+//                    .addToBackStack(null)
+//                    .commit();
+//        }else {
+//            getSupportFragmentManager()
+//                    .beginTransaction()
+//                    .replace(R.id.container_layout, NoInternetConnection.newInstance())
+//                    .addToBackStack(null)
+//                    .commit();
+//        }
+
     }
 
     @Override
     public void wantToGoToRegistration() {
-        runFragment(SingUpFragment.newInstance(this));
+        fragmentToRun=SingUpFragment.newInstance(this);
+        runFragment();
         navigationView.setCheckedItem(R.id.nav_registration);
     }
 
+
+    public void retry(View v){
+        runFragment();
+    }
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
     <data>
+
         <variable
             name="data"
             type="com.example.amir.rehave.model.DataModel"/>
@@ -11,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".AddictionInfoDetailsActivity">
+        tools:context=".ActivityInfoDetails">
 
         <TextView
             android:id="@+id/title_view"
@@ -24,35 +25,23 @@
             android:textSize="25sp"
             android:textStyle="bold"
             android:text="@{data.title}"
+            tools:text="dfdf"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ScrollView
-            android:id="@+id/scrollView2"
+        <WebView
+            android:id="@+id/web_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="10dp"
+            android:layout_marginTop="16dp"
             android:layout_weight="1"
-            app:layout_constraintTop_toBottomOf="@+id/title_view">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/des_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_marginTop="16dp"
-                    android:textSize="18sp"
-                    android:text="@{data.post}"
-                    app:layout_constraintTop_toBottomOf="@+id/title_view"
-                    tools:layout_editor_absoluteX="0dp" />
-            </LinearLayout>
-        </ScrollView>
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@+id/title_view"
+            app:showHtml="@{data.post}"
+            tools:layout_editor_absoluteX="0dp"
+            tools:text="dfdf" />
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -74,7 +63,8 @@
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/comment_btn"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="dfdf" />
 
             <Button
                 android:id="@+id/comment_btn"
@@ -87,7 +77,8 @@
                 android:text="সেভ"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/comment_box"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="dfdf" />
         </android.support.constraint.ConstraintLayout>
 
     </LinearLayout>

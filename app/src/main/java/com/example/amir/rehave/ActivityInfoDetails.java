@@ -15,7 +15,7 @@ import com.example.amir.rehave.model.MainFragmentData;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class AddictionInfoDetailsActivity extends AppCompatActivity {
+public class ActivityInfoDetails extends AppCompatActivity {
     private ActivityInfoDetailsBinding binding;
     private DataModel data;
     private String userId=SharedPrefManager.getInstance(this).getString(SharedPrefManager.ID_PREF);
@@ -29,8 +29,10 @@ public class AddictionInfoDetailsActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         data=getIntent().getParcelableExtra("data");
-        actionBar.setTitle(data.getSection());
+        actionBar.setTitle(Utils.getSectionName(data.getSection()));
         binding.setData(data);
+
+
 
         if(userId!=null){
             binding.commentBox.setVisibility(View.VISIBLE);
@@ -62,9 +64,9 @@ public class AddictionInfoDetailsActivity extends AppCompatActivity {
     }
 
     private String getOuterTableName() {
-        if(data.getSection().equals(getResources().getString(R.string.adiction_information))){
+        if(data.getSection()==Constants.Section.ADDICTION.toInt()){
             return "info";
-        }else if(data.getSection().equals(getResources().getString(R.string.relapse_protection))){
+        }else if(data.getSection()==Constants.Section.PROTECTION.toInt()){
             return "pro";
         }
         return "";
