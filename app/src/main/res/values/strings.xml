@@ -79,6 +79,8 @@
 
     <string name="forum">ফোরাম</string>
 
+    <string name="expert_opinion">অভিজ্ঞদের মতামত</string>
+
     <string name="communityMessage">পর্যালোচনা জন্য পাঠানো হয়েছে</string>
 
     <string name="adminPermissionLabel">অনুমতি দিন</string>

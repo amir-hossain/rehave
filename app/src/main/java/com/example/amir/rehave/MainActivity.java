@@ -21,6 +21,7 @@ import com.example.amir.rehave.fragments.AboutFragment;
 import com.example.amir.rehave.fragments.AddictionInformationFragment;
 import com.example.amir.rehave.fragments.ArchiveFragment;
 import com.example.amir.rehave.fragments.CommunityFragment;
+import com.example.amir.rehave.fragments.ExpertOpinionFragment;
 import com.example.amir.rehave.fragments.LoginFragment;
 import com.example.amir.rehave.fragments.MainFragment;
 import com.example.amir.rehave.fragments.NoInternetConnection;
@@ -133,7 +134,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentToRun=CommunityFragment.newInstance();
             runFragment();
 
-        }else {
+        }else if (id == R.id.nav_expert_opinion) {
+        fragmentToRun=new ExpertOpinionFragment();
+        runFragment();
+
+    }else {
             SharedPrefManager.getInstance(this).clear();
             fragmentToRun=LoginFragment.newInstance(this);
             runFragment();

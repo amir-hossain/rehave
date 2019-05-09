@@ -38,6 +38,10 @@
                     android:icon="@drawable/ic_archive"
                     android:title="@string/archive" />
                 <item
+                    android:id="@+id/nav_expert_opinion"
+                    android:icon="@drawable/expert"
+                    android:title="@string/expert_opinion" />
+                <item
                     android:id="@+id/nav_forum"
                     android:icon="@drawable/ic_forum"
                     android:title="@string/forum" />
