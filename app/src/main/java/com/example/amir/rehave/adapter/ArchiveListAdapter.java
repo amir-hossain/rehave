@@ -17,16 +17,20 @@ import com.flipkart.youtubeview.models.YouTubePlayerType;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.MyViewHolder> {
     private Fragment fragment;
-    private ArrayList<DataModel> dataSet;
+    private List<DataModel> dataSet;
     private ArrayList<String> videoIds;
     private String API_KEY="AIzaSyCBlhPQAYs4UxO3A-4-G-ljeQpZp0UsyZc";
     private static final String REGEXP_ID_PATTERN = "(?i)https?:\\/\\/(?:[0-9A-Z-]+\\.)?(?:youtu\\.be\\/|youtube(?:-nocookie)?\\.com" +
             "\\S*?[^\\w\\s-])([\\w-]{11})(?=[^\\w-]|$)(?![?=&+%\\w.-]*(?:['\"][^<>]*>|<\\/a>))[?=&+%\\w.-]*";
+
+    private static int SLIDER_HEADER=0;
+    private static int ITEM=1;
 
     private ImageLoader imageLoader = new ImageLoader() {
         @Override
@@ -38,18 +42,22 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
 
 
 
-    public ArchiveListAdapter(Fragment fragment, ArrayList<DataModel> data) {
+    public ArchiveListAdapter(Fragment fragment, List<DataModel> data) {
         this.dataSet = data;
+        this.dataSet.add(0,null);
         this.fragment=fragment;
         this.videoIds=extractVideoIds(data);
 
     }
 
-    private ArrayList<String> extractVideoIds(ArrayList<DataModel> datas) {
+    private ArrayList<String> extractVideoIds(List<DataModel> datas) {
         ArrayList<String> vidioIds=new ArrayList<>();
         for (DataModel data : datas){
-
-            vidioIds.add(extractVideoId(data));
+            if(data==null){
+                vidioIds.add(null);
+            }else {
+                vidioIds.add(extractVideoId(data));
+            }
         }
         return vidioIds;
     }
@@ -67,8 +75,15 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
     @Override
     public ArchiveListAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
                                                       int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.archive_item, parent, false);
+        View view=null;
+        if (viewType==SLIDER_HEADER){
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.slider_header_layout, parent, false);
+        }else {
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.archive_item, parent, false);
+        }
+
 
 
         return new MyViewHolder(view);
@@ -78,18 +93,25 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
 
     @Override
     public void onBindViewHolder(final ArchiveListAdapter.MyViewHolder holder, final int listPosition) {
+        if(getItemViewType(listPosition)==ITEM){
+            TextView textViewName = holder.textViewName;
 
-        TextView textViewName = holder.textViewName;
 
+            textViewName.setText(dataSet.get(listPosition).getTitle());
+            YouTubePlayerView playerView = holder.playerView;
 
-        textViewName.setText(dataSet.get(listPosition).getTitle());
-        YouTubePlayerView playerView = holder.playerView;
-
-        playerView.initPlayer(API_KEY, videoIds.get(listPosition), null, YouTubePlayerType.STRICT_NATIVE, null, fragment, imageLoader);
-
+            playerView.initPlayer(API_KEY, videoIds.get(listPosition), null, YouTubePlayerType.STRICT_NATIVE, null, fragment, imageLoader);
+        }
     }
 
-
+    @Override
+    public int getItemViewType(int position) {
+        if(position==0){
+            return SLIDER_HEADER;
+        }else {
+            return ITEM;
+        }
+    }
 
     @Override
     public int getItemCount() {

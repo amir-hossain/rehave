@@ -3,11 +3,13 @@ package com.example.amir.rehave.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.example.amir.rehave.Constants;
 import com.example.amir.rehave.R;
@@ -25,8 +27,6 @@ public class ArchiveFragment extends Fragment implements LinkListeners.DataTable
     private RecyclerView.LayoutManager layoutManager;
 
     private static RecyclerView recyclerView;
-
-    private static ArrayList<DataModel> data;
 
     private static View.OnClickListener myOnClickListener;
 
@@ -49,8 +49,6 @@ public class ArchiveFragment extends Fragment implements LinkListeners.DataTable
 
         getData();
 
-        data = new ArrayList<>();
-
         return view;
     }
 
@@ -64,7 +62,7 @@ public class ArchiveFragment extends Fragment implements LinkListeners.DataTable
 
     @Override
     public void listenDatable(List<DataModel> datas) {
-        ArchiveListAdapter archiveListAdapter = new ArchiveListAdapter(ArchiveFragment.this,data);
+        ArchiveListAdapter archiveListAdapter = new ArchiveListAdapter(ArchiveFragment.this,datas);
         view.setAdapter(archiveListAdapter);
     }
 }
