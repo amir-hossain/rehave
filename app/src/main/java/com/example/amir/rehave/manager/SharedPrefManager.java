@@ -8,15 +8,17 @@ public class SharedPrefManager {
     public static String ADMIN_TYPE="Admin";
     public static String NAME_PREF="name";
     public static String ID_PREF="id";
+    public static String DATE_PREF="date";
     public static String USER_TYPE="JSONPost";
 
-    private static SharedPrefManager sharedPrefManager;
-    private static Context context;
+    private SharedPreferences sharedPreferences;
 
-    private static final String SHARED_PREF_NAME = "id";
+    private static SharedPrefManager sharedPrefManager;
+
+    private static final String SHARED_PREF_NAME = "rehubPreference";
 
     private SharedPrefManager(Context context) {
-        SharedPrefManager.context = context;
+        sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
     }
 
     public static synchronized SharedPrefManager getInstance(Context context) {
@@ -27,19 +29,15 @@ public class SharedPrefManager {
     }
 
     public void setString(String name,String value){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(name, value);
-        editor.apply();
+        sharedPreferences.edit().putString(name, value).commit();
     }
 
     public String getString(String name){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+
         return sharedPreferences.getString(name, null);
     }
 
     public void clear(){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         sharedPreferences.edit().clear().commit();
     }
 

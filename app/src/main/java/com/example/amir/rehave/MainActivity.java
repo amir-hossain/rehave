@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = findViewById(R.id.nav_view);
 
         navigationView.setNavigationItemSelectedListener(this);
-        fragmentToRun=MainFragment.newInstance();
+        fragmentToRun=new MainFragment();
         runFragment();
 
         navigationView.setCheckedItem(R.id.nav_main);
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_main) {
-            fragmentToRun=MainFragment.newInstance();
+            fragmentToRun=new MainFragment();
             runFragment();
 
         } else if (id == R.id.nav_about) {
