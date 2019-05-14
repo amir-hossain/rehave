@@ -8,15 +8,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.amir.rehave.database.DatabaseHelper;
-import com.example.amir.rehave.database.Post;
-import com.example.amir.rehave.database.RehubDao;
 import com.example.amir.rehave.fragments.AboutFragment;
 import com.example.amir.rehave.fragments.AddictionInformationFragment;
 import com.example.amir.rehave.fragments.ArchiveFragment;
@@ -24,21 +20,10 @@ import com.example.amir.rehave.fragments.CommunityFragment;
 import com.example.amir.rehave.fragments.ExpertOpinionFragment;
 import com.example.amir.rehave.fragments.LoginFragment;
 import com.example.amir.rehave.fragments.MainFragment;
-import com.example.amir.rehave.fragments.NoInternetConnection;
 import com.example.amir.rehave.fragments.RelapseProtectionFragment;
 import com.example.amir.rehave.fragments.SingUpFragment;
 import com.example.amir.rehave.link.LinkMethods;
 import com.example.amir.rehave.manager.SharedPrefManager;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SingUpFragment.RegistrationCompleteListener, LoginFragment.RegistrationButtonClickListenter{
 
@@ -192,4 +177,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void retry(View v){
         runFragment();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.new_post_menu, menu);
+        return true;
+    }
+
 }

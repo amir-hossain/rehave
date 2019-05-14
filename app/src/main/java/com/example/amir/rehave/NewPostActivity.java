@@ -112,7 +112,7 @@ public class NewPostActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_post){
+      /*  if (item.getItemId() == R.id.action_post){
             String message = etNewPostMessage.getText().toString();
             String title = titleView.getText().toString();
             String imageurl = "";
@@ -127,9 +127,10 @@ public class NewPostActivity extends AppCompatActivity {
 
                 }
             }
-        }else {
-            onBackPressed();
         }
+        else {
+            onBackPressed();
+        }*/
         return super.onOptionsItemSelected(item);
     }
 
