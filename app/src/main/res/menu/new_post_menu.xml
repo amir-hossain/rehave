@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <item
-        android:id="@+id/action_post"
-        android:title="Post"
-        android:icon="@drawable/ic_send_white_24dp"
-        app:showAsAction="ifRoom"/>
-
+        android:id="@+id/action_cart"
+        android:title="Add to cart"
+        app:actionLayout="@layout/notification_layout"
+        app:showAsAction="always"/>
 </menu>
