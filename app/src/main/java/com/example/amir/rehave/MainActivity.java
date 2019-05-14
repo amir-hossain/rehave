@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.amir.rehave.fragments.AboutFragment;
@@ -24,6 +25,9 @@ import com.example.amir.rehave.fragments.RelapseProtectionFragment;
 import com.example.amir.rehave.fragments.SingUpFragment;
 import com.example.amir.rehave.link.LinkMethods;
 import com.example.amir.rehave.manager.SharedPrefManager;
+
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SingUpFragment.RegistrationCompleteListener, LoginFragment.RegistrationButtonClickListenter{
 
@@ -183,6 +187,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         getMenuInflater().inflate(R.menu.new_post_menu, menu);
         return true;
+    }
+
+    FrameLayout redCircle;
+    TextView countTextView;
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        final MenuItem alertMenuItem = menu.findItem(R.id.action_cart);
+        FrameLayout rootView = (FrameLayout) alertMenuItem.getActionView();
+
+        redCircle = (FrameLayout) rootView.findViewById(R.id.view_alert_red_circle);
+        countTextView = (TextView) rootView.findViewById(R.id.view_alert_count_textview);
+        rootView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onOptionsItemSelected(alertMenuItem);
+            }
+        });
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    public void setCartNotiCount(int productCounter) {
+        // if alert count extends into two digits, just show the red circle
+        if (productCounter>0) {
+            countTextView.setText(String.valueOf(productCounter));
+        } else {
+            countTextView.setText("");
+        }
+
+        redCircle.setVisibility((productCounter > 0) ? VISIBLE : GONE);
     }
 
 }

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.amir.rehave.MainActivity;
 import com.example.amir.rehave.R;
 import com.example.amir.rehave.manager.SharedPrefManager;
 
@@ -32,6 +33,7 @@ public class MainFragment extends Fragment{
     @BindView(R.id.slogan)
     TextView slogan;
 
+    int count=1;
 
     @Nullable
     @Override
