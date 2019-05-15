@@ -54,7 +54,12 @@ public class LoginFragment extends Fragment {
                 phoneEmail= phoneEmailField.getText().toString().trim();
                 pass=password.getText().toString().trim();
 //                Log.d("xxx",pass);
-                check();
+                if(check()){
+                    getFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.container_layout,AdminFragment.newInstance())
+                            .commit();
+                }
 
             }
         });
@@ -73,12 +78,11 @@ public class LoginFragment extends Fragment {
 
 
 
-    private void check() {
+    private boolean check() {
         if(singUpDatas!=null){
             boolean result=false;
             if(phoneEmail.equals("admin") && pass.equals("admin")){
                 saveToPreference("1","Admin", SharedPrefManager.ADMIN_TYPE);
-                listenter.wantToGoToRegistration();
                 result= true;
             }else{
                 for(int i=0;i<singUpDatas.size();i++){
@@ -96,15 +100,17 @@ public class LoginFragment extends Fragment {
                         result= false;
                     }
                 }
+
             }
 
 
             if(!result){
                 Toast.makeText(getContext(),R.string.loginErrorMessage,Toast.LENGTH_SHORT).show();
             }
-
+            return result;
         }
 
+        return false;
     }
 
     private void saveToPreference(String id,String name,String type) {
