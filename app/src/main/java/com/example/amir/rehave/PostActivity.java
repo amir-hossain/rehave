@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.amir.rehave.fragments.AdminFragment;
 import com.example.amir.rehave.model.DataModel;
@@ -99,7 +100,7 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-    private void postData(String title,String post,int subject) {
+    private void postData(final String title, String post, int subject) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         String path="data/info/";
@@ -120,7 +121,10 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
                     @Override
                     public void onComplete(DatabaseError databaseError,
                                            DatabaseReference databaseReference) {
-                           startActivity(new Intent(getApplicationContext(),AdminFragment.class));
+                        Toast.makeText(PostActivity.this,"posted sucessfully",Toast.LENGTH_SHORT).show();
+                        titleView.setText("");
+                        postView.setText("");
+
                     }
                 });
 

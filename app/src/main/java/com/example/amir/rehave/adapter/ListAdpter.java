@@ -1,6 +1,5 @@
 package com.example.amir.rehave.adapter;
 
-import android.media.browse.MediaBrowser;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import com.example.amir.rehave.ItemClickListener;
 import com.example.amir.rehave.R;
 import com.example.amir.rehave.model.DataModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ListAdpter extends RecyclerView.Adapter<ListAdpter.MyViewHolder> {

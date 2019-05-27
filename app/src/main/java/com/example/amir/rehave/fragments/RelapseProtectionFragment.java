@@ -80,7 +80,7 @@ public class RelapseProtectionFragment extends Fragment implements ItemClickList
 
     @Override
     public void listenDatable(List<DataModel> datas) {
-        adapter = new ListAdpter(data,RelapseProtectionFragment.this);
+        adapter = new ListAdpter(datas,RelapseProtectionFragment.this);
         recyclerView.setAdapter(adapter);
     }
 }
