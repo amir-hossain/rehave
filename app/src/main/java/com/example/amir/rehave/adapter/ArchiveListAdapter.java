@@ -1,7 +1,11 @@
 package com.example.amir.rehave.adapter;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +25,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.MyViewHolder> {
     private Fragment fragment;
     private List<DataModel> dataSet;
@@ -32,14 +39,37 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
     private static int SLIDER_HEADER=0;
     private static int ITEM=1;
 
+    @Nullable
+    @BindView(R.id.item_video)
+    CardView videoBtn;
+
+    @Nullable
+    @BindView(R.id.item_audio)
+    CardView audioBtn;
+
+    @Nullable
+    @BindView(R.id.item_book)
+    CardView bookBtn;
+
+    @Nullable
+    @BindView(R.id.item_image)
+    CardView imgBtn;
+
+    @Nullable
+    @BindView(R.id.item_sharing)
+    CardView shereBtn;
+
+    @Nullable
+    @BindView(R.id.item_tools)
+    CardView toolsBtn;
+
     private ImageLoader imageLoader = new ImageLoader() {
         @Override
         public void loadImage(@NonNull ImageView imageView, @NonNull String url, int height, int width) {
             Picasso.with(imageView.getContext()).load(url).resize(width, height).centerCrop().into(imageView);
         }
     };
-
-
+    private Context context;
 
 
     public ArchiveListAdapter(Fragment fragment, List<DataModel> data) {
@@ -75,13 +105,17 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
     @Override
     public ArchiveListAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
                                                       int viewType) {
+        this.context=parent.getContext();
         View view=null;
         if (viewType==SLIDER_HEADER){
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.slider_header_layout, parent, false);
+            ButterKnife.bind(this,view);
+            videoBtn.setActivated(true);
         }else {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.archive_item, parent, false);
+            ButterKnife.bind(this,view);
         }
 
 
@@ -100,7 +134,7 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
             textViewName.setText(dataSet.get(listPosition).getTitle());
             YouTubePlayerView playerView = holder.playerView;
 
-            playerView.initPlayer(API_KEY, videoIds.get(listPosition), null, YouTubePlayerType.STRICT_NATIVE, null, fragment, imageLoader);
+            playerView.initPlayer(API_KEY, videoIds.get(listPosition), "https://cdn.rawgit.com/flipkart-incubator/inline-youtube-view/60bae1a1/youtube-android/youtube_iframe_player.html", YouTubePlayerType.STRICT_NATIVE, null, fragment, imageLoader);
         }
     }
 
@@ -119,7 +153,7 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
     }
 
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    public  class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView textViewName;
         YouTubePlayerView playerView;
@@ -128,6 +162,7 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
             super(itemView);
             this.textViewName =itemView.findViewById(R.id.textViewName);
             playerView=itemView.findViewById(R.id.youtube_player_view);
+
         }
     }
 }

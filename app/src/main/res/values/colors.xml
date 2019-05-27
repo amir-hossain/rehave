@@ -21,4 +21,6 @@
     <color name="send_comment_button_deactivated">#7fcbe9</color>
     <color name="background_color">#32736d</color>
     <color name="color_red">#ff0000</color>
+    <color name="colorOrange">#ff6f00</color>
+
 </resources>
