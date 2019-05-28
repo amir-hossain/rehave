@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.amir.rehave.R;
 import com.example.amir.rehave.model.DataModel;
@@ -27,41 +28,20 @@ import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Optional;
 
 public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.MyViewHolder> {
     private Fragment fragment;
     private List<DataModel> dataSet;
     private ArrayList<String> videoIds;
-    private String API_KEY="AIzaSyCBlhPQAYs4UxO3A-4-G-ljeQpZp0UsyZc";
+    private String API_KEY = "AIzaSyCBlhPQAYs4UxO3A-4-G-ljeQpZp0UsyZc";
     private static final String REGEXP_ID_PATTERN = "(?i)https?:\\/\\/(?:[0-9A-Z-]+\\.)?(?:youtu\\.be\\/|youtube(?:-nocookie)?\\.com" +
             "\\S*?[^\\w\\s-])([\\w-]{11})(?=[^\\w-]|$)(?![?=&+%\\w.-]*(?:['\"][^<>]*>|<\\/a>))[?=&+%\\w.-]*";
 
-    private static int SLIDER_HEADER=0;
-    private static int ITEM=1;
+    private static int SLIDER_HEADER = 0;
+    private static int ITEM = 1;
 
-    @Nullable
-    @BindView(R.id.item_video)
-    CardView videoBtn;
-
-    @Nullable
-    @BindView(R.id.item_audio)
-    CardView audioBtn;
-
-    @Nullable
-    @BindView(R.id.item_book)
-    CardView bookBtn;
-
-    @Nullable
-    @BindView(R.id.item_image)
-    CardView imgBtn;
-
-    @Nullable
-    @BindView(R.id.item_sharing)
-    CardView shereBtn;
-
-    @Nullable
-    @BindView(R.id.item_tools)
-    CardView toolsBtn;
 
     private ImageLoader imageLoader = new ImageLoader() {
         @Override
@@ -74,18 +54,18 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
 
     public ArchiveListAdapter(Fragment fragment, List<DataModel> data) {
         this.dataSet = data;
-        this.dataSet.add(0,null);
-        this.fragment=fragment;
-        this.videoIds=extractVideoIds(data);
+        this.dataSet.add(0, null);
+        this.fragment = fragment;
+        this.videoIds = extractVideoIds(data);
 
     }
 
     private ArrayList<String> extractVideoIds(List<DataModel> datas) {
-        ArrayList<String> vidioIds=new ArrayList<>();
-        for (DataModel data : datas){
-            if(data==null){
+        ArrayList<String> vidioIds = new ArrayList<>();
+        for (DataModel data : datas) {
+            if (data == null) {
                 vidioIds.add(null);
-            }else {
+            } else {
                 vidioIds.add(extractVideoId(data));
             }
         }
@@ -104,30 +84,27 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
 
     @Override
     public ArchiveListAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
-                                                      int viewType) {
-        this.context=parent.getContext();
-        View view=null;
-        if (viewType==SLIDER_HEADER){
+                                                              int viewType) {
+        this.context = parent.getContext();
+        View view = null;
+        if (viewType == SLIDER_HEADER) {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.slider_header_layout, parent, false);
-            ButterKnife.bind(this,view);
-            videoBtn.setActivated(true);
-        }else {
+
+        } else {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.archive_item, parent, false);
-            ButterKnife.bind(this,view);
+
         }
 
 
-
-        return new MyViewHolder(view);
+        return new MyViewHolder(view, viewType);
     }
-
 
 
     @Override
     public void onBindViewHolder(final ArchiveListAdapter.MyViewHolder holder, final int listPosition) {
-        if(getItemViewType(listPosition)==ITEM){
+        if (getItemViewType(listPosition) == ITEM) {
             TextView textViewName = holder.textViewName;
 
 
@@ -140,9 +117,9 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
 
     @Override
     public int getItemViewType(int position) {
-        if(position==0){
+        if (position == 0) {
             return SLIDER_HEADER;
-        }else {
+        } else {
             return ITEM;
         }
     }
@@ -152,17 +129,103 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
         return dataSet.size();
     }
 
+    CardView activatedcardView;
 
-    public  class MyViewHolder extends RecyclerView.ViewHolder {
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+        @Nullable
+        @BindView(R.id.item_video)
+        CardView videoBtn;
+
+        @Nullable
+        @BindView(R.id.item_audio)
+        CardView audioBtn;
+
+        @Nullable
+        @BindView(R.id.item_book)
+        CardView bookBtn;
+
+        @Nullable
+        @BindView(R.id.item_image)
+        CardView imgBtn;
+
+        @Nullable
+        @BindView(R.id.item_sharing)
+        CardView shereBtn;
+
+        @Nullable
+        @BindView(R.id.item_tools)
+        CardView toolsBtn;
 
         TextView textViewName;
         YouTubePlayerView playerView;
 
-        public MyViewHolder(View itemView) {
+        public MyViewHolder(View itemView, int viewType) {
             super(itemView);
-            this.textViewName =itemView.findViewById(R.id.textViewName);
-            playerView=itemView.findViewById(R.id.youtube_player_view);
+            ButterKnife.bind(this, itemView);
+            this.textViewName = itemView.findViewById(R.id.textViewName);
+            playerView = itemView.findViewById(R.id.youtube_player_view);
 
+            if (viewType == SLIDER_HEADER) {
+                videoBtn.setActivated(true);
+                activatedcardView = videoBtn;
+
+            }
+        }
+
+        @Optional
+        @OnClick(R.id.item_video)
+        public void videoClick() {
+            activatedcardView.setActivated(false);
+            videoBtn.setActivated(true);
+            activatedcardView = videoBtn;
+
+        }
+
+        @Optional
+        @OnClick(R.id.item_audio)
+        public void audioClick() {
+
+            activatedcardView.setActivated(false);
+            audioBtn.setActivated(true);
+            activatedcardView = audioBtn;
+
+        }
+
+        @Optional
+        @OnClick(R.id.item_book)
+        public void bookClick() {
+
+            activatedcardView.setActivated(false);
+            bookBtn.setActivated(true);
+            activatedcardView = bookBtn;
+        }
+
+        @Optional
+        @OnClick(R.id.item_image)
+        public void imageClick() {
+
+            activatedcardView.setActivated(false);
+            imgBtn.setActivated(true);
+            activatedcardView = imgBtn;
+        }
+
+        @Optional
+        @OnClick(R.id.item_sharing)
+        public void shareClick() {
+
+            activatedcardView.setActivated(false);
+            shereBtn.setActivated(true);
+            activatedcardView = shereBtn;
+        }
+
+        @Optional
+        @OnClick(R.id.item_tools)
+        public void toolsClick() {
+
+            activatedcardView.setActivated(false);
+            toolsBtn.setActivated(true);
+            activatedcardView = toolsBtn;
         }
     }
 }
