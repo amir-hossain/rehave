@@ -42,7 +42,8 @@
 
         <activity
             android:name=".PostActivity"
-            android:theme="@style/ActivityTheme"/>
+            android:theme="@style/ActivityTheme"
+            android:exported="true"/>
 
         <activity android:name=".CommunityPost"
             android:theme="@style/ActivityTheme"/>

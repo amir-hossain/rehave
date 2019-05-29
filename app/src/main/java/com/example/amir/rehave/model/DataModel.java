@@ -1,7 +1,5 @@
 package com.example.amir.rehave.model;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -9,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DataModel implements Parcelable {
-    private String postId;
+    private String id;
     private String title;
     private String post;
     private int section;
@@ -23,17 +21,17 @@ public class DataModel implements Parcelable {
 
     public DataModel(String title, String id) {
         this.title = title;
-        this.postId = id;
+        this.id = id;
     }
 
     public DataModel(String id, String title, String post) {
         this.title = title;
         this.post = post;
-        this.postId = id;
+        this.id = id;
     }
 
     public DataModel(String id, String title, String post, int section, Map<String, String> commentList) {
-        this.postId = id;
+        this.id = id;
         this.title = title;
         this.post = post;
         this.section = section;
@@ -41,7 +39,7 @@ public class DataModel implements Parcelable {
     }
 
     protected DataModel(Parcel in) {
-        postId = in.readString();
+        id = in.readString();
         title = in.readString();
         post = in.readString();
         section = in.readInt();
@@ -67,13 +65,6 @@ public class DataModel implements Parcelable {
         }
     };
 
-    public String getId() {
-        return postId;
-    }
-
-    public void setId(String id) {
-        this.postId = id;
-    }
 
     public String getTitle() {
         return title;
@@ -107,12 +98,12 @@ public class DataModel implements Parcelable {
         this.commentList = commentList;
     }
 
-    public String getPostId() {
-        return postId;
+    public String getId() {
+        return id;
     }
 
-    public void setPostId(String postId) {
-        this.postId = postId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override
@@ -122,7 +113,7 @@ public class DataModel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(postId);
+        dest.writeString(id);
         dest.writeString(title);
         dest.writeString(post);
         dest.writeInt(section);

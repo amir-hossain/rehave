@@ -24,18 +24,26 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PostActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnItemSelected;
+
+public class PostActivity extends AppCompatActivity{
 
     int subject;
     EditText titleView;
     EditText postView;
+
+    @BindView(R.id.subject)
     Spinner spinner;
+
     int selectedPosition;
     String path=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+        ButterKnife.bind(this);
         if(getIntent().getExtras()!=null){
             path=getIntent().getExtras().getString("path");
         }
@@ -71,6 +79,16 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
 
 
     }
+
+  /*  @OnItemSelected(R.id.my_spinner)
+    public void spinnerItemSelected(Spinner spinner, int position) {
+        // code here
+    }*/
+
+  @OnItemSelected(R.id.subject)
+  public void spinnerSelected(int position){
+      selectedPosition=position;
+  }
 
     private void getData(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -114,7 +132,7 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
 
         String key=tempRef.push().getKey();
         DatabaseReference mainRef=database.getReference(path+key);
-        DataModel model=new DataModel(key,title,post,subject,null);
+        DataModel model=new DataModel(key,title,post,selectedPosition+1,null);
         mainRef.setValue(model,new
                 DatabaseReference.CompletionListener() {
 
@@ -137,9 +155,6 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
         // Spinner element
         spinner =findViewById(R.id.subject);
 
-        // Spinner click listener
-        spinner.setOnItemSelectedListener(this);
-
         // Spinner Drop down elements
         List<String> categories = new ArrayList<>();
         categories.add(getResources().getString(R.string.adiction_information));
@@ -154,17 +169,5 @@ public class PostActivity extends AppCompatActivity implements AdapterView.OnIte
 
         // attaching data adapter to spinner
         spinner.setAdapter(dataAdapter);
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        // On selecting a spinner item
-        subject = position;
-
-        // Showing selected spinner item
-//        Toast.makeText(parent.getContext(), "Selected: " + subject, Toast.LENGTH_LONG).show();
-    }
-    public void onNothingSelected(AdapterView<?> arg0) {
-        // TODO Auto-generated method stub
     }
 }

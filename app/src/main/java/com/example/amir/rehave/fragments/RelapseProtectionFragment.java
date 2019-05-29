@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -56,7 +57,7 @@ public class RelapseProtectionFragment extends Fragment implements ItemClickList
         recyclerView =view.findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
 
-        layoutManager = new LinearLayoutManager(getContext());
+        layoutManager = new GridLayoutManager(getContext(),2);
         recyclerView.setLayoutManager(layoutManager);
 
         return view;
@@ -80,7 +81,7 @@ public class RelapseProtectionFragment extends Fragment implements ItemClickList
 
     @Override
     public void listenDatable(List<DataModel> datas) {
-        adapter = new ListAdpter(datas,RelapseProtectionFragment.this);
+        adapter = new ListAdpter(datas,RelapseProtectionFragment.this,1);
         recyclerView.setAdapter(adapter);
     }
 }

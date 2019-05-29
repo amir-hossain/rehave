@@ -13,10 +13,11 @@ import com.example.amir.rehave.model.DataModel;
 import java.util.List;
 
 public class ListAdpter extends RecyclerView.Adapter<ListAdpter.MyViewHolder> {
+    private int numberOfLines;
     private List<DataModel> dataSet;
     private ItemClickListener listener;
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView textViewName;
         View itemView;
@@ -26,14 +27,16 @@ public class ListAdpter extends RecyclerView.Adapter<ListAdpter.MyViewHolder> {
             super(itemView);
             this.textViewName =itemView.findViewById(R.id.textViewName);
             this.itemView=itemView;
+            this.textViewName.setLines(numberOfLines);
+
 
         }
     }
 
-    public ListAdpter(List<DataModel> data, ItemClickListener listener) {
+    public ListAdpter(List<DataModel> data, ItemClickListener listener,int numberOfLines) {
         this.dataSet = data;
         this.listener=listener;
-
+        this.numberOfLines=numberOfLines;
     }
 
     @Override
