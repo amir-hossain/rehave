@@ -9,7 +9,12 @@ import com.example.amir.rehave.database.DatabaseHelper;
 import com.example.amir.rehave.database.Post;
 import com.example.amir.rehave.database.RehubDao;
 import com.example.amir.rehave.model.DataModel;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -52,17 +57,36 @@ public class LinkMethods extends Constants implements DataListeners.DataTableLis
             List<Post> posts;
             @Override
             public void subscribe(ObservableEmitter<List<Post>> emitter) throws Exception {
+                final ObservableEmitter<List<Post>> finalEmmitter=emitter;
                 if(sectionId==Section.ALL.toInt()){
                     posts=rehubDao.getAllPostWithoutArchive();
                 }else if(sectionId==Section.ADDICTION.toInt()){
                     posts=rehubDao.getAllAddictionInfoPost();
+                    emitter.onNext(posts);
                 }else if(sectionId==Section.PROTECTION.toInt()){
                     posts=rehubDao.getAllProtectionInfoPost();
+                    emitter.onNext(posts);
                 }else {
-                    posts=rehubDao.getAllArchiveInfoPost();
+                    posts=new ArrayList<>();
+                    final FirebaseDatabase database=FirebaseDatabase.getInstance();
+                    DatabaseReference reference=database.getReference("data/arch");
+                    reference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for(DataSnapshot child:dataSnapshot.getChildren()){
+                                posts.add(child.getValue(Post.class));
+                            }
+                            finalEmmitter.onNext(posts);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
                 }
 
-                emitter.onNext(posts);
+
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -108,7 +132,7 @@ public class LinkMethods extends Constants implements DataListeners.DataTableLis
                 for(DataSnapshot grandChild: childSnap.getChildren()){
 
                     mainFragmentData=grandChild.getValue(DataModel.class);
-//                    mainFragmentData.setId(grandChild.getKey());
+//                    mainFragmentData.setPostId(grandChild.getKey());
                     datas.add(mainFragmentData);
                 }
             }

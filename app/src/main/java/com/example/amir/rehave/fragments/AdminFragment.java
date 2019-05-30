@@ -123,7 +123,7 @@ public class AdminFragment extends Fragment implements AdminListAdapter.ItemClic
                     for(DataSnapshot snap : singleSnapshot.getChildren()) {
                         value=snap.getValue(DataModel.class);
                         Log.d("Fire value", "Value is: " + value.getTitle());
-                        data.add(new DataModel(value.getId(),value.getTitle(),null,value.getSection(),value.getCommentList()));
+                        data.add(new DataModel(value.getPostId(),value.getTitle(),null,value.getSection(),value.getCommentList()));
                     }
 
                 }
@@ -153,7 +153,7 @@ public class AdminFragment extends Fragment implements AdminListAdapter.ItemClic
 
     private void delete(View v){
         int index =recyclerView.getChildLayoutPosition(v);
-        String key=data.get(index).getId();
+        String key=data.get(index).getPostId();
 //            Toast.makeText(this,"delete "+key,Toast.LENGTH_SHORT).show();
         int topic=data.get(index).getSection();
         String path="data/info/"+key;
@@ -172,7 +172,7 @@ public class AdminFragment extends Fragment implements AdminListAdapter.ItemClic
 
     private void edit(View v){
         int index =recyclerView.getChildLayoutPosition(v);
-        String key=data.get(index).getId();
+        String key=data.get(index).getPostId();
         int topic=data.get(index).getSection();
         String path="data/info/"+key;
         if(topic==Constants.Section.PROTECTION.toInt()){
@@ -200,7 +200,7 @@ public class AdminFragment extends Fragment implements AdminListAdapter.ItemClic
         @Override
         public void onClick(View v) {
             int index =recyclerView.getChildLayoutPosition(v);
-            String key=data.get(index).getId();
+            String key=data.get(index).getPostId();
 //            Toast.makeText(context,index+" clicked",Toast.LENGTH_SHORT).show();
             Intent intent=new Intent(context, ActivityInfoDetails.class);
             intent.putExtra("key",key);

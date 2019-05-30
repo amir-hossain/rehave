@@ -18,6 +18,9 @@ public class Post {
 
     private String title;
 
+    public Post() {
+    }
+
     public Post(String postId, String post, int section, String title) {
         this.postId = postId;
         this.post = post;
