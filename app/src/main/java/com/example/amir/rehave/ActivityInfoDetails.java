@@ -47,7 +47,7 @@ public class ActivityInfoDetails extends AppCompatActivity {
         String comment=binding.commentBox.getText().toString().trim();
         if(!comment.isEmpty()){
             String outerTableName=getOuterTableName();
-            DatabaseReference reference=FirebaseDatabase.getInstance().getReference("data/"+outerTableName+"/"+data.getPostId()+"/commentList/"+ userId);
+            DatabaseReference reference=FirebaseDatabase.getInstance().getReference("data/"+outerTableName+"/"+data.getId()+"/commentList/"+ userId);
             reference.setValue(comment);
 
             showToast("মন্তব্য সেভ হয়েছে!");
