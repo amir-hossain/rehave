@@ -10,6 +10,8 @@ public class SharedPrefManager {
     public static String ID_PREF="id";
     public static String DATE_PREF="date";
     public static String USER_TYPE="JSONPost";
+    public static String IS_NOT_INTIAL_LUNCH="is_not_initial_lunch";
+    public static String TOTAL_PREF="total";
 
     private SharedPreferences sharedPreferences;
 
@@ -35,6 +37,24 @@ public class SharedPrefManager {
     public String getString(String name){
 
         return sharedPreferences.getString(name, null);
+    }
+
+    public void setInt(String name,int value){
+        sharedPreferences.edit().putInt(name, value).commit();
+    }
+
+    public int getint(String name){
+
+        return sharedPreferences.getInt(name, 0);
+    }
+
+    public void setBoolean(String name,Boolean value){
+        sharedPreferences.edit().putBoolean(name, value).commit();
+    }
+
+    public Boolean getBoolean(String name){
+
+        return sharedPreferences.getBoolean(name, false);
     }
 
     public void clear(){

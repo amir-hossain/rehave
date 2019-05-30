@@ -142,6 +142,7 @@ public class PostActivity extends AppCompatActivity{
                         Toast.makeText(PostActivity.this,"posted sucessfully",Toast.LENGTH_SHORT).show();
                         titleView.setText("");
                         postView.setText("");
+                        Utils.notification++;
 
                     }
                 });

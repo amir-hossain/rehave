@@ -29,7 +29,7 @@ import com.example.amir.rehave.manager.SharedPrefManager;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SingUpFragment.RegistrationCompleteListener, LoginFragment.RegistrationButtonClickListenter{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SingUpFragment.RegistrationCompleteListener, LoginFragment.RegistrationButtonClickListenter {
 
     private TextView userNameView;
 
@@ -55,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         userNameView = headerView.findViewById(R.id.user_name);
 
         userNameView.setText(SharedPrefManager.getInstance(getApplicationContext()).getString(SharedPrefManager.NAME_PREF));
+
+
     }
 
 
@@ -77,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = findViewById(R.id.nav_view);
 
         navigationView.setNavigationItemSelectedListener(this);
-        fragmentToRun=new MainFragment();
+        fragmentToRun = new MainFragment();
         runFragment();
 
         navigationView.setCheckedItem(R.id.nav_main);
@@ -91,45 +93,45 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_main) {
-            fragmentToRun=new MainFragment();
+            fragmentToRun = new MainFragment();
             runFragment();
 
         } else if (id == R.id.nav_about) {
-            fragmentToRun=AboutFragment.newInstance();
+            fragmentToRun = AboutFragment.newInstance();
             runFragment();
 
-        }else if (id == R.id.nav_registration) {
-            fragmentToRun=SingUpFragment.newInstance(this);
+        } else if (id == R.id.nav_registration) {
+            fragmentToRun = SingUpFragment.newInstance(this);
             runFragment();
 
         } else if (id == R.id.nav_login) {
-            fragmentToRun=LoginFragment.newInstance(this);
+            fragmentToRun = LoginFragment.newInstance(this);
             runFragment();
 
         } else if (id == R.id.nav_addiction) {
-            fragmentToRun=AddictionInformationFragment.newInstance();
+            fragmentToRun = AddictionInformationFragment.newInstance();
             runFragment();
 
 
         } else if (id == R.id.nav_protection) {
-            fragmentToRun=RelapseProtectionFragment.newInstance();
+            fragmentToRun = RelapseProtectionFragment.newInstance();
             runFragment();
 
         } else if (id == R.id.nav_archive) {
-            fragmentToRun=ArchiveFragment.newInstance();
+            fragmentToRun = ArchiveFragment.newInstance();
             runFragment();
 
         } else if (id == R.id.nav_forum) {
-            fragmentToRun=CommunityFragment.newInstance();
+            fragmentToRun = CommunityFragment.newInstance();
             runFragment();
 
-        }else if (id == R.id.nav_expert_opinion) {
-        fragmentToRun=new ExpertOpinionFragment();
-        runFragment();
+        } else if (id == R.id.nav_expert_opinion) {
+            fragmentToRun = new ExpertOpinionFragment();
+            runFragment();
 
-    }else {
+        } else {
             SharedPrefManager.getInstance(this).clear();
-            fragmentToRun=LoginFragment.newInstance(this);
+            fragmentToRun = LoginFragment.newInstance(this);
             runFragment();
         }
 
@@ -143,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void OnRegistrationComplete() {
-        fragmentToRun=LoginFragment.newInstance(this);
+        fragmentToRun = LoginFragment.newInstance(this);
         runFragment();
         navigationView.setCheckedItem(R.id.nav_login);
     }
@@ -172,13 +174,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void wantToGoToRegistration() {
-        fragmentToRun=SingUpFragment.newInstance(this);
+        fragmentToRun = SingUpFragment.newInstance(this);
         runFragment();
         navigationView.setCheckedItem(R.id.nav_registration);
     }
 
 
-    public void retry(View v){
+    public void retry(View v) {
         runFragment();
     }
 
@@ -194,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        final MenuItem alertMenuItem = menu.findItem(R.id.action_cart);
+        final MenuItem alertMenuItem = menu.findItem(R.id.action_notificaion);
         FrameLayout rootView = (FrameLayout) alertMenuItem.getActionView();
 
         redCircle = (FrameLayout) rootView.findViewById(R.id.view_alert_red_circle);
@@ -210,14 +212,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void setCartNotiCount(int productCounter) {
-        // if alert count extends into two digits, just show the red circle
-        if (productCounter>0) {
-            countTextView.setText(String.valueOf(productCounter));
-        } else {
-            countTextView.setText("");
-        }
-
+        countTextView.setText(String.valueOf(productCounter));
         redCircle.setVisibility((productCounter > 0) ? VISIBLE : GONE);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (Utils.notification > 0) {
+            setCartNotiCount(Utils.notification);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_notificaion:
+                int previousTotal = SharedPrefManager.getInstance(getApplicationContext())
+                        .getint(SharedPrefManager.TOTAL_PREF);
+                SharedPrefManager.getInstance(getApplicationContext())
+                        .setInt(SharedPrefManager.TOTAL_PREF, previousTotal + Utils.notification);
+                Utils.notification = 0;
+                setCartNotiCount(Utils.notification);
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 }

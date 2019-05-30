@@ -178,6 +178,7 @@ public class NewPostActivity extends AppCompatActivity {
             mainRef.setValue(new CommunityPostModel(userId,postId,title,message,"Admin",dateTime[0],dateTime[1],true,imageUrl));
             progressDialog.dismiss();
             Toast.makeText(getApplicationContext(),R.string.acceptMessage,Toast.LENGTH_SHORT).show();
+            Utils.notification++;
             onBackPressed();
     }
 

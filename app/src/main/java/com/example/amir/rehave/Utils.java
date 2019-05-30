@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 public class Utils {
 
+    public static int notification=0;
+
     public static  String getSectionName(int section) {
         if(section==Constants.Section.ADDICTION.toInt()){
             return "মাদক  ও  মাদকাসক্তি  বিষয়ে তথ্য";
