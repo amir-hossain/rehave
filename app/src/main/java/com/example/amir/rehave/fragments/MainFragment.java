@@ -31,8 +31,6 @@ public class MainFragment extends Fragment{
     @BindView(R.id.slogan)
     TextView slogan;
 
-    int count=1;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -49,6 +47,7 @@ public class MainFragment extends Fragment{
             day=1;
             date=formatter.format(new Date());
             SharedPrefManager.getInstance(getContext()).setString(SharedPrefManager.DATE_PREF,date);
+            dayView.setText((day)+"");
         }else {
             try {
                 Date savedDate=formatter.parse(date);
@@ -58,8 +57,9 @@ public class MainFragment extends Fragment{
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+            dayView.setText((day+1)+"");
         }
-        dayView.setText((day+1)+"");
+
 }
 
 }
