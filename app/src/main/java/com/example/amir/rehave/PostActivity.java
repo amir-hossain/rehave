@@ -1,19 +1,16 @@
 package com.example.amir.rehave;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.amir.rehave.fragments.AdminFragment;
 import com.example.amir.rehave.model.DataModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,11 +31,16 @@ public class PostActivity extends AppCompatActivity{
     EditText titleView;
     EditText postView;
 
-    @BindView(R.id.subject)
-    Spinner spinner;
+    @BindView(R.id.section)
+    Spinner sectionSpinner;
+
+    @BindView(R.id.sub_section)
+    Spinner subSectionSpinner;
 
     int selectedPosition;
+    int subSelectedPosition;
     String path=null;
+    int section;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +58,22 @@ public class PostActivity extends AppCompatActivity{
         actionBar.setDisplayHomeAsUpEnabled(true);
 
 
+        List<String> section = new ArrayList<>();
+        section.add(getResources().getString(R.string.adiction_information));
+        section.add(getResources().getString(R.string.relapse_protection));
+        section.add(getResources().getString(R.string.archive));
+        creatSpinner(sectionSpinner,section);
 
-        creatSpinner();
+        List<String> subSection = new ArrayList<>();
+        subSection.add("Video");
+        subSection.add("Audio");
+        subSection.add("Book");
+        subSection.add("Image");
+        subSection.add("Sharing");
+        subSection.add("Tools");
+        creatSpinner(subSectionSpinner,subSection);
+
+
         titleView=findViewById(R.id.title);
         postView=findViewById(R.id.post);
         Button postBtn=findViewById(R.id.post_button);
@@ -85,10 +101,20 @@ public class PostActivity extends AppCompatActivity{
         // code here
     }*/
 
-  @OnItemSelected(R.id.subject)
+  @OnItemSelected(R.id.section)
   public void spinnerSelected(int position){
       selectedPosition=position;
+      if(position==2){
+          subSectionSpinner.setVisibility(View.VISIBLE);
+      }else {
+          subSectionSpinner.setVisibility(View.GONE);
+      }
   }
+
+    @OnItemSelected(R.id.sub_section)
+    public void subSectionSelected(int position){
+        subSelectedPosition =position;
+    }
 
     private void getData(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -101,9 +127,9 @@ public class PostActivity extends AppCompatActivity{
                 titleView.setText(value.getTitle());
                 postView.setText(value.getPost());
                 if(value.getSection()==Constants.Section.PROTECTION.toInt()){
-                    spinner.setSelection(Constants.Section.PROTECTION.toInt());
+                    sectionSpinner.setSelection(Constants.Section.PROTECTION.toInt());
                 }else if(value.getSection()==Constants.Section.ARCHIVE.toInt()){
-                    spinner.setSelection(Constants.Section.ARCHIVE.toInt());
+                    sectionSpinner.setSelection(Constants.Section.ARCHIVE.toInt());
                 }
 
 
@@ -122,17 +148,38 @@ public class PostActivity extends AppCompatActivity{
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         String path="data/info/";
+        section=1;
         if(selectedPosition==1){
             path="data/pro/";
+            section=2;
         }else if(selectedPosition==2){
             path="data/arch/";
+            if(subSelectedPosition==0){
+                path=path+"/video/";
+                section=3;
+            }else if(subSelectedPosition==1){
+                path=path+"/audio/";
+                section=4;
+            }else if(subSelectedPosition==2){
+                path=path+"/book/";
+                section=5;
+            }else if(subSelectedPosition==3){
+                path=path+"/image/";
+                section=6;
+            }else if(subSelectedPosition==4){
+                path=path+"/sharing/";
+                section=7;
+            }else if(subSelectedPosition==5){
+                path=path+"/tools/";
+                section=8;
+            }
         }
 
         DatabaseReference tempRef = database.getReference(path);
 
         String key=tempRef.push().getKey();
         DatabaseReference mainRef=database.getReference(path+key);
-        DataModel model=new DataModel(key,title,post,selectedPosition+1,null);
+        DataModel model=new DataModel(key,title,post,section,null);
         mainRef.setValue(model,new
                 DatabaseReference.CompletionListener() {
 
@@ -152,18 +199,9 @@ public class PostActivity extends AppCompatActivity{
     }
 
 
-    private void creatSpinner() {
-        // Spinner element
-        spinner =findViewById(R.id.subject);
+    private void creatSpinner(Spinner spinner,List<String> data) {
 
-        // Spinner Drop down elements
-        List<String> categories = new ArrayList<>();
-        categories.add(getResources().getString(R.string.adiction_information));
-        categories.add(getResources().getString(R.string.relapse_protection));
-        categories.add(getResources().getString(R.string.archive));
-
-        // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data);
 
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

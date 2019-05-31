@@ -42,9 +42,16 @@
             android:textStyle="bold"
             android:layout_marginTop="5dp"/>
         <Spinner
-            android:id="@+id/subject"
+            android:layout_marginTop="10dp"
+            android:id="@+id/section"
             android:layout_width="300dp"
-            android:layout_height="wrap_content"></Spinner>
+            android:layout_height="wrap_content"/>
+        <Spinner
+            android:layout_marginTop="10dp"
+            android:id="@+id/sub_section"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
         <Button
             android:id="@+id/post_button"
             android:layout_width="wrap_content"
