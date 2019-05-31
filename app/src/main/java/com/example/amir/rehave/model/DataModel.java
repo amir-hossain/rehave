@@ -3,13 +3,22 @@ package com.example.amir.rehave.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class DataModel implements Parcelable {
-    private String id;
+
+    @Expose
+    @SerializedName("postId")
+    private String postId;
+    @Expose
     private String title;
+    @Expose
     private String post;
+    @Expose
     private int section;
 
     private Map<String,String> commentList;
@@ -19,19 +28,19 @@ public class DataModel implements Parcelable {
     }
 
 
-    public DataModel(String title, String id) {
+    public DataModel(String title, String postId) {
         this.title = title;
-        this.id = id;
+        this.postId = postId;
     }
 
-    public DataModel(String id, String title, String post) {
+    public DataModel(String postId, String title, String post) {
         this.title = title;
         this.post = post;
-        this.id = id;
+        this.postId = postId;
     }
 
-    public DataModel(String id, String title, String post, int section, Map<String, String> commentList) {
-        this.id = id;
+    public DataModel(String postId, String title, String post, int section, Map<String, String> commentList) {
+        this.postId = postId;
         this.title = title;
         this.post = post;
         this.section = section;
@@ -39,7 +48,7 @@ public class DataModel implements Parcelable {
     }
 
     protected DataModel(Parcel in) {
-        id = in.readString();
+        postId = in.readString();
         title = in.readString();
         post = in.readString();
         section = in.readInt();
@@ -65,6 +74,15 @@ public class DataModel implements Parcelable {
         }
     };
 
+    @SerializedName("postId")
+    public String getPostId() {
+        return postId;
+    }
+
+    @SerializedName("postId")
+    public void setPostId(String postId) {
+        this.postId = postId;
+    }
 
     public String getTitle() {
         return title;
@@ -99,11 +117,11 @@ public class DataModel implements Parcelable {
     }
 
     public String getId() {
-        return id;
+        return postId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(String postId) {
+        this.postId = postId;
     }
 
     @Override
@@ -113,7 +131,7 @@ public class DataModel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
+        dest.writeString(postId);
         dest.writeString(title);
         dest.writeString(post);
         dest.writeInt(section);
