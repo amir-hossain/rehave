@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,9 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.amir.rehave.R;
+import com.example.amir.rehave.fragments.ArchiveFragment;
 import com.example.amir.rehave.model.DataModel;
 import com.flipkart.youtubeview.YouTubePlayerView;
 import com.flipkart.youtubeview.models.ImageLoader;
@@ -40,7 +40,9 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
             "\\S*?[^\\w\\s-])([\\w-]{11})(?=[^\\w-]|$)(?![?=&+%\\w.-]*(?:['\"][^<>]*>|<\\/a>))[?=&+%\\w.-]*";
 
     private static int SLIDER_HEADER = 0;
-    private static int ITEM = 1;
+    private static int VIDEO_ITEM = 1;
+    private static int IMAGE_ITEM = 2;
+    private static int OTHER_ITEM = 3;
 
 
     private ImageLoader imageLoader = new ImageLoader() {
@@ -50,13 +52,15 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
         }
     };
     private Context context;
+    private onCategoryClickListener listener;
 
-
-    public ArchiveListAdapter(Fragment fragment, List<DataModel> data) {
+    public ArchiveListAdapter(Fragment fragment, List<DataModel> data,onCategoryClickListener listener) {
         this.dataSet = data;
-        this.dataSet.add(0, null);
         this.fragment = fragment;
-        this.videoIds = extractVideoIds(data);
+        this.listener=listener;
+        if(data.get(1).getSection()==ArchiveFragment.VIDEO){
+            this.videoIds = extractVideoIds(data);
+        }
 
     }
 
@@ -91,10 +95,17 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.slider_header_layout, parent, false);
 
-        } else {
+        } else if(viewType==VIDEO_ITEM) {
             view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.archive_item, parent, false);
+                    .inflate(R.layout.archive_vidio_view, parent, false);
 
+        }else if(viewType==IMAGE_ITEM) {
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.archive_image_view, parent, false);
+
+        }else {
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.other_archive_view, parent, false);
         }
 
 
@@ -104,14 +115,23 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
 
     @Override
     public void onBindViewHolder(final ArchiveListAdapter.MyViewHolder holder, final int listPosition) {
-        if (getItemViewType(listPosition) == ITEM) {
-            TextView textViewName = holder.textViewName;
-
-
+        if (getItemViewType(listPosition) == VIDEO_ITEM) {
+            TextView textViewName = holder.titleView;
             textViewName.setText(dataSet.get(listPosition).getTitle());
             YouTubePlayerView playerView = holder.playerView;
 
             playerView.initPlayer(API_KEY, videoIds.get(listPosition), "https://cdn.rawgit.com/flipkart-incubator/inline-youtube-view/60bae1a1/youtube-android/youtube_iframe_player.html", YouTubePlayerType.STRICT_NATIVE, null, fragment, imageLoader);
+        }else if(getItemViewType(listPosition) == IMAGE_ITEM){
+            holder.titleView.setText(dataSet.get(listPosition).getTitle());
+
+            Glide
+                    .with(context)
+                    .load(dataSet.get(listPosition).getPost())
+                    .into(holder.imageView);
+
+        }else if(getItemViewType(listPosition) == OTHER_ITEM){
+            holder.titleView.setText(dataSet.get(listPosition).getTitle());
+            holder.linkView.setText(dataSet.get(listPosition).getPost());
         }
     }
 
@@ -120,13 +140,31 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
         if (position == 0) {
             return SLIDER_HEADER;
         } else {
-            return ITEM;
+            if(dataSet.get(position).getSection()== ArchiveFragment.VIDEO){
+                return VIDEO_ITEM;
+            }else if(dataSet.get(position).getSection()== ArchiveFragment.AUDIO){
+                return OTHER_ITEM;
+            }else if(dataSet.get(position).getSection()== ArchiveFragment.BOOK){
+                return OTHER_ITEM;
+            }else if(dataSet.get(position).getSection()== ArchiveFragment.IMAGE){
+                return IMAGE_ITEM;
+            }else if(dataSet.get(position).getSection()== ArchiveFragment.SHARING){
+                return OTHER_ITEM;
+            }else {
+                return OTHER_ITEM;
+            }
+
         }
     }
 
     @Override
     public int getItemCount() {
         return dataSet.size();
+    }
+
+    public void setData(ArrayList<DataModel> dataSet){
+        this.dataSet=dataSet;
+        notifyDataSetChanged();
     }
 
     CardView activatedcardView;
@@ -157,14 +195,29 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
         @BindView(R.id.item_tools)
         CardView toolsBtn;
 
-        TextView textViewName;
+        @Nullable
+        @BindView(R.id.textViewName)
+        TextView titleView;
+
+        @Nullable
+        @BindView(R.id.youtube_player_view)
         YouTubePlayerView playerView;
+
+        @Nullable
+        @BindView(R.id.img)
+        ImageView imageView;
+
+        @Nullable
+        @BindView(R.id.link)
+        TextView linkView;
+
+        @Nullable
+        @BindView(R.id.card_view)
+        CardView cardView;
 
         public MyViewHolder(View itemView, int viewType) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            this.textViewName = itemView.findViewById(R.id.textViewName);
-            playerView = itemView.findViewById(R.id.youtube_player_view);
 
             if (viewType == SLIDER_HEADER) {
                 videoBtn.setActivated(true);
@@ -179,6 +232,7 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
             activatedcardView.setActivated(false);
             videoBtn.setActivated(true);
             activatedcardView = videoBtn;
+            listener.onCategoryClick(ArchiveFragment.VIDEO);
 
         }
 
@@ -189,7 +243,7 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
             activatedcardView.setActivated(false);
             audioBtn.setActivated(true);
             activatedcardView = audioBtn;
-
+            listener.onCategoryClick(ArchiveFragment.AUDIO);
         }
 
         @Optional
@@ -199,6 +253,7 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
             activatedcardView.setActivated(false);
             bookBtn.setActivated(true);
             activatedcardView = bookBtn;
+            listener.onCategoryClick(ArchiveFragment.BOOK);
         }
 
         @Optional
@@ -208,6 +263,7 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
             activatedcardView.setActivated(false);
             imgBtn.setActivated(true);
             activatedcardView = imgBtn;
+            listener.onCategoryClick(ArchiveFragment.IMAGE);
         }
 
         @Optional
@@ -217,6 +273,7 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
             activatedcardView.setActivated(false);
             shereBtn.setActivated(true);
             activatedcardView = shereBtn;
+            listener.onCategoryClick(ArchiveFragment.SHARING);
         }
 
         @Optional
@@ -226,6 +283,13 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
             activatedcardView.setActivated(false);
             toolsBtn.setActivated(true);
             activatedcardView = toolsBtn;
+            listener.onCategoryClick(ArchiveFragment.TOOLS);
         }
+    }
+
+
+
+    public interface onCategoryClickListener{
+        void onCategoryClick(int dataType);
     }
 }
