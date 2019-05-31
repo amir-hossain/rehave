@@ -1,6 +1,8 @@
 package com.example.amir.rehave.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -132,6 +134,13 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
         }else if(getItemViewType(listPosition) == OTHER_ITEM){
             holder.titleView.setText(dataSet.get(listPosition).getTitle());
             holder.linkView.setText(dataSet.get(listPosition).getPost());
+            holder.cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(dataSet.get(listPosition).getPost()));
+                    context.startActivity(browserIntent);
+                }
+            });
         }
     }
 
