@@ -71,7 +71,7 @@ public class ArchiveFragment extends Fragment implements LinkListeners.DataTable
     @Override
     public void listenDatable(List<DataModel> datas) {
         catagorizeData(datas);
-        archiveListAdapter = new ArchiveListAdapter(ArchiveFragment.this,videoData,this);
+        archiveListAdapter = new ArchiveListAdapter(getContext(),ArchiveFragment.this,videoData,this);
         view.setAdapter(archiveListAdapter);
     }
 

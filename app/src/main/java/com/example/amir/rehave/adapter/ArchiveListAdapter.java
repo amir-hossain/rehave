@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.amir.rehave.R;
@@ -56,7 +57,8 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
     private Context context;
     private onCategoryClickListener listener;
 
-    public ArchiveListAdapter(Fragment fragment, List<DataModel> data,onCategoryClickListener listener) {
+    public ArchiveListAdapter(Context context,Fragment fragment, List<DataModel> data,onCategoryClickListener listener) {
+        this.context=context;
         this.dataSet = data;
         this.fragment = fragment;
         this.listener=listener;
@@ -72,7 +74,12 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
             if (data == null) {
                 vidioIds.add(null);
             } else {
-                vidioIds.add(extractVideoId(data));
+                try {
+                    vidioIds.add(extractVideoId(data));
+                }catch (Exception e){
+                    Toast.makeText(context,"invalid url not shown",Toast.LENGTH_SHORT).show();
+                }
+
             }
         }
         return vidioIds;
@@ -91,7 +98,6 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
     @Override
     public ArchiveListAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
                                                               int viewType) {
-        this.context = parent.getContext();
         View view = null;
         if (viewType == SLIDER_HEADER) {
             view = LayoutInflater.from(parent.getContext())
@@ -137,8 +143,12 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
             holder.cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(dataSet.get(listPosition).getPost()));
-                    context.startActivity(browserIntent);
+                    try {
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(dataSet.get(listPosition).getPost()));
+                        context.startActivity(browserIntent);
+                    }catch (Exception e){
+                        Toast.makeText(context,"invalid url",Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
         }

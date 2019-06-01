@@ -4,6 +4,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,6 +21,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,6 +44,9 @@ public class PostActivity extends AppCompatActivity{
     int subSelectedPosition;
     String path=null;
     int section;
+
+    private static final String REGEXP_ID_PATTERN = "(?i)https?:\\/\\/(?:[0-9A-Z-]+\\.)?(?:youtu\\.be\\/|youtube(?:-nocookie)?\\.com" +
+            "\\S*?[^\\w\\s-])([\\w-]{11})(?=[^\\w-]|$)(?![?=&+%\\w.-]*(?:['\"][^<>]*>|<\\/a>))[?=&+%\\w.-]*";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -177,29 +183,74 @@ public class PostActivity extends AppCompatActivity{
 
         DatabaseReference tempRef = database.getReference(path);
 
-        String key=tempRef.push().getKey();
-        DatabaseReference mainRef=database.getReference(path+key);
-        DataModel model=new DataModel(key,title,post,section,null);
-        mainRef.setValue(model,new
-                DatabaseReference.CompletionListener() {
+        if(section==3){
+                try {
+                  extractVideoId(post);
+                    String key=tempRef.push().getKey();
+                    DatabaseReference mainRef=database.getReference(path+key);
+                    DataModel model=new DataModel(key,title,post,section,null);
+                    mainRef.setValue(model,new
+                            DatabaseReference.CompletionListener() {
 
-                    @Override
-                    public void onComplete(DatabaseError databaseError,
-                                           DatabaseReference databaseReference) {
-                        Toast.makeText(PostActivity.this,"posted sucessfully",Toast.LENGTH_SHORT).show();
-                        titleView.setText("");
-                        postView.setText("");
-                        Utils.notification++;
+                                @Override
+                                public void onComplete(DatabaseError databaseError,
+                                                       DatabaseReference databaseReference) {
+                                    Toast.makeText(PostActivity.this,"posted sucessfully",Toast.LENGTH_SHORT).show();
+                                    titleView.setText("");
+                                    postView.setText("");
+                                    Utils.notification++;
 
-                    }
-                });
+                                }
+                            });
+                }catch (Exception e){
+                    Toast.makeText(getApplicationContext(),"invalid youtube url",Toast.LENGTH_SHORT).show();
+                }
 
+        }else{
+            String key=tempRef.push().getKey();
+            DatabaseReference mainRef=database.getReference(path+key);
+            DataModel model=new DataModel(key,title,post,section,null);
+            mainRef.setValue(model,new
+                    DatabaseReference.CompletionListener() {
 
+                        @Override
+                        public void onComplete(DatabaseError databaseError,
+                                               DatabaseReference databaseReference) {
+                            Toast.makeText(PostActivity.this,"posted sucessfully",Toast.LENGTH_SHORT).show();
+                            titleView.setText("");
+                            postView.setText("");
+                            Utils.notification++;
+
+                        }
+                    });
+        }
 
     }
 
+    private String extractVideoId(String url) {
+        final Pattern pattern = Pattern.compile(REGEXP_ID_PATTERN);
+        final Matcher matcher = pattern.matcher(url);
+        if (matcher.matches()) {
+            return matcher.group(1);
+        }
 
-    private void creatSpinner(Spinner spinner,List<String> data) {
+        throw new IllegalArgumentException("Cannot extract video id from url");
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+      if(item.getItemId()==android.R.id.home){
+          onBackPressed();
+      }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    private void creatSpinner(Spinner spinner, List<String> data) {
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data);
 

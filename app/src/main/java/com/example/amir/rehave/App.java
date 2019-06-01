@@ -21,7 +21,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        boolean notIntialLunch=SharedPrefManager.getInstance(this).getBoolean(SharedPrefManager.IS_NOT_INTIAL_LUNCH);
+   /*     boolean notIntialLunch=SharedPrefManager.getInstance(this).getBoolean(SharedPrefManager.IS_NOT_INTIAL_LUNCH);
         Observable observable=Observable
                 .create(new ObservableOnSubscribe<Integer>() {
                     @Override
@@ -62,6 +62,6 @@ public class App extends Application {
                             .setInt(SharedPrefManager.TOTAL_PREF,integer);
                 }
             });
-        }
+        }*/
     }
 }
