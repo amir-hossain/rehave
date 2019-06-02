@@ -42,7 +42,7 @@
             android:value="AIzaSyBWlab7jN6Wzcot20S5ryMBVZ1cit0Z89I" />
 
         <activity
-            android:name=".PostActivity"
+            android:name=".BlogPostActivity"
             android:theme="@style/ActivityTheme"
             android:exported="true"/>
 
@@ -60,7 +60,7 @@
             android:theme="@style/ActivityTheme"/>
         <activity android:name=".ReplayActivity"
             android:theme="@style/ActivityTheme"></activity>
-        <activity android:name=".NewPostActivity"
+        <activity android:name=".ForumPostActivity"
             android:theme="@style/ActivityTheme" />
     </application>
 

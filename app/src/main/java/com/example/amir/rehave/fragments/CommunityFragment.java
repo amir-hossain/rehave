@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.amir.rehave.CommentActivity;
 import com.example.amir.rehave.ForumDetails;
-import com.example.amir.rehave.NewPostActivity;
+import com.example.amir.rehave.ForumPostActivity;
 import com.example.amir.rehave.R;
 import com.example.amir.rehave.ReviewActivity;
 import com.example.amir.rehave.adapter.CommunityListAdapter;
@@ -127,7 +127,7 @@ public class CommunityFragment extends Fragment implements CommunityListAdapter.
                 @Override
                 public void onClick(View view) {
 
-                    Intent intent=new Intent(getActivity(),NewPostActivity.class);
+                    Intent intent=new Intent(getActivity(), ForumPostActivity.class);
                     startActivity(intent);
 
                 }

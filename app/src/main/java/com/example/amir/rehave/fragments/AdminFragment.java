@@ -16,9 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.amir.rehave.ActivityInfoDetails;
+import com.example.amir.rehave.BlogPostActivity;
 import com.example.amir.rehave.Constants;
 import com.example.amir.rehave.MainActivity;
-import com.example.amir.rehave.PostActivity;
 import com.example.amir.rehave.R;
 import com.example.amir.rehave.adapter.AdminListAdapter;
 import com.example.amir.rehave.manager.SharedPrefManager;
@@ -55,7 +55,7 @@ public class AdminFragment extends Fragment implements AdminListAdapter.ItemClic
             @Override
             public void onClick(View view) {
 
-                startActivity(new Intent(getActivity(),PostActivity.class));
+                startActivity(new Intent(getActivity(), BlogPostActivity.class));
             }
         });
 
@@ -181,7 +181,7 @@ public class AdminFragment extends Fragment implements AdminListAdapter.ItemClic
             path="data/arch/"+key;
         }
 //            Toast.makeText(this,"edit "+key,Toast.LENGTH_SHORT).show();
-        Intent intent=new Intent(getActivity(),PostActivity.class);
+        Intent intent=new Intent(getActivity(), BlogPostActivity.class);
         intent.putExtra("path",path);
         startActivity(intent);
 

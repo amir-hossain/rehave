@@ -28,7 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnItemSelected;
 
-public class PostActivity extends AppCompatActivity{
+public class BlogPostActivity extends AppCompatActivity{
 
     int subject;
     EditText titleView;
@@ -50,7 +50,7 @@ public class PostActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post);
+        setContentView(R.layout.activity_blog_post);
         ButterKnife.bind(this);
         if(getIntent().getExtras()!=null){
             path=getIntent().getExtras().getString("path");
@@ -195,7 +195,7 @@ public class PostActivity extends AppCompatActivity{
                                 @Override
                                 public void onComplete(DatabaseError databaseError,
                                                        DatabaseReference databaseReference) {
-                                    Toast.makeText(PostActivity.this,"posted sucessfully",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(BlogPostActivity.this,"posted sucessfully",Toast.LENGTH_SHORT).show();
                                     titleView.setText("");
                                     postView.setText("");
                                     Utils.notification++;
@@ -216,7 +216,7 @@ public class PostActivity extends AppCompatActivity{
                         @Override
                         public void onComplete(DatabaseError databaseError,
                                                DatabaseReference databaseReference) {
-                            Toast.makeText(PostActivity.this,"posted sucessfully",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BlogPostActivity.this,"posted sucessfully",Toast.LENGTH_SHORT).show();
                             titleView.setText("");
                             postView.setText("");
                             Utils.notification++;
