@@ -31,10 +31,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class ForumPostActivity extends AppCompatActivity {
-
-    private ImageView ivNewPostUserImage;
-    private TextView tvNewPostUserName;
-    private EditText etNewPostMessage,titleView;
     private ImageView ivNewPostPostImage;
 
     private boolean photoSelected = false;
@@ -62,11 +58,8 @@ public class ForumPostActivity extends AppCompatActivity {
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-        ivNewPostUserImage = findViewById(R.id.user_image);
-        tvNewPostUserName = findViewById(R.id.user_name);
-        etNewPostMessage = findViewById(R.id.et_new_post_message);
-        titleView = findViewById(R.id.title);
         ivNewPostPostImage = findViewById(R.id.post_image);
+
 
         progressDialog = new ProgressDialog(this);
 
@@ -78,36 +71,12 @@ public class ForumPostActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-//        overridePendingTransition(R.anim.push_down_in, R.anim.push_down_out);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.new_post_menu, menu);
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-      /*  if (item.getItemId() == R.id.action_post){
-            String message = etNewPostMessage.getText().toString();
-            String title = titleView.getText().toString();
-            String imageurl = "";
-            if (message.isEmpty()){
-                Toast.makeText(this, "মেসেজ লিখুন ", Toast.LENGTH_SHORT).show();
-            } else {
-                progressDialog.setMessage("পোস্ট হচ্ছে ");
-                progressDialog.show();
-                if (photoSelected){
-                    uploadImage(selectedImageURI,message,title);
-                } else {
-
-                }
-            }
-        }
-        else {
-            onBackPressed();
-        }*/
+        onBackPressed();
         return super.onOptionsItemSelected(item);
     }
 
