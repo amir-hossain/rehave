@@ -48,7 +48,7 @@ public abstract class DatabaseHelper extends RoomDatabase {
                             public void run() {
                                 String jsonString = getJsonFromFile(context);
                                 insertFrom(context,jsonString);
-                                Toast.makeText(context,""+ids,Toast.LENGTH_LONG).show();
+
                             }
                         });
                     }

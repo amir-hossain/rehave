@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.amir.rehave.manager.SharedPrefManager;
+
 public class SplashScreenActivity extends AppCompatActivity {
 
     @Override
@@ -14,6 +16,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_spalash_screen);
         SharedPreferences prefs = getSharedPreferences("terms", MODE_PRIVATE);
         final boolean opened = prefs.getBoolean("opened", false);
+
 
 
         new Handler().postDelayed(new Runnable() {

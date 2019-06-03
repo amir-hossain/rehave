@@ -70,7 +70,7 @@ public class BlogDetailsActivity extends AppCompatActivity {
                         public void accept(Long saveId) throws Exception {
                             if(saveId>0){
                                 showToast("মন্তব্য সেভ হয়েছে!");
-                                Utils.newCommentedPostId=data.getPostId();
+                                Utils.newCommentAdded=true;
                             }
                         }
                     });

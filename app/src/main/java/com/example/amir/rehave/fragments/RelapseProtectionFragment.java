@@ -14,6 +14,7 @@ import com.example.amir.rehave.BlogDetailsActivity;
 import com.example.amir.rehave.Constants;
 import com.example.amir.rehave.ItemClickListener;
 import com.example.amir.rehave.R;
+import com.example.amir.rehave.Utils;
 import com.example.amir.rehave.link.LinkListeners;
 import com.example.amir.rehave.link.LinkMethods;
 import com.example.amir.rehave.model.DataModel;
@@ -76,5 +77,14 @@ public class RelapseProtectionFragment extends Fragment implements ItemClickList
     public void listenDatable(List<DataModel> datas) {
         adapter = new ListAdpter(datas,RelapseProtectionFragment.this,1);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(Utils.newCommentAdded){
+            getData();
+            Utils.newCommentAdded=false;
+        }
     }
 }

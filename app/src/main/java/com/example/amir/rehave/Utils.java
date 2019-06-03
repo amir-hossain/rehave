@@ -9,10 +9,12 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.TextView;
 
+import com.example.amir.rehave.model.DataModel;
+
 public class Utils {
 
     public static int notification=0;
-    public static String newCommentedPostId;
+    public static boolean newCommentAdded;
 
     public static  String getSectionName(int section) {
         if(section==Constants.Section.ADDICTION.toInt()){

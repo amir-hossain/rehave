@@ -14,6 +14,7 @@ import com.example.amir.rehave.BlogDetailsActivity;
 import com.example.amir.rehave.Constants;
 import com.example.amir.rehave.ItemClickListener;
 import com.example.amir.rehave.R;
+import com.example.amir.rehave.Utils;
 import com.example.amir.rehave.adapter.ListAdpter;
 import com.example.amir.rehave.link.LinkListeners;
 import com.example.amir.rehave.link.LinkMethods;
@@ -26,7 +27,6 @@ public class AddictionInformationFragment extends Fragment implements LinkListen
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView recyclerView;
-    public View.OnClickListener myOnClickListener;
 
     private View view;
 
@@ -75,4 +75,13 @@ public class AddictionInformationFragment extends Fragment implements LinkListen
         getContext().startActivity(intent);
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(Utils.newCommentAdded){
+            getData();
+            Utils.newCommentAdded=false;
+        }
+    }
 }

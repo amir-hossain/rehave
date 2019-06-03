@@ -3,6 +3,7 @@ package com.example.amir.rehave;
 import android.app.Application;
 import android.util.Log;
 
+import com.example.amir.rehave.database.DatabaseHelper;
 import com.example.amir.rehave.manager.SharedPrefManager;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -63,5 +64,26 @@ public class App extends Application {
                 }
             });
         }*/
+
+   Observable
+           .create(new ObservableOnSubscribe<Void>() {
+               @Override
+               public void subscribe(ObservableEmitter<Void> emitter) throws Exception {
+                   DatabaseHelper.getInstance(getApplicationContext())
+                           .rehubDao()
+                           .getAllAddictionInfoPost();
+                   emitter.onComplete();
+               }
+           })
+           .subscribeOn(Schedulers.newThread())
+           .observeOn(AndroidSchedulers.mainThread())
+           .subscribe(new Consumer<Void>() {
+               @Override
+               public void accept(Void aVoid) throws Exception {
+
+               }
+           });
+
+
     }
 }

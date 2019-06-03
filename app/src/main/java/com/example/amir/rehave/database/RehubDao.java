@@ -12,20 +12,9 @@ import java.util.List;
 
 @Dao
 public interface RehubDao {
-    @Insert
-    long[] insertPost(Post... posts);
 
     @Insert
     long[] insertAllPost(ArrayList<Post> posts);
-
-//    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    void saveComment(Comment comment);
-
-//    @Query("select * from comment")
-//    Comment getComment (int userId);
-
-//    @Query("select * from post where post_id==:postId")
-//    JSONPost getPost (int postId);
 
     @Query("select * from post where section !=3")
     List<Post> getAllPostWithoutArchive();
