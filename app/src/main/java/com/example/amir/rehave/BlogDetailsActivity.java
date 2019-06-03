@@ -8,11 +8,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.amir.rehave.database.DatabaseHelper;
 import com.example.amir.rehave.databinding.ActivityInfoDetailsBinding;
 import com.example.amir.rehave.manager.SharedPrefManager;
 import com.example.amir.rehave.model.DataModel;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 public class BlogDetailsActivity extends AppCompatActivity {
     private ActivityInfoDetailsBinding binding;
@@ -36,21 +44,37 @@ public class BlogDetailsActivity extends AppCompatActivity {
         if(userId!=null){
             binding.commentBox.setVisibility(View.VISIBLE);
             binding.commentBtn.setVisibility(View.VISIBLE);
-            String comment=data.getCommentList().get(SharedPrefManager.getInstance(this).getString(SharedPrefManager.ID_PREF));
-            binding.commentBox.setText(comment);
+            binding.commentBox.setText(data.getComment());
+
         }
 
 
     }
 
     public void saveComment(View view){
-        String comment=binding.commentBox.getText().toString().trim();
+        final String comment=binding.commentBox.getText().toString().trim();
         if(!comment.isEmpty()){
-            String outerTableName=getOuterTableName();
-            DatabaseReference reference=FirebaseDatabase.getInstance().getReference("data/"+outerTableName+"/"+data.getId()+"/commentList/"+ userId);
-            reference.setValue(comment);
+            Observable.create(new ObservableOnSubscribe<Long>() {
+                @Override
+                public void subscribe(ObservableEmitter<Long> emitter) throws Exception {
+                    long id=DatabaseHelper.getInstance(getApplicationContext())
+                            .rehubDao()
+                            .saveComment(data.getPostId(),comment);
+                    emitter.onNext(id);
+                }
+            })
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<Long>() {
+                        @Override
+                        public void accept(Long saveId) throws Exception {
+                            if(saveId>0){
+                                showToast("মন্তব্য সেভ হয়েছে!");
+                                Utils.newCommentedPostId=data.getPostId();
+                            }
+                        }
+                    });
 
-            showToast("মন্তব্য সেভ হয়েছে!");
 
         }else {
             showToast("ফিল্ড খালি আছে!");

@@ -117,7 +117,7 @@ public class LinkMethods extends Constants implements DataListeners.DataTableLis
     private List<DataModel> convertPostToDataModel(List<Post> posts) {
         ArrayList<DataModel> dataModels = new ArrayList<>();
         for (Post post : posts) {
-            dataModels.add(new DataModel(post.getPostId(), post.getTitle(), post.getPost(), post.getSection(), null));
+            dataModels.add(new DataModel(post.getPostId(), post.getTitle(), post.getPost(), post.getSection(), post.getComment()));
         }
         return dataModels;
     }

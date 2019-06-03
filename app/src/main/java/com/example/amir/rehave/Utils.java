@@ -12,6 +12,7 @@ import android.widget.TextView;
 public class Utils {
 
     public static int notification=0;
+    public static String newCommentedPostId;
 
     public static  String getSectionName(int section) {
         if(section==Constants.Section.ADDICTION.toInt()){

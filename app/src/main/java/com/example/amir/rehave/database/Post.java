@@ -18,6 +18,8 @@ public class Post {
 
     private String title;
 
+    private String comment;
+
     public Post() {
     }
 
@@ -58,5 +60,13 @@ public class Post {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

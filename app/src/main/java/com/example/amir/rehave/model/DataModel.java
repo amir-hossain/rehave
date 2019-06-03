@@ -6,7 +6,6 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class DataModel implements Parcelable {
@@ -22,7 +21,7 @@ public class DataModel implements Parcelable {
     private int section;
     
 
-    private Map<String,String> commentList;
+    private String comment;
 
 
     public DataModel() {
@@ -40,12 +39,12 @@ public class DataModel implements Parcelable {
         this.postId = postId;
     }
 
-    public DataModel(String postId, String title, String post, int section, Map<String, String> commentList) {
+    public DataModel(String postId, String title, String post, int section, String comment) {
         this.postId = postId;
         this.title = title;
         this.post = post;
         this.section = section;
-        this.commentList = commentList;
+        this.comment = comment;
     }
 
     protected DataModel(Parcel in) {
@@ -53,13 +52,7 @@ public class DataModel implements Parcelable {
         title = in.readString();
         post = in.readString();
         section = in.readInt();
-        int size=in.readInt();
-        this.commentList=new HashMap<>();
-        for(int i=0;i<size;i++){
-            String key=in.readString();
-            String value=in.readString();
-            this.commentList.put(key,value);
-        }
+        comment =in.readString();
     }
 
 
@@ -109,12 +102,12 @@ public class DataModel implements Parcelable {
         this.section = section;
     }
 
-    public Map<String, String> getCommentList() {
-        return commentList;
+    public String getComment() {
+        return comment;
     }
 
-    public void setCommentList(Map<String, String> commentList) {
-        this.commentList = commentList;
+    public void setCommentList(String comment) {
+        this.comment = comment;
     }
 
     public String getId() {
@@ -136,12 +129,6 @@ public class DataModel implements Parcelable {
         dest.writeString(title);
         dest.writeString(post);
         dest.writeInt(section);
-        if(commentList!=null){
-            dest.writeInt(commentList.size());
-            for(Map.Entry<String,String> entry : commentList.entrySet()){
-                dest.writeString(entry.getKey());
-                dest.writeString(entry.getValue());
-            }
-        }
+        dest.writeString(comment);
     }
 }

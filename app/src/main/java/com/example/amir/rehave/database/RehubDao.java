@@ -39,5 +39,8 @@ public interface RehubDao {
     @Query("select * from post where section ==3")
     List<Post> getAllArchiveInfoPost();
 
+    @Query("update post set comment=:comment where post_id==:postId")
+    long saveComment(String postId,String comment);
+
 
 }
