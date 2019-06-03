@@ -77,6 +77,9 @@ public class LinkMethods extends Constants implements DataListeners.DataTableLis
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             for (DataSnapshot section : dataSnapshot.getChildren()) {
                                 for (DataSnapshot item : section.getChildren()) {
+                                    for(DataSnapshot comment:item.getChildren()){
+                                        Log.d("sdsd","sdsd");
+                                    }
                                     posts.add(item.getValue(Post.class));
                                 }
                             }

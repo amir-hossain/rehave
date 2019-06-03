@@ -1,18 +1,16 @@
 package com.example.amir.rehave.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.amir.rehave.ActivityInfoDetails;
+import com.example.amir.rehave.BlogDetailsActivity;
 import com.example.amir.rehave.Constants;
 import com.example.amir.rehave.ItemClickListener;
 import com.example.amir.rehave.R;
@@ -20,11 +18,6 @@ import com.example.amir.rehave.link.LinkListeners;
 import com.example.amir.rehave.link.LinkMethods;
 import com.example.amir.rehave.model.DataModel;
 import com.example.amir.rehave.adapter.ListAdpter;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +67,7 @@ public class RelapseProtectionFragment extends Fragment implements ItemClickList
         Log.d("xzzzzzzzzzz", "xxxxxxx");
 
 //            Toast.makeText(context,index+" clicked",Toast.LENGTH_SHORT).show();
-        Intent intent=new Intent(getContext(), ActivityInfoDetails.class);
+        Intent intent=new Intent(getContext(), BlogDetailsActivity.class);
         intent.putExtra("data",data);
         getContext().startActivity(intent);
     }

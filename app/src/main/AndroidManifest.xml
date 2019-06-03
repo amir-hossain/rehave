@@ -31,7 +31,7 @@
 
 
         <activity
-            android:name=".ActivityInfoDetails"
+            android:name=".BlogDetailsActivity"
             android:theme="@style/ActivityTheme"/>
         <activity
             android:name=".ArchiveDetailsActivity"

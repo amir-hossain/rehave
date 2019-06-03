@@ -15,7 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.amir.rehave.ActivityInfoDetails;
+import com.example.amir.rehave.BlogDetailsActivity;
 import com.example.amir.rehave.BlogPostActivity;
 import com.example.amir.rehave.Constants;
 import com.example.amir.rehave.MainActivity;
@@ -202,7 +202,7 @@ public class AdminFragment extends Fragment implements AdminListAdapter.ItemClic
             int index =recyclerView.getChildLayoutPosition(v);
             String key=data.get(index).getId();
 //            Toast.makeText(context,index+" clicked",Toast.LENGTH_SHORT).show();
-            Intent intent=new Intent(context, ActivityInfoDetails.class);
+            Intent intent=new Intent(context, BlogDetailsActivity.class);
             intent.putExtra("key",key);
             context.startActivity(intent);
         }

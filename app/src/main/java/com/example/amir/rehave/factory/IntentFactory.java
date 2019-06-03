@@ -3,7 +3,7 @@ package com.example.amir.rehave.factory;
 import android.content.Context;
 import android.content.Intent;
 
-import com.example.amir.rehave.ActivityInfoDetails;
+import com.example.amir.rehave.BlogDetailsActivity;
 import com.example.amir.rehave.ProtectionDetailsActivity;
 import com.example.amir.rehave.R;
 
@@ -12,7 +12,7 @@ public class IntentFactory {
     public static Intent getIntent(Context context,String name){
         Intent intent=null;
         if(name.equals(context.getString(R.string.adiction_information))){
-            intent=new Intent(context, ActivityInfoDetails.class);
+            intent=new Intent(context, BlogDetailsActivity.class);
 
         }else if(name.equals(context.getString(R.string.relapse_protection))){
             intent=new Intent(context, ProtectionDetailsActivity.class);

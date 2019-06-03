@@ -14,7 +14,7 @@ import com.example.amir.rehave.model.DataModel;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class ActivityInfoDetails extends AppCompatActivity {
+public class BlogDetailsActivity extends AppCompatActivity {
     private ActivityInfoDetailsBinding binding;
     private DataModel data;
     private String userId=SharedPrefManager.getInstance(this).getString(SharedPrefManager.ID_PREF);
