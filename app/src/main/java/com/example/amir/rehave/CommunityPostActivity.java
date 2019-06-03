@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.amir.rehave.fragments.CommunityFragment;
+import com.example.amir.rehave.manager.SharedPrefManager;
 import com.example.amir.rehave.model.CommunityPostModel;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -21,7 +22,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class CommunityPost extends AppCompatActivity {
+public class CommunityPostActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +41,12 @@ public class CommunityPost extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences preferences= getSharedPreferences("id", Context.MODE_PRIVATE);
-                String name=preferences.getString("name",null);
-                String userId=preferences.getString("id",null);
+//                SharedPreferences preferences= getSharedPreferences("id", Context.MODE_PRIVATE);
+//                String name=preferences.getString("name",null);
+//                String userId=preferences.getString("id",null);
+
+                String name=SharedPrefManager.getInstance(getApplicationContext()).getString(SharedPrefManager.NAME_PREF);
+                String userId=SharedPrefManager.getInstance(getApplicationContext()).getString(SharedPrefManager.ID_PREF);
 
                 String input=post.getText().toString().trim();
                 String title=titleView.getText().toString().trim();
@@ -61,8 +65,10 @@ public class CommunityPost extends AppCompatActivity {
                     mainRef.setValue(new CommunityPostModel(userId,postId,title,input,name,dateTime[0],dateTime[1],false));
                     Toast.makeText(getApplicationContext(),R.string.communityMessage,Toast.LENGTH_SHORT).show();
                 }
-                startActivity(new Intent(CommunityPost.this,CommunityFragment.class));
-                finish();
+
+                titleView.setText("");
+                post.setText("");
+                Utils.notification=Utils.notification++;
 
 
             }
@@ -71,8 +77,7 @@ public class CommunityPost extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        startActivity(new Intent(CommunityPost.this,CommunityFragment.class));
-        finish();
+        onBackPressed();
         return true;
     }
 
@@ -82,5 +87,10 @@ public class CommunityPost extends AppCompatActivity {
         String formatedDate =dateFormat.format(Calendar.getInstance().getTime());
         dateTime=formatedDate.split(" ");
         return dateTime;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

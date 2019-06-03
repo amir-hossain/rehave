@@ -102,10 +102,6 @@ public class BlogPostActivity extends AppCompatActivity{
 
     }
 
-  /*  @OnItemSelected(R.id.my_spinner)
-    public void spinnerItemSelected(Spinner spinner, int position) {
-        // code here
-    }*/
 
   @OnItemSelected(R.id.section)
   public void spinnerSelected(int position){

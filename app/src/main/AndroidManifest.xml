@@ -46,10 +46,12 @@
             android:theme="@style/ActivityTheme"
             android:exported="true"/>
 
-        <activity android:name=".CommunityPost"
-            android:theme="@style/ActivityTheme"/>
+        <activity android:name=".CommunityPostActivity"
+            android:theme="@style/ActivityTheme"
+            android:exported="true"/>
         <activity android:name=".ReviewActivity"
-            android:theme="@style/ActivityTheme"/>
+            android:theme="@style/ActivityTheme"
+            />
         <activity
             android:name=".CommentActivity"
             android:theme="@style/ActivityTheme"/>
@@ -60,8 +62,6 @@
             android:theme="@style/ActivityTheme"/>
         <activity android:name=".ReplayActivity"
             android:theme="@style/ActivityTheme"></activity>
-        <activity android:name=".ForumPostActivity"
-            android:theme="@style/ActivityTheme" />
     </application>
 
 </manifest>

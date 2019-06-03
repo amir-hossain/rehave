@@ -13,8 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.amir.rehave.CommentActivity;
+import com.example.amir.rehave.CommunityPostActivity;
 import com.example.amir.rehave.ForumDetails;
-import com.example.amir.rehave.ForumPostActivity;
 import com.example.amir.rehave.R;
 import com.example.amir.rehave.ReviewActivity;
 import com.example.amir.rehave.adapter.CommunityListAdapter;
@@ -79,6 +79,7 @@ public class CommunityFragment extends Fragment implements CommunityListAdapter.
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 CommunityPostModel value=null;
+                data.clear();
                 for(DataSnapshot snap : dataSnapshot.getChildren()) {
                     value=snap.getValue(CommunityPostModel.class);
 //                        Log.d("Fire value", "Value is: " + value.getName());
@@ -127,7 +128,7 @@ public class CommunityFragment extends Fragment implements CommunityListAdapter.
                 @Override
                 public void onClick(View view) {
 
-                    Intent intent=new Intent(getActivity(), ForumPostActivity.class);
+                    Intent intent=new Intent(getActivity(), CommunityPostActivity.class);
                     startActivity(intent);
 
                 }

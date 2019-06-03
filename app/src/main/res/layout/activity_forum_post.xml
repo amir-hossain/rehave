@@ -58,7 +58,7 @@
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/title"
+                        android:id="@+id/title_field"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
                         android:layout_marginBottom="16dp"
@@ -71,7 +71,7 @@
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/et_new_post_message"
+                        android:id="@+id/post_field"
                         android:minLines="4"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
