@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -68,9 +69,8 @@ public class CommunityPostActivity extends AppCompatActivity {
 
                 titleView.setText("");
                 post.setText("");
-                Utils.notification=Utils.notification++;
 
-
+                Utils.notification++;
             }
         });
     }
