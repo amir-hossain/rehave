@@ -23,6 +23,7 @@ import com.example.amir.rehave.fragments.LoginFragment;
 import com.example.amir.rehave.fragments.MainFragment;
 import com.example.amir.rehave.fragments.RelapseProtectionFragment;
 import com.example.amir.rehave.fragments.SingUpFragment;
+import com.example.amir.rehave.fragments.StatusFragment;
 import com.example.amir.rehave.link.LinkMethods;
 import com.example.amir.rehave.manager.SharedPrefManager;
 
@@ -98,6 +99,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.nav_about) {
             fragmentToRun = AboutFragment.newInstance();
+            runFragment();
+
+        }else if (id == R.id.nav_status) {
+            fragmentToRun = StatusFragment.newInstance();
             runFragment();
 
         } else if (id == R.id.nav_registration) {

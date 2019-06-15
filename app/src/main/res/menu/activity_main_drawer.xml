@@ -17,6 +17,11 @@
                     android:id="@+id/nav_about"
                     android:icon="@drawable/ic_about"
                     android:title="@string/about" />
+
+                <item
+                    android:id="@+id/nav_status"
+                    android:icon="@drawable/ic_about"
+                    android:title="আজকের দিনে আমার অবস্থা" />
                 <item
                     android:id="@+id/nav_registration"
                     android:icon="@drawable/ic_registration"
