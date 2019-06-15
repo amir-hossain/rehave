@@ -30,14 +30,11 @@
                     android:id="@+id/nav_login"
                     android:icon="@drawable/ic_login"
                     android:title="@string/login" />
+
                 <item
-                    android:id="@+id/nav_addiction"
+                    android:id="@+id/nav_path"
                     android:icon="@drawable/ic_addiction"
-                    android:title="@string/adiction_information" />
-                <item
-                    android:id="@+id/nav_protection"
-                    android:icon="@drawable/ic_protection"
-                    android:title="@string/relapse_protection" />
+                    android:title="মাদকাসক্ত মুক্তির কৌশল" />
                 <item
                     android:id="@+id/nav_archive"
                     android:icon="@drawable/ic_archive"

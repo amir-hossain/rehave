@@ -21,6 +21,7 @@ import com.example.amir.rehave.fragments.CommunityFragment;
 import com.example.amir.rehave.fragments.ExpertOpinionFragment;
 import com.example.amir.rehave.fragments.LoginFragment;
 import com.example.amir.rehave.fragments.MainFragment;
+import com.example.amir.rehave.fragments.PathFragment;
 import com.example.amir.rehave.fragments.RelapseProtectionFragment;
 import com.example.amir.rehave.fragments.SingUpFragment;
 import com.example.amir.rehave.fragments.StatusFragment;
@@ -113,16 +114,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentToRun = LoginFragment.newInstance(this);
             runFragment();
 
-        } else if (id == R.id.nav_addiction) {
-            fragmentToRun = AddictionInformationFragment.newInstance();
+        } else if (id == R.id.nav_path) {
+            fragmentToRun = new PathFragment();
             runFragment();
 
 
-        } else if (id == R.id.nav_protection) {
-            fragmentToRun = RelapseProtectionFragment.newInstance();
-            runFragment();
-
-        } else if (id == R.id.nav_archive) {
+        }else if (id == R.id.nav_archive) {
             fragmentToRun = ArchiveFragment.newInstance();
             runFragment();
 
