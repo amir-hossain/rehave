@@ -38,7 +38,7 @@
                 <item
                     android:id="@+id/nav_archive"
                     android:icon="@drawable/ic_archive"
-                    android:title="@string/archive" />
+                    android:title="আলোর মিছিল আর্কাইভ" />
                 <item
                     android:id="@+id/nav_expert_opinion"
                     android:icon="@drawable/expert"
@@ -46,7 +46,7 @@
                 <item
                     android:id="@+id/nav_forum"
                     android:icon="@drawable/ic_forum"
-                    android:title="@string/forum" />
+                    android:title="আলোর মিছিল ফোরাম" />
                 <item
                     android:id="@+id/nav_logout"
                     android:icon="@drawable/ic_logout"
