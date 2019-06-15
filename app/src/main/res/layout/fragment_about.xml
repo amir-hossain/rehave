@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragments.AboutFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <data>
+        <import type="com.example.amir.rehave.Utils"/>
+    </data>
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="About" />
+        tools:context=".fragments.AboutFragment">
+        <WebView
+            android:id="@+id/web_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@+id/title_view"
+            app:showHtml="@{Utils.aboutText}"
+            tools:layout_editor_absoluteX="0dp"
+            tools:text="dfdf" />
 
-</FrameLayout>
+    </FrameLayout>
+</layout>
