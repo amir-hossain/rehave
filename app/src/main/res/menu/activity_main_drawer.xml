@@ -20,7 +20,7 @@
 
                 <item
                     android:id="@+id/nav_status"
-                    android:icon="@drawable/ic_about"
+                    android:icon="@drawable/ic_status"
                     android:title="@string/status_of_today" />
                 <item
                     android:id="@+id/nav_registration"
@@ -47,6 +47,16 @@
                     android:id="@+id/nav_forum"
                     android:icon="@drawable/ic_forum"
                     android:title="@string/forum" />
+
+                <item
+                    android:id="@+id/nav_comming"
+                    android:icon="@drawable/ic_comming"
+                    android:title="@string/comming" />
+
+                <item
+                    android:id="@+id/nav_contact"
+                    android:icon="@drawable/ic_contract"
+                    android:title="@string/contact" />
                 <item
                     android:id="@+id/nav_logout"
                     android:icon="@drawable/ic_logout"

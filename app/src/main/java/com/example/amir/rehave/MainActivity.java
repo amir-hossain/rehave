@@ -17,7 +17,9 @@ import android.widget.TextView;
 import com.example.amir.rehave.fragments.AboutFragment;
 import com.example.amir.rehave.fragments.AddictionInformationFragment;
 import com.example.amir.rehave.fragments.ArchiveFragment;
+import com.example.amir.rehave.fragments.CommingSoonFragment;
 import com.example.amir.rehave.fragments.CommunityFragment;
+import com.example.amir.rehave.fragments.ContactFragment;
 import com.example.amir.rehave.fragments.ExpertOpinionFragment;
 import com.example.amir.rehave.fragments.LoginFragment;
 import com.example.amir.rehave.fragments.MainFragment;
@@ -151,7 +153,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentToRun = new ExpertOpinionFragment();
             runFragment();
 
-        } else {
+        } else if (id == R.id.nav_comming) {
+            title.setText(R.string.comming);
+            fragmentToRun = new CommingSoonFragment();
+            runFragment();
+
+        }else if (id == R.id.nav_contact) {
+            title.setText(R.string.contact);
+            fragmentToRun = new ContactFragment();
+            runFragment();
+
+        }else {
             SharedPrefManager.getInstance(this).clear();
             fragmentToRun = LoginFragment.newInstance(this);
             runFragment();
