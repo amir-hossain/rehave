@@ -206,9 +206,6 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
         @BindView(R.id.item_image)
         CardView imgBtn;
 
-        @Nullable
-        @BindView(R.id.item_sharing)
-        CardView shereBtn;
 
         @Nullable
         @BindView(R.id.item_tools)
@@ -285,15 +282,6 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
             listener.onCategoryClick(ArchiveFragment.IMAGE);
         }
 
-        @Optional
-        @OnClick(R.id.item_sharing)
-        public void shareClick() {
-
-            activatedcardView.setActivated(false);
-            shereBtn.setActivated(true);
-            activatedcardView = shereBtn;
-            listener.onCategoryClick(ArchiveFragment.SHARING);
-        }
 
         @Optional
         @OnClick(R.id.item_tools)
