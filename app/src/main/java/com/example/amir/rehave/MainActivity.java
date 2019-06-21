@@ -28,6 +28,9 @@ import com.example.amir.rehave.fragments.StatusFragment;
 import com.example.amir.rehave.link.LinkMethods;
 import com.example.amir.rehave.manager.SharedPrefManager;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
@@ -41,12 +44,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private NavigationView navigationView;
 
+    @BindView(R.id.title)
+    public TextView title;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        ButterKnife.bind(this);
 
         LinkMethods.getInstance().initializeDatabase(this);
 
@@ -81,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = findViewById(R.id.nav_view);
 
         navigationView.setNavigationItemSelectedListener(this);
+        title.setText(R.string.main);
         fragmentToRun = new MainFragment();
         runFragment();
 
@@ -95,39 +106,48 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_main) {
+            title.setText(R.string.main);
             fragmentToRun = new MainFragment();
             runFragment();
 
         } else if (id == R.id.nav_about) {
+            title.setText(R.string.about);
             fragmentToRun = AboutFragment.newInstance();
             runFragment();
 
         }else if (id == R.id.nav_status) {
+            title.setText(R.string.status_of_today);
             fragmentToRun = StatusFragment.newInstance();
             runFragment();
 
         } else if (id == R.id.nav_registration) {
+            title.setText(R.string.registration);
             fragmentToRun = SingUpFragment.newInstance(this);
             runFragment();
 
         } else if (id == R.id.nav_login) {
+            title.setText(R.string.login);
             fragmentToRun = LoginFragment.newInstance(this);
             runFragment();
 
         } else if (id == R.id.nav_path) {
+            title.setText(R.string.overcome_addiction);
             fragmentToRun = new PathFragment();
             runFragment();
 
 
         }else if (id == R.id.nav_archive) {
+            title.setText(R.string.archive);
             fragmentToRun = ArchiveFragment.newInstance();
             runFragment();
 
         } else if (id == R.id.nav_forum) {
+            title.setText(R.string.forum);
             fragmentToRun = CommunityFragment.newInstance();
             runFragment();
 
         } else if (id == R.id.nav_expert_opinion) {
+            title.setText(R.string.expert_opinion);
             fragmentToRun = new ExpertOpinionFragment();
             runFragment();
 
@@ -147,6 +167,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void OnRegistrationComplete() {
+        title.setText(R.string.login);
+        navigationView.setCheckedItem(R.id.nav_login);
         fragmentToRun = LoginFragment.newInstance(this);
         runFragment();
         navigationView.setCheckedItem(R.id.nav_login);
@@ -176,6 +198,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void wantToGoToRegistration() {
+        title.setText(R.string.registration);
+        navigationView.setCheckedItem(R.id.nav_registration);
         fragmentToRun = SingUpFragment.newInstance(this);
         runFragment();
         navigationView.setCheckedItem(R.id.nav_registration);

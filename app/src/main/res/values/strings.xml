@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">আলোর মিছিল </string>
+    <string name="app_name">মুক্তির মিছিল </string>
     <string name="tc_title">শর্তাবলী</string>
     <string name="tc_tick_label">আমি শর্ত পড়েছি এবং স্বীকার করছি</string>
     <string name="tc_text1">1. Introduction</string>
@@ -49,8 +49,6 @@
 
     <string name="relapse_protection"> রিলাপ্স প্রতিরোধ</string>
 
-    <string name="archive"> আর্কাইভ </string>
-
     <string name="login">প্রবেশ করুন</string>
 
     <string name="admin"> অ্যাডমিন</string>
@@ -77,7 +75,6 @@
 
     <string name="name_preference">name</string>
 
-    <string name="forum">ফোরাম</string>
 
     <string name="expert_opinion">অভিজ্ঞদের মতামত</string>
 
@@ -118,6 +115,14 @@
     <string name="main">প্রধান</string>
 
     <string name="menu">মেনু</string>
+
+    <string name="status_of_today">আজকের দিনে আমার অবস্থা</string>
+
+    <string name="overcome_addiction">মাদকাসক্ত মুক্তির কৌশল</string>
+
+    <string name="archive">মুক্তির মিছিল আর্কাইভ</string>
+
+    <string name="forum">আলোর মিছিল ফোরাম</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
 

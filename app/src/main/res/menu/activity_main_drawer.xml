@@ -21,7 +21,7 @@
                 <item
                     android:id="@+id/nav_status"
                     android:icon="@drawable/ic_about"
-                    android:title="আজকের দিনে আমার অবস্থা" />
+                    android:title="@string/status_of_today" />
                 <item
                     android:id="@+id/nav_registration"
                     android:icon="@drawable/ic_registration"
@@ -34,11 +34,11 @@
                 <item
                     android:id="@+id/nav_path"
                     android:icon="@drawable/ic_addiction"
-                    android:title="মাদকাসক্ত মুক্তির কৌশল" />
+                    android:title="@string/overcome_addiction" />
                 <item
                     android:id="@+id/nav_archive"
                     android:icon="@drawable/ic_archive"
-                    android:title="আলোর মিছিল আর্কাইভ" />
+                    android:title="@string/archive" />
                 <item
                     android:id="@+id/nav_expert_opinion"
                     android:icon="@drawable/expert"
@@ -46,7 +46,7 @@
                 <item
                     android:id="@+id/nav_forum"
                     android:icon="@drawable/ic_forum"
-                    android:title="আলোর মিছিল ফোরাম" />
+                    android:title="@string/forum" />
                 <item
                     android:id="@+id/nav_logout"
                     android:icon="@drawable/ic_logout"
