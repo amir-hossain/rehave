@@ -25,8 +25,8 @@ import io.reactivex.schedulers.Schedulers;
 
 public class SingUpFragment extends BaseFragment implements View.OnClickListener{
     EditText userName;
-    EditText phonEmail;
-    EditText password;
+    EditText passwordField;
+    EditText centerField;
 
     private RegistrationCompleteListener registrationCompleteListener;
     private View rootView;
@@ -44,9 +44,9 @@ public class SingUpFragment extends BaseFragment implements View.OnClickListener
 
         rootView = inflater.inflate(R.layout.signup_fragment, container, false);
 
-        userName=rootView.findViewById(R.id.phone_email);
-        phonEmail=rootView.findViewById(R.id.phone_email);
-        password=rootView.findViewById(R.id.password);
+        userName=rootView.findViewById(R.id.user_name);
+        passwordField =rootView.findViewById(R.id.user_name);
+        centerField =rootView.findViewById(R.id.password);
         final Button singUp=rootView.findViewById(R.id.button);
         CheckBox checkBox=rootView.findViewById(R.id.checkbox);
         singUp.setOnClickListener(SingUpFragment.this);
@@ -73,11 +73,11 @@ public class SingUpFragment extends BaseFragment implements View.OnClickListener
     public void onClick(View v) {
         if(isCheckboxChecked){
             String name=userName.getText().toString();
-            String pass=password.getText().toString();
-            String phoneEmail=phonEmail.getText().toString();
+            String center= centerField.getText().toString();
+            String password= passwordField.getText().toString();
 
-            postData(name,pass,phoneEmail);
-//        saveOfline(name,pass,phoneEmail);
+            postData(name,center,password);
+//        saveOfline(name,pass,userName);
         }else {
             showToast("দয়া করে শর্ত মানুন",Toast.LENGTH_LONG);
         }
@@ -88,7 +88,7 @@ public class SingUpFragment extends BaseFragment implements View.OnClickListener
         Observable.create(new ObservableOnSubscribe<String>() {
             @Override
             public void subscribe(ObservableEmitter<String> emitter) throws Exception {
-//                dao.userRegistration(new JSONPost(name,phoneEmail,pass));
+//                dao.userRegistration(new JSONPost(name,userName,pass));
                 emitter.onNext("sucessfully registered");
             }
         }).subscribeOn(Schedulers.io())
@@ -103,14 +103,14 @@ public class SingUpFragment extends BaseFragment implements View.OnClickListener
 
     }
 
-    private void postData(String name,String pass,String phoneEmail) {
+    private void postData(String name,String center,String password) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         String path="auth/";
         DatabaseReference tempRef=database.getReference(path);
         String key=tempRef.push().getKey();
         DatabaseReference mainRef=database.getReference(path+key+"/");
-        SignUpModel model=new SignUpModel(key,name,pass,phoneEmail);
+        SignUpModel model=new SignUpModel(key,name,center,password);
         mainRef.setValue(model,new
                 DatabaseReference.CompletionListener() {
 

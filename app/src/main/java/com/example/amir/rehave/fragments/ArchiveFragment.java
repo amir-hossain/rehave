@@ -32,6 +32,7 @@ public class ArchiveFragment extends Fragment implements LinkListeners.DataTable
     public static int IMAGE=6;
     public static int SHARING=7;
     public static int TOOLS=8;
+    public static int OPNION=9;
 
     private ArrayList<DataModel> videoData=new ArrayList<>();
     private ArrayList<DataModel> audioData=new ArrayList<>();

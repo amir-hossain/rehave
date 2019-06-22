@@ -196,10 +196,48 @@
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:paddingRight="@dimen/padding"/>
-
             </LinearLayout>
 
-        </android.support.v7.widget.CardView>
 
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:id="@+id/item_opnion"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/card_margin"
+            android:elevation="3dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@drawable/archive_header_background">
+
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/expert"
+                    android:padding="@dimen/padding"
+                    android:layout_gravity="center"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:paddingLeft="@dimen/padding"
+                    android:paddingTop="@dimen/padding"
+                    android:paddingBottom="@dimen/padding"
+                    android:text="@string/expert_opinion"
+                    android:textAllCaps="false"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:paddingRight="@dimen/padding"/>
+            </LinearLayout>
+
+
+        </android.support.v7.widget.CardView>
     </LinearLayout>
 </HorizontalScrollView>

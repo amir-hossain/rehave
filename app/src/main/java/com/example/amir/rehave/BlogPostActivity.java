@@ -72,10 +72,9 @@ public class BlogPostActivity extends AppCompatActivity{
 
         List<String> subSection = new ArrayList<>();
         subSection.add("Video");
-        subSection.add("Audio");
+        subSection.add("Recovery Sharing");
         subSection.add("Book");
         subSection.add("Image");
-        subSection.add("Sharing");
         subSection.add("Tools");
         creatSpinner(subSectionSpinner,subSection);
 
@@ -169,9 +168,6 @@ public class BlogPostActivity extends AppCompatActivity{
                 path=path+"/image/";
                 section=6;
             }else if(subSelectedPosition==4){
-                path=path+"/sharing/";
-                section=7;
-            }else if(subSelectedPosition==5){
                 path=path+"/tools/";
                 section=8;
             }

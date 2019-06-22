@@ -24,9 +24,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class LoginFragment extends Fragment {
-    String phoneEmail;
+    String userName;
     String pass;
-    EditText phoneEmailField;
+    EditText userNameField;
     EditText password;
     private View rootView;
     private RegistrationButtonClickListenter listenter;
@@ -42,7 +42,7 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.login_fragment, container, false);
-        phoneEmailField =rootView.findViewById(R.id.phone_email);
+        userNameField =rootView.findViewById(R.id.user_name);
         password=rootView.findViewById(R.id.password);
 
         getData();
@@ -51,7 +51,7 @@ public class LoginFragment extends Fragment {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                phoneEmail= phoneEmailField.getText().toString().trim();
+                userName = userNameField.getText().toString().trim();
                 pass=password.getText().toString().trim();
 //                Log.d("xxx",pass);
                 if(check()){
@@ -81,16 +81,15 @@ public class LoginFragment extends Fragment {
     private boolean check() {
         if(singUpDatas!=null){
             boolean result=false;
-            if(phoneEmail.equals("admin") && pass.equals("admin")){
+            if(userName.equals("admin") && pass.equals("admin")){
                 saveToPreference("1","Admin", SharedPrefManager.ADMIN_TYPE);
                 result= true;
             }else{
                 for(int i=0;i<singUpDatas.size();i++){
-                    String dataBasephoneEmail=singUpDatas.get(i).getPhoneEmail();
-                    String dataBasePass=singUpDatas.get(i).getPassword();
+                    String dataBasePassword=singUpDatas.get(i).getPassword();
                     String id=singUpDatas.get(i).getId();
                     String name=singUpDatas.get(i).getName();
-                    if(phoneEmail.equals(dataBasephoneEmail) && pass.equals(dataBasePass)){
+                    if(userName.equals(name) && pass.equals(dataBasePassword)){
                         saveToPreference(id,name,SharedPrefManager.USER_TYPE);
                         startActivity(new Intent(getContext(),MainActivity.class));
 
@@ -131,7 +130,7 @@ public class LoginFragment extends Fragment {
                 for(DataSnapshot snap : dataSnapshot.getChildren()) {
                     SignUpModel value=snap.getValue(SignUpModel.class);
 //                        Log.d("Fire value", "Value is: " + value.getName());
-                    singUpDatas.add(new SignUpModel(value.getId(),value.getName(),value.getPassword(),value.getPhoneEmail()));
+                    singUpDatas.add(new SignUpModel(value.getId(),value.getName(),value.getCenter(),value.getPassword()));
                 }
 
             }

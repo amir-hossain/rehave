@@ -148,12 +148,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentToRun = CommunityFragment.newInstance();
             runFragment();
 
-        } else if (id == R.id.nav_expert_opinion) {
-            title.setText(R.string.expert_opinion);
-            fragmentToRun = new ExpertOpinionFragment();
-            runFragment();
-
-        } else if (id == R.id.nav_comming) {
+        }else if (id == R.id.nav_comming) {
             title.setText(R.string.comming);
             fragmentToRun = new CommingSoonFragment();
             runFragment();

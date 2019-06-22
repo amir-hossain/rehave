@@ -46,6 +46,7 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
     private static int VIDEO_ITEM = 1;
     private static int IMAGE_ITEM = 2;
     private static int OTHER_ITEM = 3;
+    private static int OPINION_ITEM = 4;
 
 
     private ImageLoader imageLoader = new ImageLoader() {
@@ -111,6 +112,10 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.archive_image_view, parent, false);
 
+        }else if(viewType==OPINION_ITEM) {
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.expert_layout, parent, false);
+
         }else {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.other_archive_view, parent, false);
@@ -169,6 +174,8 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
                 return IMAGE_ITEM;
             }else if(dataSet.get(position).getSection()== ArchiveFragment.SHARING){
                 return OTHER_ITEM;
+            }else if(dataSet.get(position).getSection()== ArchiveFragment.OPNION){
+                return OPINION_ITEM;
             }else {
                 return OTHER_ITEM;
             }
@@ -210,6 +217,10 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
         @Nullable
         @BindView(R.id.item_tools)
         CardView toolsBtn;
+
+        @Nullable
+        @BindView(R.id.item_opnion)
+        CardView opnionBtn;
 
         @Nullable
         @BindView(R.id.textViewName)
@@ -291,6 +302,22 @@ public class ArchiveListAdapter extends RecyclerView.Adapter<ArchiveListAdapter.
             toolsBtn.setActivated(true);
             activatedcardView = toolsBtn;
             listener.onCategoryClick(ArchiveFragment.TOOLS);
+        }
+
+        @Optional
+        @OnClick(R.id.item_opnion)
+        public void opinionClick() {
+
+            activatedcardView.setActivated(false);
+            opnionBtn.setActivated(true);
+            activatedcardView = opnionBtn;
+            ArrayList<DataModel> models=new ArrayList<>();
+            models.add(null);
+            DataModel dataModel=new DataModel();
+            dataModel.setSection(9);
+            models.add(dataModel);
+           setData(models);
+
         }
     }
 
